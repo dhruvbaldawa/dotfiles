@@ -2,7 +2,7 @@
 
 # A simple script for setting up OSX dev environment.
 
-dev="$HOME/Development"
+dev="$HOME/Code/dotfiles"
 pushd .
 mkdir -p $dev
 cd $dev
@@ -29,7 +29,7 @@ if [[ `uname` == 'Darwin' ]]; then
     echo 'Installing Homebrew...'
       ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
       brew update
-      brew install htop mongodb mysql nginx node ruby
+      brew install htop
   fi
 
   echo 'Tweaking OS X...'

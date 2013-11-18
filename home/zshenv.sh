@@ -1,6 +1,16 @@
-# Defines environment variables.
-privenv="$HOME/.private-env"
-[[ -f "$privenv" ]] && source $privenv
+export CLICOLOR=1
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export TERM="xterm-256color"
+
+export MKL_NUM_THREADS=1
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+export L1=~/Library/Enthought/Canopy_64bit/System
+export L2=~/Library/Enthought/Canopy_64bit/User
+export EDITOR='subl -w'
+
 
 # Browser.
 # --------
@@ -10,9 +20,15 @@ fi
 
 # Editors.
 # --------
-export EDITOR='/usr/local/bin/subl'
-export VISUAL='/usr/local/bin/subl'
+export EDITOR='/usr/local/bin/subl -w'
+export VISUAL='/usr/local/bin/subl -w'
 export PAGER='less'
+
+# Most used directorys
+# --------------------
+hash -d venv=~/Projects/venvs/
+hash -d erc=~/Enthought/src/
+hash -d proj=~/Projects/
 
 # Language.
 # ---------
@@ -38,11 +54,6 @@ typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
-dev="$HOME/Development"
-br="$dev/brunch"
-ch="$dev/chaplinjs"
-com="$dev/com"
-pm="$dev/paulmillr"
 as="$HOME/Library/Application Support"
 
 # Set the the list of directories that cd searches.
@@ -70,15 +81,14 @@ done
 unset path_file
 
 # Set the list of directories that Zsh searches for programs.
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages
-path=(
-  /usr/local/{bin,sbin}
-  /usr/local/lib/python2.7/site-packages
-  /usr/local/share/npm/bin
-  /usr/{bin,sbin}
-  /{bin,sbin}
-  $path
-)
+export PATH="/usr/local/mysql/bin:$PATH"
+export PATH="/Applications/Android Studio.app/sdk/tools:${PATH}"
+export PATH="/Applications/Android Studio.app/sdk/platform-tools:${PATH}"
+export PATH="${PATH}:/usr/local/share/elasticsearch/bin"
+export PATH="${PATH}:/usr/local/sbin"
+export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH="$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/texbin:/Library/Frameworks/EPD64.framework/Versions/Current/bin:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/mysql/bin:/usr/local/sbin"
+export PATH="/Library/Frameworks/EPD64.framework/Versions/Current/bin:${PATH}"
 
 for path_file in /etc/paths.d/*(.N); do
   path+=($(<$path_file))
@@ -93,3 +103,12 @@ if [[ -d "$TMPDIR" ]]; then
   fi
 fi
 
+# Settings for virtualenvwrapper
+export WORKON_HOME=$HOME/Projects/venvs
+export VIRTUALENVWRAPPER_PYTHON=/Library/Frameworks/EPD64.framework/Versions/Current/bin/python
+source /usr/local/bin/virtualenvwrapper.sh
+
+
+[[-f "source $HOME/.aliases"]] && source $HOME/.aliases
+[[-f "source $HOME/.functions"]] && source $HOME/.functions
+[[-f "source $HOME/.extra"]] && source $HOME/.extra

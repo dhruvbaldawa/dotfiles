@@ -39,4 +39,7 @@ zstyle ':prezto:load' pmodule \
   'osx' \
   'node' \
   'python' \
-  'ruby'
+  'brew' \
+  'coffee' \
+  'virtualenv' \
+  'virtualenvwrapper'
