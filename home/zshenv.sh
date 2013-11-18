@@ -24,12 +24,6 @@ export EDITOR='/usr/local/bin/subl -w'
 export VISUAL='/usr/local/bin/subl -w'
 export PAGER='less'
 
-# Most used directorys
-# --------------------
-hash -d venv=~/Projects/venvs/
-hash -d erc=~/Enthought/src/
-hash -d proj=~/Projects/
-
 # Language.
 # ---------
 if [[ -z "$LANG" ]]; then
@@ -55,6 +49,9 @@ typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
 as="$HOME/Library/Application Support"
+hash -d venv="$HOME/Projects/venvs/"
+hash -d erc="$HOME/Enthought/src/"
+hash -d proj="$HOME/Projects/"
 
 # Set the the list of directories that cd searches.
 cdpath=(
@@ -81,19 +78,26 @@ done
 unset path_file
 
 # Set the list of directories that Zsh searches for programs.
-export PATH="/usr/local/mysql/bin:$PATH"
-export PATH="/Applications/Android Studio.app/sdk/tools:${PATH}"
-export PATH="/Applications/Android Studio.app/sdk/platform-tools:${PATH}"
-export PATH="${PATH}:/usr/local/share/elasticsearch/bin"
-export PATH="${PATH}:/usr/local/sbin"
-export PATH="$HOME/Library/Haskell/bin:$PATH"
-export PATH="$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/texbin:/Library/Frameworks/EPD64.framework/Versions/Current/bin:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/mysql/bin:/usr/local/sbin"
-export PATH="/Library/Frameworks/EPD64.framework/Versions/Current/bin:${PATH}"
+path=(
+  /usr/local/{bin,sbin}
+  /usr/local/lib/python2.7/site-packages
+  /usr/local/share/npm/bin
+  /usr/{bin,sbin}
+  /{bin,sbin}
+  $path
+)
 
 for path_file in /etc/paths.d/*(.N); do
   path+=($(<$path_file))
 done
 unset path_file
+
+export PATH="/Applications/Android Studio.app/sdk/tools:${PATH}"
+export PATH="/Applications/Android Studio.app/sdk/platform-tools:${PATH}"
+export PATH="${PATH}:/usr/local/share/elasticsearch/bin"
+export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH="$PATH:/opt/X11/bin:/usr/texbin:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/mysql/bin"
+export PATH="/Library/Frameworks/EPD64.framework/Versions/Current/bin:${PATH}"
 
 # Temporary Files.
 if [[ -d "$TMPDIR" ]]; then
@@ -108,7 +112,6 @@ export WORKON_HOME=$HOME/Projects/venvs
 export VIRTUALENVWRAPPER_PYTHON=/Library/Frameworks/EPD64.framework/Versions/Current/bin/python
 source /usr/local/bin/virtualenvwrapper.sh
 
-
-[[-f "source $HOME/.aliases"]] && source $HOME/.aliases
-[[-f "source $HOME/.functions"]] && source $HOME/.functions
-[[-f "source $HOME/.extra"]] && source $HOME/.extra
+[[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
+[[ -f "$HOME/.functions" ]] && source $HOME/.functions
+# [[ -f "$HOME/.extra" ]] && source $HOME/.extra

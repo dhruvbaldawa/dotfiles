@@ -15,7 +15,7 @@ link() {
   from="$1"
   to="$2"
   echo "Linking '$from' to '$to'"
-  rm --force "$to"
+  rm "$to"
   ln -s "$from" "$to"
 }
 

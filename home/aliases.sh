@@ -76,7 +76,6 @@ alias grv="git remote -v show"
 alias gp='git push origin HEAD'
 alias gd='git diff'
 alias gds='git diff --staged'
-alias gc='git commit'
 alias gca='git commit -a'
 alias gco='git checkout'
 alias gb='git branch'
@@ -106,10 +105,10 @@ alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Canonical hex dump; some systems have this symlinked
-type -t hd > /dev/null || alias hd="hexdump -C"
+command -v hd > /dev/null || alias hd="hexdump -C"
 
 # OS X has no `md5sum`, so use `md5` as a fallback
-type -t md5sum > /dev/null || alias md5sum="md5"
+command -v md5sum > /dev/null || alias md5sum="md5"
 
 # OS X has no `sha1sum`, so use `shasum` as a fallback
 command -v sha1sum > /dev/null || alias sha1sum="shasum"

@@ -74,7 +74,10 @@ function clone {
 # git log with per-commit cmd-clickable GitHub URLs (iTerm)
 function gf() {
   local remote="$(git remote -v | awk '/^origin.*\(push\)$/ {print $2}')"
-  [[ "$remote" ]] || return
+  if [[ -z "$remote" ]]
+  then
+    return
+  fi
   local user_repo="$(echo "$remote" | perl -pe 's/.*://;s/\.git$//')"
   git log $* --name-status --color | awk "$(cat <<AWK
     /^.*commit [0-9a-f]{40}/ {sha=substr(\$2,1,7)}

@@ -95,3 +95,6 @@
 [url "git@github.com:dhruvbaldawa/"]
   insteadOf = "git://github.com/dhruvbaldawa/"
 
+[user]
+	name = Dhruv Baldawa
+	email = dhruvbaldawa@gmail.com

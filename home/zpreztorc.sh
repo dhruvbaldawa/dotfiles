@@ -15,13 +15,18 @@ zstyle ':prezto:*:*' case-sensitive 'no'
 zstyle ':prezto:*:*' color 'yes'
 
 # Auto set the tab and window titles.
-zstyle ':prezto:module:terminal' auto-title 'yes'
+# zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # Set the Zsh modules to load (man zshmodules).
 # zstyle ':prezto:load' zmodule 'attr' 'stat'
 
 # Set the Zsh functions to load (man zshcontrib).
 zstyle ':prezto:load' zfunction 'zargs' 'zmv'
+
+# Set the prompt theme to load.
+# Setting it to 'random' loads a random theme.
+# Auto set to 'off' on dumb terminals.
+# zstyle ':prezto:module:prompt' theme 'random'
 
 # Set the Prezto modules to load (browse ~/.zprezto/modules).
 # The order matters.
@@ -38,8 +43,4 @@ zstyle ':prezto:load' pmodule \
   'archive' \
   'osx' \
   'node' \
-  'python' \
-  'brew' \
-  'coffee' \
-  'virtualenv' \
-  'virtualenvwrapper'
+  'python'
