@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 ZSH=$HOME/.oh-my-zsh
+
+# Enable rupa z
 . "$ZSH/plugins/z/z.sh"
+
 ZSH_THEME="amuse"
 # Lines configured by zsh-newuser-install
 
@@ -10,6 +13,7 @@ compinit
 
 autoload -U colors && colors
 
+# Enable the ohmyzsh lib functions
 fpath=($ZSH/lib $fpath)
 autoload -U $ZSH/lib/*(:t)
 

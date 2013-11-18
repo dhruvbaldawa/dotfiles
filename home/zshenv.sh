@@ -9,8 +9,6 @@ export LC_ALL=en_US.UTF-8
 
 export L1=~/Library/Enthought/Canopy_64bit/System
 export L2=~/Library/Enthought/Canopy_64bit/User
-export EDITOR='subl -w'
-
 
 # Browser.
 # --------
