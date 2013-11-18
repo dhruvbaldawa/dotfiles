@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 ZSH=$HOME/.oh-my-zsh
+. "$ZSH/plugins/z/z.sh"
 ZSH_THEME="amuse"
 # Lines configured by zsh-newuser-install
 
