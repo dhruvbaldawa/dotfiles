@@ -29,7 +29,7 @@ if [[ `uname` == 'Darwin' ]]; then
     echo 'Installing Homebrew...'
       ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
       brew update
-      brew install htop
+      brew install htop hub
   fi
 
   echo 'Tweaking OS X...'
