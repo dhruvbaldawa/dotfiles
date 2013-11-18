@@ -1,21 +1,16 @@
 #!/usr/bin/env zsh
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="amuse"
+# Lines configured by zsh-newuser-install
 
-# if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-#   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-# fi
-source "$HOME/.zshenv"
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
 
 autoload -U colors && colors
 
-# Load and execute the prompt theming system.
-# fpath=("$HOME/Code/dotfiles/terminal" $fpath)
-# autoload -Uz promptinit && promptinit
-# prompt 'paulmillr'
-
-# fpath=($ZSH/functions $fpath)
-# autoload -U $ZSH/functions/*(:t)
+fpath=($ZSH/lib $fpath)
+autoload -U $ZSH/lib/*(:t)
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -54,7 +49,10 @@ VIRTUAL_ENV_DISABLE_PROMPT=True
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # zstyle ':completion:*:*:git:*' script $ZSH/plugins/gitfast/git-completion.zsh
 
-plugin=(git themes bower brew coffee copydir copyfile django gitfast node npm osx pip postgres python sublime virtualenv virtualenvwrapper extract rand-quote gitfast git-remote-branch)
+plugins=(git brew celery coffee git-extras history history-substring-search npm osx pip python themes tmux virtualenv virtualenvwrapper z)
+
+# this should be the last line
+source $ZSH/oh-my-zsh.sh
 
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
@@ -65,22 +63,18 @@ setopt pushd_silent
 setopt hist_expire_dups_first
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt PROMPT_SUBST
-setopt CORRECT
 setopt COMPLETE_IN_WORD
 setopt IGNORE_EOF
 setopt APPEND_HISTORY # adds history
 setopt hist_ignore_dups # don't record dupes in history
-
-#add each topic folder to fpath so that they can add functions and completion scripts
-for topic_folder ($ZSH/*) if [ -d $topic_folder ]; then  fpath=($topic_folder $fpath); fi;
+setopt beep notify
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+# zstyle :compinstall filename '/Users/dhruv/.zshrc'
 
 # matches case insensitive for lowercase
 # zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # pasting with tabs doesn't perform completion
 # zstyle ':completion:*' insert-tab pending
-
-plugin=(git themes bower brew coffee copydir copyfile django gitfast node npm osx pip postgres python sublime virtualenv virtualenvwrapper extract rand-quote gitfast git-remote-branch)
-
-# this should be the last line
-source $ZSH/oh-my-zsh.sh
