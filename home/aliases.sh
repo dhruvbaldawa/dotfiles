@@ -7,7 +7,6 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # programs
-alias st='open -a "Sublime Text 2"'
 # also/or do this:
 # ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl
 alias preview="open -a '$PREVIEW'"
@@ -73,15 +72,18 @@ alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup 
 alias gc="git commit"
 alias gs="git status"
 alias grv="git remote -v show"
-alias gp='git push origin HEAD'
+alias gp='git push'
 alias gd='git diff'
 alias gds='git diff --staged'
-alias gca='git commit -a'
+alias gcm='git commit -m'
+alias gcam='git commit -a -m'
 alias gco='git checkout'
 alias gb='git branch'
 # alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | \
            perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm"
+alias gap='git add -p'
+alias pr='hub pull-request'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
