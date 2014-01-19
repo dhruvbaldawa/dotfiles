@@ -45,7 +45,7 @@
   keepBackup = true
 
 [color]
-  ui = always
+	ui = true
 
 [apply]
   whitespace = fix
@@ -67,8 +67,8 @@
   new = green bold
 
 [color "status"]
-  added = yellow
-  changed = green
+  added = green
+  changed = red
   untracked = cyan
 
 [merge]
@@ -98,3 +98,9 @@
 [user]
 	name = Dhruv Baldawa
 	email = dhruvbaldawa@gmail.com
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

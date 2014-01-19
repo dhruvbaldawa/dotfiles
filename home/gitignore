@@ -23,3 +23,12 @@ Icon?
 /tmp
 
 # Project stuff
+*.sublime-project
+*.sublime-workspace
+
+.coverage/*
+.noserc
+.project
+.pydevproject
+.ropeproject
+todo.txt

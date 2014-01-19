@@ -1,31 +1,57 @@
 {
-	"bold_folder_labels": true,
-	"color_scheme": "Packages/pm-themes/Darkside.tmTheme",
+	"auto_complete": true,
+	"auto_complete_commit_on_tab": false,
+	"caret_style": "solid",
+	"close_windows_when_empty": false,
+	"color_scheme": "Packages/Theme - Spacefunk/Future Funk (Blue Monday).tmTheme",
+	"draw_minimap_border": true,
+	"draw_white_space": "all",
 	"ensure_newline_at_eof_on_save": true,
-	"file_exclude_patterns":
-	[
-		".DS_Store"
-	],
-	"fold_buttons": false,
+	"find_selected_text": true,
+	"fold_buttons": true,
 	"folder_exclude_patterns":
 	[
+		".svn",
 		".git",
-		"log",
-		"tmp",
-		"node_modules"
+		".hg",
+		"CVS",
+		"_build",
+		"dist",
+		"build",
+		"site"
 	],
 	"font_face": "Monaco",
+	"font_options":
+	[
+		"subpixel_antialias"
+	],
 	"font_size": 12,
-	"highlight_line": false,
+	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Jedi - Python autocompletion",
+		"PlainTasks",
+		"Vintage",
+		"SideBarEnhancements"
 	],
-	"save_on_focus_lost": false,
-	"tab_size": 2,
-	"theme": "Nexus.sublime-theme",
+	"indent_guide_options":
+	[
+		"draw_normal"
+	],
+	"open_files_in_new_window": true,
+	"rulers":
+	[
+		72,
+		79
+	],
+	"save_on_focus_lost": true,
+	"scroll_past_end": false,
+	"soda_folder_icons": true,
+	"theme": "Spacefunk (Blue Monday).sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"word_wrap": true
+	"wide_caret": true,
+	"word_wrap": true,
+	"wrap_width": 80
 }

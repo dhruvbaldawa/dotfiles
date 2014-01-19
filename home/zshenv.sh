@@ -7,9 +7,6 @@ export MKL_NUM_THREADS=1
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export L1=~/Library/Enthought/Canopy_64bit/System
-export L2=~/Library/Enthought/Canopy_64bit/User
-
 # Browser.
 # --------
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -18,8 +15,8 @@ fi
 
 # Editors.
 # --------
-export EDITOR='/usr/local/bin/subl -w'
-export VISUAL='/usr/local/bin/subl -w'
+export EDITOR='vi'
+export VISUAL='subl -w'
 export PAGER='less'
 
 # Language.
@@ -45,11 +42,6 @@ fi
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
-# Commonly used directories.
-as="$HOME/Library/Application Support"
-hash -d venv="$HOME/Projects/venvs/"
-hash -d erc="$HOME/Enthought/src/"
-hash -d proj="$HOME/Projects/"
 
 # Set the the list of directories that cd searches.
 cdpath=(
@@ -90,13 +82,6 @@ for path_file in /etc/paths.d/*(.N); do
 done
 unset path_file
 
-export PATH="/Applications/Android Studio.app/sdk/tools:${PATH}"
-export PATH="/Applications/Android Studio.app/sdk/platform-tools:${PATH}"
-export PATH="${PATH}:/usr/local/share/elasticsearch/bin"
-export PATH="$HOME/Library/Haskell/bin:$PATH"
-export PATH="$PATH:/opt/X11/bin:/usr/texbin:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/mysql/bin"
-export PATH="/Library/Frameworks/EPD64.framework/Versions/Current/bin:${PATH}"
-
 # Temporary Files.
 if [[ -d "$TMPDIR" ]]; then
   export TMPPREFIX="${TMPDIR%/}/zsh"
@@ -105,11 +90,6 @@ if [[ -d "$TMPDIR" ]]; then
   fi
 fi
 
-# Settings for virtualenvwrapper
-export WORKON_HOME=$HOME/Projects/venvs
-export VIRTUALENVWRAPPER_PYTHON=/Library/Frameworks/EPD64.framework/Versions/Current/bin/python
-source /usr/local/bin/virtualenvwrapper.sh
-
 [[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
 [[ -f "$HOME/.functions" ]] && source $HOME/.functions
-# [[ -f "$HOME/.extra" ]] && source $HOME/.extra
+[[ -f "$HOME/.extra" ]] && source $HOME/.extra

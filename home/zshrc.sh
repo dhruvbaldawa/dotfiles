@@ -14,7 +14,7 @@ compinit
 autoload -U colors && colors
 
 # Enable the ohmyzsh lib functions
-fpath=($ZSH/lib $fpath)
+fpath=($ZSH/lib /usr/local/share/zsh/site-functions $fpath)
 autoload -U $ZSH/lib/*(:t)
 
 # Example aliases
@@ -54,25 +54,26 @@ VIRTUAL_ENV_DISABLE_PROMPT=True
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # zstyle ':completion:*:*:git:*' script $ZSH/plugins/gitfast/git-completion.zsh
 
-plugins=(git brew celery coffee git-extras history history-substring-search npm osx pip python themes tmux virtualenv virtualenvwrapper z)
+plugins=(git brew celery coffee git-extras history history-substring-search npm osx pip python themes tmux z)
 
 # this should be the last line
 source $ZSH/oh-my-zsh.sh
 
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
-setopt complete_aliases
-setopt no_share_history
-setopt auto_pushd
-setopt pushd_silent
-setopt hist_expire_dups_first
-setopt EXTENDED_HISTORY # add timestamps to history
-setopt PROMPT_SUBST
-setopt COMPLETE_IN_WORD
-setopt IGNORE_EOF
-setopt APPEND_HISTORY # adds history
-setopt hist_ignore_dups # don't record dupes in history
+setopt completealiases
+setopt nosharehistory
+setopt autopushd
+setopt pushdsilent
+setopt histexpiredupsfirst
+setopt EXTENDEDHISTORY # add timestamps to history
+setopt PROMPTSUBST
+setopt COMPLETEINWORD
+setopt IGNOREEOF
+setopt APPENDHISTORY # adds history
+setopt histignoredups # don't record dupes in history
 setopt beep notify
+setopt histignorespace
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
