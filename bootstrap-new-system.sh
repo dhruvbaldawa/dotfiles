@@ -7,6 +7,35 @@ pushd .
 mkdir -p $dev
 cd $dev
 
+# If we on OS X, install homebrew and tweak system a bit.
+if [[ `uname` == 'Darwin' ]]; then
+  which -s brew
+  if [[ $? != 0 ]]; then
+    echo 'Installing Homebrew...'
+      ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+      brew update
+      brew install htop hub
+      brew install zsh
+      brew install ohmyzsh
+  fi
+
+  echo 'Tweaking OS X...'
+    source 'etc/osx.sh'
+fi
+
+# If on Linux, install zsh
+if [[ `uname` != 'Darwin' ]]; then
+  which -s zsh
+  if [[ $? != 0 ]]; then
+    echo 'Installing zsh and ohmyzsh...'
+    sudo apt-get install zsh curl
+    curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+    echo 'Copying theme...'
+    mkdir ~/.oh-my-zsh/custom/themes
+    cp $dev/terminal/* ~/.oh-my-zsh/custom/themes/
+  fi
+fi
+
 echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
   read hostname
   echo "Setting new hostname to $hostname..."
@@ -21,20 +50,6 @@ echo 'Checking for SSH key, generating one if it does not exist...'
 echo 'Copying public key to clipboard. Paste it into your Github account...'
   [[ -f '~/.ssh/id_rsa.pub' ]] && cat '~/.ssh/id_rsa.pub' | pbcopy
   open 'https://github.com/account/ssh'
-
-# If we on OS X, install homebrew and tweak system a bit.
-if [[ `uname` == 'Darwin' ]]; then
-  which -s brew
-  if [[ $? != 0 ]]; then
-    echo 'Installing Homebrew...'
-      ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
-      brew update
-      brew install htop hub
-  fi
-
-  echo 'Tweaking OS X...'
-    source 'etc/osx.sh'
-fi
 
 echo 'Symlinking config files...'
   source 'bin/symlink-dotfiles.sh'
