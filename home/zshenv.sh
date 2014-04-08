@@ -15,8 +15,8 @@ fi
 
 # Editors.
 # --------
-export EDITOR='vi'
-export VISUAL='subl -w'
+export EDITOR='vim'
+export VISUAL='vim'
 export PAGER='less'
 
 # Language.

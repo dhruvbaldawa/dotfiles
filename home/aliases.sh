@@ -73,18 +73,21 @@ alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup 
 alias gc="git commit"
 alias gs="git status"
 alias grv="git remote -v show"
-alias gp='git push'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gcm='git commit -m'
-alias gcam='git commit -a -m'
 alias gco='git checkout'
 alias gb='git branch'
 # alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | \
            perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm"
 alias gap='git add -p'
-alias pr='hub pull-request'
+alias cpr='hub pull-request'
+
+# usable git aliases
+alias ghya='git push'
+alias dya='git pull'
+alias kasakai='git status'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -117,7 +120,7 @@ command -v md5sum > /dev/null || alias md5sum="md5"
 command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
 # Trim new lines and copy to clipboard
-alias c="tr -d '\n' | pbcopy"
+# alias c="tr -d '\n' | pbcopy"
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
