@@ -4,7 +4,7 @@
         "bold_folder_labels": true,
 	"caret_style": "solid",
 	"close_windows_when_empty": false,
-        "color_scheme": "Packages/Tomorrow Color Schemes/Tomorrow-Night-Bright.tmTheme",
+        "color_scheme": "Packages/Behave Color Scheme/Behave.tmTheme",
 	"draw_minimap_border": true,
 	"draw_white_space": "all",
         "enable_tab_scrolling": false,
@@ -34,10 +34,15 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Jedi - Python autocompletion",
-                "RestructuredText",
+                "Theme - Soda",
+                "SublimeLinter-contrib-scss-lint",
+                "Vintage",
+                "SCSS",
+                "Theme - Spacefunk",
 		"PlainTasks",
-                "Vintage"
+                "Jedi - Python autocompletion",
+                "SideBarEnhancements",
+                "RestructuredText"
 	],
 	"indent_guide_options":
 	[
