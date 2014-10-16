@@ -2,6 +2,7 @@
 BACKUP_DIR="/Users/dhruv/.backup"
 BREW_SCRIPT_NAME="$BACKUP_DIR/restore_homebrew.sh"
 PYTHON_PACKAGE_LIST="$BACKUP_DIR/python_packages.txt"
+ITERM_CONFIG="$BACKUP_DIR/iterm.config"
 
 if [ ! -d "$BACKUP_DIR" ]; then
     mkdir -p "$BACKUP_DIR"

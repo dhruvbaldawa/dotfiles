@@ -127,6 +127,7 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
 # Recursively delete `*.pyc` files
 alias pyclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
+alias pipfg='pip freeze | grep -i '
 
 # Shortcuts
 alias g="git"

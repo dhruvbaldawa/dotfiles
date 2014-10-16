@@ -54,7 +54,7 @@ VIRTUAL_ENV_DISABLE_PROMPT=True
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # zstyle ':completion:*:*:git:*' script $ZSH/plugins/gitfast/git-completion.zsh
 
-plugins=(git brew celery coffee git-extras virtualenvwrapper history history-substring-search npm osx pip python themes tmux z bower cp django postgres vagrant)
+plugins=(git brew coffee virtualenvwrapper history history-substring-search npm osx pip python tmux z bower cp django vagrant)
 
 # this should be the last line
 source $ZSH/oh-my-zsh.sh
@@ -69,7 +69,7 @@ setopt histexpiredupsfirst
 setopt EXTENDEDHISTORY # add timestamps to history
 setopt PROMPTSUBST
 setopt COMPLETEINWORD
-setopt IGNOREEOF
+#setopt IGNOREEOF
 setopt APPENDHISTORY # adds history
 setopt histignoredups # don't record dupes in history
 setopt beep notify
