@@ -23,26 +23,26 @@
 		"build",
 		"site"
 	],
-	"font_face": "Monaco",
+	"font_face": "Ubuntu Mono",
 	"font_options":
 	[
 		"subpixel_antialias",
 		"no_round"
 	],
-	"font_size": 12,
+	"font_size": 13,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"PlainTasks",
-		"Jedi - Python autocompletion",
-		"SideBarEnhancements",
-		"RestructuredText",
-		"SublimeLinter-contrib-scss-lint",
 		"Theme - Soda",
+		"SublimeLinter-contrib-scss-lint",
+		"Vintage",
 		"SCSS",
-		"Theme - Spacefunk",
-		"Vintage"
+		"RestructuredText",
+		"Jedi - Python autocompletion",
+		"PlainTasks",
+		"SideBarEnhancements",
+		"Theme - Spacefunk"
 	],
 	"indent_guide_options":
 	[
