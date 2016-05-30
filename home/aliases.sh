@@ -76,8 +76,8 @@ alias grv="git remote -v show"
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gcm='git commit -m'
-alias gco='git checkout'
-alias gb='git branch'
+#alias gco='git checkout'
+#alias gb='git branch'
 # alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | \
            perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm"
@@ -130,7 +130,7 @@ alias pyclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias pipfg='pip freeze | grep -i '
 
 # Shortcuts
-alias g="git"
+#alias g="git"
 alias v="vim"
 
 # File size
@@ -182,3 +182,14 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
 
+# New aliases
+alias dtp="xinput set-prop $(xinput | grep 'DLL' | cut -f2 | egrep -o '[[:digit:]]{1,2}') \"Device Enabled\" 0"
+alias etp="xinput set-prop $(xinput | grep 'DLL' | cut -f2 | egrep -o '[[:digit:]]{1,2}') \"Device Enabled\" 1"
+alias gfo="git fetch origin"
+alias gpom="git pull origin master"
+alias gpu="git push -u"
+#alias uxt="date --date=@"
+
+function uxt() {
+    date --date="@$@"
+}

@@ -52,16 +52,16 @@ VIRTUAL_ENV_DISABLE_PROMPT=True
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-# zstyle ':completion:*:*:git:*' script $ZSH/plugins/gitfast/git-completion.zsh
+zstyle ':completion:*:*:git:*' commands base
 
-plugins=(git brew coffee virtualenvwrapper history history-substring-search npm osx pip python tmux z bower cp django vagrant)
+plugins=(git gitfast virtualenvwrapper history history-substring-search npm pip python tmux z bower cp django vagrant dnf docker rsync)
 
 # this should be the last line
 source $ZSH/oh-my-zsh.sh
 
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
-setopt completealiases
+setopt complete_aliases
 setopt nosharehistory
 setopt autopushd
 setopt pushdsilent
