@@ -19,13 +19,13 @@ function prompt_dhruv_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
   prompt_opts=(cr percent subst)
- 
+
 # Load required functions.
   autoload -Uz add-zsh-hook
- 
+
 # Add hook for calling git-info before each command.
   add-zsh-hook precmd prompt_dhruv_precmd
- 
+
   zstyle ':prezto:module:git:info' verbose 'yes'
   zstyle ':prezto:module:git:info:unmerged' format "%F{red}[K]%f"
   zstyle ':prezto:module:git:info:deleted' format "%F{red}[D]%f"
@@ -37,7 +37,7 @@ function prompt_dhruv_setup {
   zstyle ':prezto:module:git:info:behind' format "%F{blue}!%f"
   zstyle ':prezto:module:git:info:keys' format \
       'prompt' '' \
-      'rprompt' '%b%a%d%D%m%r%U%u'
+      'rprompt' '%b%a%d%D%m%r%U%u%A%B'
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
 
 
