@@ -16,8 +16,8 @@ if [[ `uname` == 'Darwin' ]]; then
       brew update
       brew install htop hub
       brew install zsh
-      # brew install ohmyzsh
       brew install coreutils
+      git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
   fi
 
   echo 'Tweaking OS X...'
@@ -28,12 +28,9 @@ fi
 if [[ `uname` != 'Darwin' ]]; then
   which -s zsh
   if [[ $? != 0 ]]; then
-    echo 'Installing zsh and ohmyzsh...'
+    echo 'Installing zsh and prezto...'
     sudo apt-get install zsh curl
-    curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-    echo 'Copying theme...'
-    mkdir ~/.oh-my-zsh/custom/themes
-    cp $dev/terminal/* ~/.oh-my-zsh/custom/themes/
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
   fi
 fi
 

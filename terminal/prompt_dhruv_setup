@@ -1,16 +1,14 @@
 # vim:ft=zsh ts=2 sw=2 sts=2
 # Virtualenv: current working virtualenv
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
-}
-
-function _prompt_dhruv_pwd {
-
+    [ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`') %f%b'
 }
 
 function prompt_dhruv_precmd {
   git-info
-  virtualenv_info
+  if (( $+functions[python-info] )); then
+    python-info
+  fi
   #ruby-info
   #node-info
 }
@@ -37,13 +35,11 @@ function prompt_dhruv_setup {
   zstyle ':prezto:module:git:info:behind' format "%F{blue}!%f"
   zstyle ':prezto:module:git:info:keys' format \
       'prompt' '' \
-      'rprompt' '%b%a%d%D%m%r%U%u%A%B'
-  zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-
+      'rprompt' '%a%d%D%m%r%U%u%A%B'
 
   PROMPT='%F{yellow}[${PWD/#$HOME/~}]%f%F{cyan}[%D{%a, %d %b %I:%M:%S%p}]%f
-%B%F{red}${python_info[virtualenv]}%f%b%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
-  RPROMPT='${git_info[rprompt]}'
+$(virtualenv_info)%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
+  RPROMPT='$(git-branch-current 2> /dev/null)${git_info[rprompt]}'
 }
 
 prompt_dhruv_setup "$@"

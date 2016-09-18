@@ -37,14 +37,16 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'homebrew' \
   'osx' \
-  'rsync'
+  'rsync' \
+  'fasd' \
+  'autosuggestions'
 
 #
 # Autosuggestions
 #
 
 # Set the query found color.
-zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions:color' 'yes'
 
 #
 # Editor
