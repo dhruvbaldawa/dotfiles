@@ -38,8 +38,7 @@ zstyle ':prezto:load' pmodule \
   'homebrew' \
   'osx' \
   'rsync' \
-  'fasd' \
-  'autosuggestions'
+  'fasd'
 
 #
 # Autosuggestions

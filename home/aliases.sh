@@ -1,4 +1,5 @@
 # Easier navigation: .., ..., ~ and -
+unalias rm
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."

@@ -68,6 +68,11 @@ for path_file in /etc/manpaths.d/*(.N); do
 done
 unset path_file
 
+fpath=(
+  /usr/local/share/zsh/site-functions
+  $fpath
+)
+
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/opt/coreutils/libexec/gnubin

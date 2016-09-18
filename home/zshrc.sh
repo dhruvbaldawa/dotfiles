@@ -14,6 +14,17 @@ fi
 source `which virtualenvwrapper.sh`
 source "$HOME/bin/z"
 
+# Start antigen and use more plugins
+source "$HOME/.antigen/antigen.zsh"
+antigen bundle akoenig/gulp.plugin.zsh
+antigen bundle zsh-users/zsh-completions
+antigen bundle unixorn/git-extra-commands
+antigen bundle unixorn/tumult.plugin.zsh
+antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
+antigen bundle srijanshetty/zsh-pip-completion
+antigen bundle lukechilds/zsh-better-npm-completion
+antigen apply
+
 [[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
 [[ -f "$HOME/.functions" ]] && source $HOME/.functions
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra
