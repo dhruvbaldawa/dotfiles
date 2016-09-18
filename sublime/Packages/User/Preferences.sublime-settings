@@ -4,7 +4,7 @@
 	"bold_folder_labels": true,
 	"caret_style": "solid",
 	"close_windows_when_empty": false,
-	"color_scheme": "Packages/Behave Color Scheme/Behave.tmTheme",
+	"color_scheme": "Packages/Theme - itg.flat/itg.dark.tmTheme",
 	"draw_minimap_border": true,
 	"draw_white_space": "all",
 	"enable_tab_scrolling": false,
@@ -23,7 +23,7 @@
 		"build",
 		"site"
 	],
-	"font_face": "Ubuntu Mono",
+	"font_face": "Monaco",
 	"font_options":
 	[
 		"subpixel_antialias",
@@ -34,15 +34,15 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Theme - Soda",
-		"SublimeLinter-contrib-scss-lint",
-		"Vintage",
-		"SCSS",
-		"RestructuredText",
 		"Jedi - Python autocompletion",
 		"PlainTasks",
+		"RestructuredText",
+		"SCSS",
 		"SideBarEnhancements",
-		"Theme - Spacefunk"
+		"SublimeLinter-contrib-scss-lint",
+		"Theme - Soda",
+		"Theme - Spacefunk",
+		"Vintage"
 	],
 	"indent_guide_options":
 	[

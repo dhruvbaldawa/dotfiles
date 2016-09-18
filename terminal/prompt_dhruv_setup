@@ -1,0 +1,49 @@
+# vim:ft=zsh ts=2 sw=2 sts=2
+# Virtualenv: current working virtualenv
+function virtualenv_info {
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+}
+
+function _prompt_dhruv_pwd {
+
+}
+
+function prompt_dhruv_precmd {
+  git-info
+  virtualenv_info
+  #ruby-info
+  #node-info
+}
+
+function prompt_dhruv_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+ 
+# Load required functions.
+  autoload -Uz add-zsh-hook
+ 
+# Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_dhruv_precmd
+ 
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:unmerged' format "%F{red}[K]%f"
+  zstyle ':prezto:module:git:info:deleted' format "%F{red}[D]%f"
+  zstyle ':prezto:module:git:info:renamed' format "%F{yellow}[Rn]%f"
+  zstyle ':prezto:module:git:info:modified' format "%F{yellow}[C]%f"
+  zstyle ':prezto:module:git:info:added' format "%F{green}[A]%f"
+  zstyle ':prezto:module:git:info:untracked' format "%F{white}[Un]%f"
+  zstyle ':prezto:module:git:info:ahead' format "%F{red}^%f"
+  zstyle ':prezto:module:git:info:behind' format "%F{blue}!%f"
+  zstyle ':prezto:module:git:info:keys' format \
+      'prompt' '' \
+      'rprompt' '%b%a%d%D%m%r%U%u'
+  zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
+
+
+  PROMPT='%F{yellow}[${PWD/#$HOME/~}]%f%F{cyan}[%D{%a, %d %b %I:%M:%S%p}]%f
+%B%F{red}${python_info[virtualenv]}%f%b%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
+  RPROMPT='${git_info[rprompt]}'
+}
+
+prompt_dhruv_setup "$@"

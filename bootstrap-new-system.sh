@@ -16,7 +16,8 @@ if [[ `uname` == 'Darwin' ]]; then
       brew update
       brew install htop hub
       brew install zsh
-      brew install ohmyzsh
+      # brew install ohmyzsh
+      brew install coreutils
   fi
 
   echo 'Tweaking OS X...'

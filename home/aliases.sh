@@ -183,8 +183,8 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias reload="exec $SHELL -l"
 
 # New aliases
-alias dtp="xinput set-prop $(xinput | grep 'DLL' | cut -f2 | egrep -o '[[:digit:]]{1,2}') \"Device Enabled\" 0"
-alias etp="xinput set-prop $(xinput | grep 'DLL' | cut -f2 | egrep -o '[[:digit:]]{1,2}') \"Device Enabled\" 1"
+#alias dtp="xinput set-prop $(xinput | grep 'DLL' | cut -f2 | egrep -o '[[:digit:]]{1,2}') \"Device Enabled\" 0"
+#alias etp="xinput set-prop $(xinput | grep 'DLL' | cut -f2 | egrep -o '[[:digit:]]{1,2}') \"Device Enabled\" 1"
 alias gfo="git fetch origin"
 alias gpom="git pull origin master"
 alias gpu="git push -u"

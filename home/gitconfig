@@ -87,9 +87,12 @@
 [user]
 	name = Dhruv Baldawa
 	email = dhruvbaldawa@gmail.com
+	signingkey = 02707AF8
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
         path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[commit]
+	gpgsign = true
