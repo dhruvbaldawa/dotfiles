@@ -10,6 +10,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+unsetopt SHARE_HISTORY             # Share history between all sessions.
+
 # Disable the virtualenv prompt.
 source `which virtualenvwrapper.sh`
 source "$HOME/bin/z"
