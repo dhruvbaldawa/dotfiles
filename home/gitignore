@@ -25,6 +25,7 @@ Icon?
 # Project stuff
 *.sublime-project
 *.sublime-workspace
+*.iml
 
 .coverage/*
 .noserc

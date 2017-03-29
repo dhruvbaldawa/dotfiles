@@ -1,5 +1,5 @@
 # Easier navigation: .., ..., ~ and -
-unalias rm
+# unalias rm
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -62,6 +62,8 @@ alias grv="git remote -v show"
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gcm='git commit -m'
+alias grh='git reset --hard'
+alias gst='git stash'
 #alias gco='git checkout'
 #alias gb='git branch'
 # alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
@@ -69,6 +71,8 @@ alias grm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | \
            perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm"
 alias gap='git add -p'
 alias cpr='hub pull-request'
+alias gth='git town-hack'
+alias gts='git town-sync'
 
 # usable git aliases
 alias ghya='git push'

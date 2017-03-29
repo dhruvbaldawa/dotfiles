@@ -3,6 +3,18 @@ function mkcd() {
     mkdir -p "$@" && cd "$@"
 }
 
+function m() {
+    export GEN_MSG="$@"
+}
+
+function cm() {
+    unset GEN_MSG;
+}
+
+# JIRA ticket in the commit message
+function jgcm() {
+    git commit -m "${GEN_MSG}: $@"
+}
 
 # find shorthand
 function f() {

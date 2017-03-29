@@ -4,6 +4,10 @@ function virtualenv_info {
     [ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`') %f%b'
 }
 
+function genmsg_info {
+    [ $GEN_MSG ] && echo "%B%F{white}[${GEN_MSG}] %f%b"
+}
+
 function prompt_dhruv_precmd {
   git-info
   if (( $+functions[python-info] )); then
@@ -37,7 +41,7 @@ function prompt_dhruv_setup {
       'prompt' '' \
       'rprompt' '%a%d%D%m%r%U%u%A%B'
 
-  PROMPT='%F{yellow}[${PWD/#$HOME/~}]%f%F{cyan}[%D{%a, %d %b %I:%M:%S%p}]%f
+  PROMPT='%F{yellow}[${PWD/#$HOME/~}]%f%F{cyan}[%D{%a, %d %b %I:%M:%S%p}]%f$(genmsg_info)
 $(virtualenv_info)%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
   RPROMPT='$(git-branch-current 2> /dev/null)${git_info[rprompt]}'
 }
