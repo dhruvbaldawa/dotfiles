@@ -1,8 +1,16 @@
 # vim:ft=zsh ts=2 sw=2 sts=2
 # Virtualenv: current working virtualenv
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`') %f%b'
+    ([ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION') %f%b') || ([ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`') %f%b')
 }
+
+#function pyenv_info {
+#    [ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION') %f%b'
+#}
+
+# function nvm_info {
+#   ( [ $NVM_BIN ] && echo '%B%F{red}(nvm:'`nvm current`') %f%b')
+# }
 
 function genmsg_info {
     [ $GEN_MSG ] && echo "%B%F{white}[${GEN_MSG}] %f%b"

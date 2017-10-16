@@ -39,7 +39,9 @@ zstyle ':prezto:load' pmodule \
   'osx' \
   'rsync' \
   'fasd' \
-  'ruby'
+  'ruby' \
+  'docker' \
+  'ssh'
 
 #
 # Autosuggestions

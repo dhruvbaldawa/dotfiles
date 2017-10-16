@@ -26,6 +26,7 @@ Icon?
 *.sublime-project
 *.sublime-workspace
 *.iml
+.idea/
 
 .coverage/*
 .noserc
@@ -33,3 +34,5 @@ Icon?
 .pydevproject
 .ropeproject
 todo.txt
+
+.env

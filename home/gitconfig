@@ -2,12 +2,6 @@
   user = dhruvbaldawa
 
 [alias]
-  st = status
-  ci = commit
-  br = branch
-  co = checkout
-  df = diff
-  dc = diff --cached
   lg = log -p
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
@@ -20,7 +14,6 @@
   cpush = "!sh -c 'git commit -au -m \"$1\" && git push -u origin' -"
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-  discard = checkout -- .
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
 [push]
@@ -87,7 +80,7 @@
 [user]
 	name = Dhruv Baldawa
 	email = dhruvbaldawa@gmail.com
-	signingkey = 02707AF8
+	signingKey = 0C31CA1693B00F0505BEA87DC1460F10C633C38F
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
         path =
