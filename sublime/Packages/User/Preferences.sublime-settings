@@ -1,4 +1,6 @@
 {
+	"anaconda_linting": true,
+	"anaconda_linting_behaviour": "always",
 	"auto_complete": true,
 	"auto_complete_commit_on_tab": false,
 	"bold_folder_labels": true,
@@ -23,7 +25,7 @@
 		"build",
 		"site"
 	],
-	"font_face": "Monaco",
+	"font_face": "Hack",
 	"font_options":
 	[
 		"subpixel_antialias",

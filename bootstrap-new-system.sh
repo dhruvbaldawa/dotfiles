@@ -55,7 +55,7 @@ echo 'Symlinking config files...'
 
 echo 'Applying sublime config...'
   st=$(pwd)/sublime/packages
-  as="$HOME/Application Support/Sublime Text 2/Packages"
+  as="$HOME/Library/Application Support/Sublime Text 3/Packages"
   asprefs="$as/User/Preferences.sublime-settings"
   if [[ -d "$as" ]]; then
     for theme in $st/Theme*; do

@@ -120,7 +120,6 @@ alias pyclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias pipfg='pip freeze | grep -i '
 
 # Shortcuts
-#alias g="git"
 alias v="vim"
 
 # File size

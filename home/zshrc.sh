@@ -13,21 +13,29 @@ fi
 unsetopt SHARE_HISTORY             # Share history between all sessions.
 
 # Disable the virtualenv prompt.
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export VIRTUALENVWRAPPER_WORKON_CD=0
 source `which virtualenvwrapper.sh`
 source "$HOME/bin/z"
 
+# Rename autoenv file to .env
+export AUTOENV_FILE_ENTER='.env'
+
 # Start antigen and use more plugins
 source "$HOME/.antigen/antigen.zsh"
+antigen bundle Tarrasch/zsh-autoenv
 antigen bundle akoenig/gulp.plugin.zsh
 antigen bundle zsh-users/zsh-completions
-#antigen bundle unixorn/git-extra-commands
 antigen bundle unixorn/tumult.plugin.zsh
-antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle lukechilds/zsh-better-npm-completion
 antigen bundle supercrabtree/k
+antigen bundle greymd/docker-zsh-completion
+antigen bundle MichaelAquilina/zsh-you-should-use
 antigen apply
+
 
 [[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
 [[ -f "$HOME/.functions" ]] && source $HOME/.functions
