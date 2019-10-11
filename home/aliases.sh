@@ -72,7 +72,7 @@ alias grm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | \
 alias gap='git add -p'
 alias cpr='hub pull-request'
 alias gth='git town-hack'
-alias gts='git town-sync'
+alias gts='git-town sync'
 
 # usable git aliases
 alias ghya='git push'
