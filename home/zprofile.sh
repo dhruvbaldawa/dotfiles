@@ -69,6 +69,7 @@ done
 unset path_file
 
 fpath=(
+  /usr/local/share/zsh-completions
   /usr/local/share/zsh/site-functions
   $fpath
 )

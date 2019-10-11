@@ -36,3 +36,7 @@ Icon?
 todo.txt
 
 .env
+editor.env
+
+.pytest_cache/
+.exercism/

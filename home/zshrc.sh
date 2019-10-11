@@ -12,6 +12,9 @@ fi
 
 unsetopt SHARE_HISTORY             # Share history between all sessions.
 
+# Install fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Disable the virtualenv prompt.
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
@@ -25,15 +28,17 @@ export AUTOENV_FILE_ENTER='.env'
 
 # Start antigen and use more plugins
 source "$HOME/.antigen/antigen.zsh"
+antigen bundle zsh-users/zsh-completions
 antigen bundle Tarrasch/zsh-autoenv
 antigen bundle akoenig/gulp.plugin.zsh
 antigen bundle zsh-users/zsh-completions
 antigen bundle unixorn/tumult.plugin.zsh
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle lukechilds/zsh-better-npm-completion
-antigen bundle supercrabtree/k
 antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
+antigen bundle dubizzle/awsshutils
+antigen bundle changyuheng/fz
 antigen apply
 
 

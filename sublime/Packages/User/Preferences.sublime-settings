@@ -6,7 +6,7 @@
 	"bold_folder_labels": true,
 	"caret_style": "solid",
 	"close_windows_when_empty": false,
-	"color_scheme": "Packages/Theme - itg.flat/itg.dark.tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 	"draw_minimap_border": true,
 	"draw_white_space": "all",
 	"enable_tab_scrolling": false,
@@ -36,12 +36,15 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"Anaconda",
+		"GitGutter",
 		"Jedi - Python autocompletion",
 		"PlainTasks",
 		"RestructuredText",
 		"SCSS",
 		"SideBarEnhancements",
 		"SublimeLinter-contrib-scss-lint",
+		"Theme - itg.flat",
 		"Theme - Soda",
 		"Theme - Spacefunk",
 		"Vintage"
@@ -63,7 +66,7 @@
 	"save_on_focus_lost": true,
 	"scroll_past_end": false,
 	"soda_folder_icons": true,
-	"theme": "itg.flat.dark.blue.sublime-theme",
+	"theme": "Default.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"wide_caret": true,
