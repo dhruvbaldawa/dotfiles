@@ -16,7 +16,11 @@ function virtualenv_info {
     [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
 }
 
-PROMPT='%{$fg[yellow]%}[${PWD/#$HOME/~}]%{$reset_color%}%{$fg[cyan]%}[%D{%a, %d %b %I:%M:%S%p}]%{$reset_color%}
+function aws_profile {
+    [ $AWS_PROFILE ] && echo '('$AWS_PROFILE') '
+}
+
+PROMPT='%{$fg[yellow]%}[${PWD/#$HOME/~}]%{$reset_color%}%{$fg[cyan]%}[%D{%a, %d %b %I:%M:%S%p}]%{$reset_color%}%{$fg[red]%}$(aws_profile)%{$reset_color%}$(kube_ps1)
 %{$fg_bold[red]%}$(virtualenv_info)%{$reset_color%}%{$fg_bold[green]%}%n@%m%{$reset_color%}%{$fg_bold[yellow]%}$ %{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$RED%}[K]"

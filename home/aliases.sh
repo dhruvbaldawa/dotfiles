@@ -22,9 +22,6 @@ alias chromium="open -a chromium"
 alias dashcode="open -a dashcode"
 alias f='open -a Finder'
 
-# general shortcuts
-alias gh="open -a google\ chrome 'http://github.com/dhruvbaldawa'"
-
 # be nice
 alias please=sudo
 

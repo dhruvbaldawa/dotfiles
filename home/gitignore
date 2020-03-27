@@ -37,6 +37,7 @@ todo.txt
 
 .env
 editor.env
+.autoenv
 
 .pytest_cache/
 .exercism/

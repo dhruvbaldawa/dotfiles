@@ -80,7 +80,7 @@
 [user]
 	name = Dhruv Baldawa
 	email = dhruvbaldawa@gmail.com
-	signingKey = 0C31CA1693B00F0505BEA87DC1460F10C633C38F
+	signingkey = C1460F10C633C38F
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
         path =
