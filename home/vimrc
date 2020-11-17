@@ -10,6 +10,8 @@ set ttyfast
 set gdefault
 " Use UTF-8 without BOM
 set encoding=utf-8 nobomb
+" Allow to switch buffers without saving files
+set hidden
 " Change mapleader
 let mapleader=","
 " Don’t add empty newlines at the end of files

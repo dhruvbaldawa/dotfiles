@@ -1,8 +1,5 @@
 {
-    "gitlens.currentLine.enabled": false,
     "gitlens.hovers.currentLine.over": "line",
-    "gitlens.codeLens.enabled": false,
-    "gitlens.statusBar.enabled": false,
     "files.autoSave": "onFocusChange",
     "editor.renderWhitespace": "all",
     "editor.multiCursorModifier": "ctrlCmd",
@@ -39,6 +36,11 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "[typescript]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "[stylus]": {
         "editor.tabSize": 2,
         "editor.formatOnSave": true
@@ -60,7 +62,8 @@
         {
             "language": "vue",
             "autoFix": true
-        }
+        },
+        "typescript"
     ],
     "vetur.format.defaultFormatter.html": "prettier",
     "editor.suggestSelection": "first",
@@ -68,5 +71,25 @@
     "vsicons.dontShowNewVersionMessage": true,
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "grammarly.username": "grammarly@dhruvb.com",
+    "grammarly.password": "ts#IAjAHNNNA0Jc%lz$w3g*3P^Qpl&E8UibAhxB7Wv^RH^%J7gZh6&vQNh%gg1c2yYv0",
+    "prettier.printWidth": 119,
+    "prettier.trailingComma": "all",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "python.defaultInterpreterPath": "/usr/local/bin/python3.7",
+    "python.pythonPath": "/usr/local/bin/python3.7",
+    "python.languageServer": "Pylance",
+    "gitlens.codeLens.enabled": false,
+    "gitlens.statusBar.enabled": false,
+    "jupyter.textOutputLimit": 0,
+    "jupyter.sendSelectionToInteractiveWindow": true,
+    "jupyter.alwaysTrustNotebooks": true,
+    "jupyter.askForKernelRestart": false
 }

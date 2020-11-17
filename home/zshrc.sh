@@ -9,7 +9,7 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
-
+export HISTFILE=${ZDOTDIR:-$HOME}/.zhistory
 unsetopt SHARE_HISTORY             # Share history between all sessions.
 
 # Install fzf
@@ -39,6 +39,7 @@ antigen bundle MichaelAquilina/zsh-you-should-use
 antigen bundle dubizzle/awsshutils
 antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
+antigen bundle dbz/kube-aliases
 antigen apply
 
 

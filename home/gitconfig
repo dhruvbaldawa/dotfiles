@@ -35,7 +35,11 @@
 [core]
   excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
-  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+  whitespace = fix,trailing-space,blank-at-eol,blank-at-eof
+    pager = delta --dark --plus-color="#012800" --minus-color="#340001" --file-style=plain --file-color=white --hunk-style=plain --hunk-color=green
+
+[interactive]
+    diffFilter = delta --dark --color-only --file-style=plain --file-color=white --hunk-color=green --hunk-style=plain
 
 [color "branch"]
   current = yellow reverse
@@ -81,13 +85,9 @@
 	name = Dhruv Baldawa
 	email = dhruvbaldawa@gmail.com
 	signingkey = C1460F10C633C38F
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-        path =
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [commit]
-	gpgsign = true
+  gpgsign = true
 [branch]
-        autosetupmerge = always
+  autosetupmerge = always
+[diff "sopsdiffer"]
+	textconv = sops -d
