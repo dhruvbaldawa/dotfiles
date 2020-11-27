@@ -25,6 +25,10 @@ if [[ -z "$LANG" ]]; then
   eval "$(locale)"
 fi
 
+# Homebrew
+#---------
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 # Less.
 # -----
 # Set the default Less options.

@@ -20,7 +20,7 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VIRTUALENVWRAPPER_WORKON_CD=0
-source `which virtualenvwrapper.sh`
+# source `which virtualenvwrapper.sh`
 source "$HOME/bin/z"
 
 # Rename autoenv file to .autoenv
@@ -36,10 +36,10 @@ antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle lukechilds/zsh-better-npm-completion
 antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
-antigen bundle dubizzle/awsshutils
+# antigen bundle dubizzle/awsshutils
 antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
-antigen bundle dbz/kube-aliases
+# antigen bundle dbz/kube-aliases
 antigen apply
 
 

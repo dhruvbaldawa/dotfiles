@@ -3,6 +3,7 @@
 # A simple script for setting up OSX dev environment.
 
 dev="$HOME/Code/dotfiles"
+mkdir -p "$HOME/bin"
 pushd .
 mkdir -p $dev
 cd $dev
@@ -12,11 +13,9 @@ if [[ `uname` == 'Darwin' ]]; then
   which -s brew
   if [[ $? != 0 ]]; then
     echo 'Installing Homebrew...'
-      ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
       brew update
-      brew install htop hub
-      brew install zsh
-      brew install coreutils
+      brew bundle --file "$dotfiles/etc/Brewfile"
       git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
       git clone https://github.com/zsh-users/antigen.git "$HOME/.antigen"
   fi
