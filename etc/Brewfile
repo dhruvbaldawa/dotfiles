@@ -8,6 +8,7 @@ brew "git"
 brew "gpg"
 brew "htop"
 brew "hub"
+brew "pinentry-mac" # for gpg keys storage
 brew "pipx"
 brew "pyenv"
 brew "zsh"
