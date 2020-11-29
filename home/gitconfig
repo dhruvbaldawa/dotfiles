@@ -81,13 +81,14 @@
 [url "git@github.com:dhruvbaldawa/"]
   insteadOf = "git://github.com/dhruvbaldawa/"
 
-[user]
-	name = Dhruv Baldawa
-	email = dhruvbaldawa@gmail.com
-	signingkey = C1460F10C633C38F
-[commit]
-  gpgsign = true
+[include]
+path = .gitconfig-default
+
+[includeIf "gitdir:~/Projects/**/.git"]
+  path = .gitconfig-specific
+
 [branch]
   autosetupmerge = always
+
 [diff "sopsdiffer"]
 	textconv = sops -d
