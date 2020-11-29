@@ -81,10 +81,7 @@ fpath=(
 # Set the list of directories that Zsh searches for programs.
 path=(
   ~/bin
-  /usr/local/opt/coreutils/libexec/gnubin
   /usr/local/{bin,sbin}
-  ~/Library/Python/2.7/bin
-  /usr/local/lib/python2.7/site-packages
   /usr/local/share/npm/bin
   /usr/{bin,sbin}
   /{bin,sbin}

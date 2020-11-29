@@ -15,12 +15,21 @@ unsetopt SHARE_HISTORY             # Share history between all sessions.
 # Install fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Setup pyenv environment variables
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 # Disable the virtualenv prompt.
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VIRTUALENVWRAPPER_WORKON_CD=0
-# source `which virtualenvwrapper.sh`
+[[ -f `which virtualenvwrapper.sh` ]] && source `which virtualenvwrapper.sh`
+
+# rupa/z
 source "$HOME/bin/z"
 
 # Rename autoenv file to .autoenv
@@ -30,13 +39,11 @@ export AUTOENV_FILE_ENTER='.autoenv'
 source "$HOME/.antigen/antigen.zsh"
 antigen bundle Tarrasch/zsh-autoenv
 antigen bundle akoenig/gulp.plugin.zsh
-antigen bundle zsh-users/zsh-completions
 antigen bundle unixorn/tumult.plugin.zsh
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle lukechilds/zsh-better-npm-completion
 antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
-# antigen bundle dubizzle/awsshutils
 antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
 # antigen bundle dbz/kube-aliases
