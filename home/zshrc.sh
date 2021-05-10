@@ -9,7 +9,12 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
-export HISTFILE=${ZDOTDIR:-$HOME}/.zhistory
+export HISTSIZE=9999999
+export HISTFILESIZE=9999999
+export SAVEHIST=${HISTSIZE}
+setopt INC_APPEND_HISTORY
+export HISTTIMEFORMAT="[%F %T] "
+setopt HIST_IGNORE_ALL_DUPS
 unsetopt SHARE_HISTORY             # Share history between all sessions.
 
 # Install fzf
@@ -27,7 +32,9 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VIRTUALENVWRAPPER_WORKON_CD=0
-[[ -f `which virtualenvwrapper.sh` ]] && source `which virtualenvwrapper.sh`
+if command -v pyenv-virtualenvwrapper_lazy 1>/dev/null 2>&1; then
+  pyenv virtualenvwrapper_lazy
+fi
 
 # rupa/z
 source "$HOME/bin/z"
