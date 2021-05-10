@@ -41,6 +41,7 @@ todo.txt
 .env
 editor.env
 .autoenv
+.nvmrc
 
 .pytest_cache/
 .exercism/

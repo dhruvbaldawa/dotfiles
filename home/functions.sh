@@ -226,3 +226,9 @@ function browsers(){
     firefox $1
     safari $1
 }
+
+function runupdate(){
+    brew update && \
+    brew outdated -q --formula | xargs brew upgrade
+    zprezto-update
+}

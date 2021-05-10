@@ -92,3 +92,7 @@ path = .gitconfig-default
 
 [diff "sopsdiffer"]
 	textconv = sops -d
+[pull]
+	ff = only
+[fetch]
+	prune = true

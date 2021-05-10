@@ -46,7 +46,9 @@ antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
 antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
-# antigen bundle dbz/kube-aliases
+antigen bundle darvid/zsh-poetry
+antigen bundle dbz/kube-aliases
+antigen bundle jonmosco/kube-ps1
 antigen apply
 
 

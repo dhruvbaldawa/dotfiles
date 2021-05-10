@@ -67,12 +67,13 @@ alias gst='git stash'
 alias grm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | \
            perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm"
 alias gap='git add -p'
-alias cpr='hub pull-request'
+alias cpr='gh pr create'
 alias gth='git town-hack'
 alias gts='git-town sync'
 
 # usable git aliases
 alias ghya='git push'
+alias ghyauf="git push -uf origin $(git-branch-current)"
 alias dya='git pull'
 alias kasakai='git status'
 
