@@ -103,7 +103,7 @@
     "editor.defaultFormatter" : "esbenp.prettier-vscode"
   },
   "editor.accessibilitySupport" : "off",
-  "python.defaultInterpreterPath" : "\/usr\/local\/bin\/python3.7",
+  "python.defaultInterpreterPath" : "/usr/local/bin/python3.7",
   "docker.dockerComposeBuild" : false,
   "eslint.validate" : [
     "javascript",
@@ -120,10 +120,19 @@
   "[yaml]" : {
     "editor.defaultFormatter" : "redhat.vscode-yaml"
   },
-  "workbench.editorAssociations": [
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+  },
+  "mssql.connections": [
     {
-      "viewType": "jupyter.notebook.ipynb",
-      "filenamePattern": "*.ipynb"
+      "server": "{{put-server-name-here}}",
+      "database": "{{put-database-name-here}}",
+      "user": "{{put-username-here}}",
+      "password": "{{put-password-here}}"
     }
-  ]
+  ],
+  "[sql]": {
+    "editor.defaultFormatter": "ms-mssql.mssql"
+  },
+  "redhat.telemetry.enabled": false
 }
