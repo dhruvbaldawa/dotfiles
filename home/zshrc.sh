@@ -39,12 +39,11 @@ fi
 # rupa/z
 source "$HOME/bin/z"
 
-# Rename autoenv file to .autoenv
-export AUTOENV_FILE_ENTER='.autoenv'
+# direnv
+eval "$(direnv hook zsh)"
 
 # Start antigen and use more plugins
 source "$HOME/.antigen/antigen.zsh"
-antigen bundle Tarrasch/zsh-autoenv
 antigen bundle akoenig/gulp.plugin.zsh
 antigen bundle unixorn/tumult.plugin.zsh
 antigen bundle srijanshetty/zsh-pip-completion
