@@ -73,7 +73,7 @@ alias gts='git-town sync'
 
 # usable git aliases
 alias ghya='git push'
-alias ghyauf="git push -uf origin $(git-branch-current)"
+alias ghyauf='git push -uf origin $(git-branch-current)'
 alias dya='git pull'
 alias kasakai='git status'
 

@@ -25,28 +25,29 @@
   "git.enableCommitSigning" : true,
   "jupyter.askForKernelRestart" : false,
   "vs-kubernetes" : {
-    "vs-kubernetes.minikube-path" : "",
-    "logsDisplay" : "webview",
-    "vs-kubernetes.draft-path.mac" : "\/Users\/dhruv\/.vs-kubernetes\/tools\/draft\/darwin-amd64\/draft",
-    "checkForMinikubeUpgrade" : true,
-    "vs-kubernetes.autoCleanupOnDebugTerminate" : false,
-    "vs-kubernetes.kubectlVersioning" : "user-provided",
-    "vs-kubernetes.kubeconfig" : "",
-    "vs-kubernetes.nodejs-autodetect-remote-root" : true,
-    "vs-kubernetes.kubectl-path.mac" : "\/Users\/dhruv\/.vs-kubernetes\/tools\/kubectl\/kubectl",
-    "vs-kubernetes.helm-path.mac" : "\/Users\/dhruv\/.vs-kubernetes\/tools\/helm\/darwin-amd64\/helm",
-    "vs-kubernetes.namespace" : "",
-    "vs-kubernetes.helm-path" : "",
-    "imageBuildTool" : "Docker",
-    "vs-kubernetes.draft-path" : "",
-    "vs-kubernetes.knownKubeconfigs" : [
-
-    ],
-    "vs-kubernetes.minikube-path.mac" : "\/Users\/dhruv\/.vs-kubernetes\/tools\/minikube\/darwin-amd64\/minikube",
-    "vs-kubernetes.outputFormat" : "yaml",
-    "vs-kubernetes.kubectl-path" : "",
-    "vs-kubernetes.nodejs-remote-root" : "",
-    "vs-kubernetes.nodejs-debug-port" : 9229
+    "vs-kubernetes.minikube-path": "",
+    "logsDisplay": "webview",
+    "vs-kubernetes.draft-path.mac": "/Users/dhruv/.vs-kubernetes/tools/draft/darwin-amd64/draft",
+    "checkForMinikubeUpgrade": true,
+    "vs-kubernetes.autoCleanupOnDebugTerminate": false,
+    "vs-kubernetes.kubectlVersioning": "user-provided",
+    "vs-kubernetes.kubeconfig": "",
+    "vs-kubernetes.nodejs-autodetect-remote-root": true,
+    "vs-kubernetes.kubectl-path.mac": "/Users/dhruv/.vs-kubernetes/tools/kubectl/kubectl",
+    "vs-kubernetes.helm-path.mac": "/Users/dhruv/.vs-kubernetes/tools/helm/darwin-amd64/helm",
+    "vs-kubernetes.namespace": "",
+    "vs-kubernetes.helm-path": "",
+    "imageBuildTool": "Docker",
+    "vs-kubernetes.draft-path": "",
+    "vs-kubernetes.knownKubeconfigs": [],
+    "vs-kubernetes.minikube-path.mac": "/Users/dhruv/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
+    "vs-kubernetes.outputFormat": "yaml",
+    "vs-kubernetes.kubectl-path": "",
+    "vs-kubernetes.nodejs-remote-root": "",
+    "vs-kubernetes.nodejs-debug-port": 9229,
+    "vscode-kubernetes.helm-path.mac": "/Users/dhruv/.vs-kubernetes/tools/helm/darwin-amd64/helm",
+    "vscode-kubernetes.minikube-path.mac": "/Users/dhruv/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
+    "vscode-kubernetes.kubectl-path.mac": "/Users/dhruv/.vs-kubernetes/tools/kubectl/kubectl"
   },
   "eslint.run" : "onSave",
   "workbench.statusBar.feedback.visible" : false,
@@ -82,7 +83,7 @@
   "workbench.editor.closeOnFileDelete" : true,
   "files.insertFinalNewline" : true,
   "terminal.integrated.enableBell" : true,
-  "terminal.integrated.shell.osx" : "\/usr\/local\/bin\/zsh",
+  "terminal.integrated.shell.osx" : "/opt/homebrew/bin/zsh",
   "gitlens.hovers.currentLine.over" : "line",
   "breadcrumbs.enabled" : true,
   "files.trimTrailingWhitespace" : true,
@@ -128,11 +129,18 @@
       "server": "{{put-server-name-here}}",
       "database": "{{put-database-name-here}}",
       "user": "{{put-username-here}}",
-      "password": "{{put-password-here}}"
+      "password": ""
     }
   ],
   "[sql]": {
     "editor.defaultFormatter": "ms-mssql.mssql"
   },
-  "redhat.telemetry.enabled": false
+  "redhat.telemetry.enabled": false,
+  "vscode-kubernetes.kubectl-path.windows": "",
+  "vscode-kubernetes.kubectl-path.mac": "/opt/homebrew/bin/kubectl",
+  "vscode-kubernetes.helm-path.mac": "/opt/homebrew/bin/helm",
+  "settingsSync.ignoredSettings": [
+    "-vscode-kubernetes.kubectl-path.mac",
+    "-vscode-kubernetes.helm-path.mac"
+  ]
 }

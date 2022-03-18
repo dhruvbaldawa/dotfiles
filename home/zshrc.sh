@@ -39,6 +39,9 @@ fi
 # rupa/z
 source "$HOME/bin/z"
 
+# homebrew
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # direnv
 eval "$(direnv hook zsh)"
 

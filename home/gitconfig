@@ -36,10 +36,10 @@
   excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
   whitespace = fix,trailing-space,blank-at-eol,blank-at-eof
-    pager = delta --dark --plus-color="#012800" --minus-color="#340001" --file-style=plain --file-color=white --hunk-style=plain --hunk-color=green
+  pager = delta --dark --color-only
 
 [interactive]
-    diffFilter = delta --dark --color-only --file-style=plain --file-color=white --hunk-color=green --hunk-style=plain
+    diffFilter = delta --dark --color-only --features=interactive
 
 [color "branch"]
   current = yellow reverse
@@ -83,6 +83,10 @@
 
 [include]
 path = .gitconfig-default
+
+[includeIf "gitdir:~/Code/**/.git"]
+  [core]
+    sshCommand = "ssh -i ~/.ssh/id_github_dhruv"
 
 [includeIf "gitdir:~/Projects/**/.git"]
   path = .gitconfig-specific
