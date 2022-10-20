@@ -142,5 +142,7 @@
   "settingsSync.ignoredSettings": [
     "-vscode-kubernetes.kubectl-path.mac",
     "-vscode-kubernetes.helm-path.mac"
-  ]
+  ],
+  "bracketPairColorizer.depreciation-notice": false,
+  "go.toolsManagement.autoUpdate": true
 }
