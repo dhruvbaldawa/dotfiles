@@ -41,6 +41,9 @@ Shell (zsh):
 * Clone:
     * this project (dotfiles) and run `sh bootstrap-new-system.sh`
 
+## TODO
+* Move this to nixos or other dotfile managers
+
 ## License
 
 The MIT license.
