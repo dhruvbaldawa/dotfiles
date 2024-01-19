@@ -4,12 +4,12 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-# zmodload zsh/zprof
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+
 export HISTSIZE=9999999
 export HISTFILESIZE=9999999
 export SAVEHIST=${HISTSIZE}
@@ -51,19 +51,14 @@ export NVM_LAZY_LOAD=true
 
 # Start antigen and use more plugins
 source "$HOME/.antigen/antigen.zsh"
-antigen bundle akoenig/gulp.plugin.zsh
 antigen bundle unixorn/tumult.plugin.zsh
-# antigen bundle srijanshetty/zsh-pip-completion
-# antigen bundle lukechilds/zsh-better-npm-completion
-# antigen bundle greymd/docker-zsh-completion
+antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
 antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
-# antigen bundle darvid/zsh-poetry
 antigen bundle dbz/kube-aliases
 antigen bundle lukechilds/zsh-nvm
 antigen apply
-
 
 [[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
 [[ -f "$HOME/.functions" ]] && source $HOME/.functions
