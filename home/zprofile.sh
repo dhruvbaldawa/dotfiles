@@ -1,82 +1,63 @@
+#
+# Executes commands at login pre-zshrc.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export TERM="xterm-256color"
 
-export MKL_NUM_THREADS=1
-
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# Browser.
-# --------
-if [[ "$OSTYPE" == darwin* ]]; then
+#
+# Browser
+#
+
+if [[ -z "$BROWSER" && "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
-# Editors.
-# --------
-export EDITOR='vi'
-export VISUAL='vi'
-export PAGER='less'
+#
+# Editors
+#
 
-# Language.
-# ---------
+if [[ -z "$EDITOR" ]]; then
+  export EDITOR='vi'
+fi
+if [[ -z "$VISUAL" ]]; then
+  export VISUAL='vi'
+fi
+if [[ -z "$PAGER" ]]; then
+  export PAGER='less'
+fi
+
+#
+# Language
+#
+
 if [[ -z "$LANG" ]]; then
-  eval "$(locale)"
+  export LANG='en_US.UTF-8'
 fi
 
-# Homebrew
-#---------
-export HOMEBREW_NO_AUTO_UPDATE=1
+#
+# Paths
+#
 
-# Less.
-# -----
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
 
-# Set the Less input preprocessor.
-if (( $+commands[lesspipe.sh] )); then
-  export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
-fi
-
-# Paths.
-# ------
-typeset -gU cdpath fpath mailpath manpath path
-typeset -gUT INFOPATH infopath
-
-
-# Set the the list of directories that cd searches.
+# Set the list of directories that cd searches.
 cdpath=(
   $cdpath
 )
+# fpath=(
+#   /usr/local/share/zsh-completions
+#   /usr/local/share/zsh/site-functions
+#   $fpath
+# )
 
-# Set the list of directories that info searches for manuals.
-infopath=(
-  /usr/local/share/info
-  /usr/share/info
-  $infopath
-)
-
-# Set the list of directories that man searches for manuals.
-manpath=(
-  /usr/local/opt/coreutils/libexec/gnuman
-  /usr/local/share/man
-  /usr/share/man
-  $manpath
-)
-
-for path_file in /etc/manpaths.d/*(.N); do
-  manpath+=($(<$path_file))
-done
-unset path_file
-
-fpath=(
-  /usr/local/share/zsh-completions
-  /usr/local/share/zsh/site-functions
-  $fpath
-)
 
 # Set the list of directories that Zsh searches for programs.
 path=(
@@ -89,15 +70,19 @@ path=(
   $path
 )
 
-for path_file in /etc/paths.d/*(.N); do
-  path+=($(<$path_file))
-done
-unset path_file
+#
+# Less
+#
 
-# Temporary Files.
-if [[ -d "$TMPDIR" ]]; then
-  export TMPPREFIX="${TMPDIR%/}/zsh"
-  if [[ ! -d "$TMPPREFIX" ]]; then
-    mkdir -p "$TMPPREFIX"
-  fi
+# Set the default Less options.
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X to enable it.
+if [[ -z "$LESS" ]]; then
+  export LESS='-g -i -M -R -S -w -X -z-4'
+fi
+
+# Set the Less input preprocessor.
+# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
