@@ -41,6 +41,10 @@ function prompt_dhruv_async_callback {
 }
 
 function prompt_dhruv_async_kube {
+  if (( $+functions[kube_ps1] == 0 )); then
+    source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh" zsh
+  fi
+  # comment `add-zsh-hook precmd _kube_ps1_prompt_update` in the file for performance
   _kube_ps1_prompt_update
   print -n "$(kube_ps1)"
 }

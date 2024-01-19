@@ -4,6 +4,7 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
+# zmodload zsh/zprof
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -45,27 +46,32 @@ source "$HOME/bin/z"
 # direnv
 eval "$(direnv hook zsh)"
 
+# nvm
+export NVM_LAZY_LOAD=true
+
 # Start antigen and use more plugins
 source "$HOME/.antigen/antigen.zsh"
 antigen bundle akoenig/gulp.plugin.zsh
 antigen bundle unixorn/tumult.plugin.zsh
-antigen bundle srijanshetty/zsh-pip-completion
-antigen bundle lukechilds/zsh-better-npm-completion
-antigen bundle greymd/docker-zsh-completion
+# antigen bundle srijanshetty/zsh-pip-completion
+# antigen bundle lukechilds/zsh-better-npm-completion
+# antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
 antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
-antigen bundle darvid/zsh-poetry
+# antigen bundle darvid/zsh-poetry
 antigen bundle dbz/kube-aliases
-antigen bundle jonmosco/kube-ps1
+antigen bundle lukechilds/zsh-nvm
 antigen apply
 
 
 [[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
 [[ -f "$HOME/.functions" ]] && source $HOME/.functions
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra
-# autoload -U compinit && compinit
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+autoload -Uz compinit
+if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi

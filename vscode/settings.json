@@ -25,29 +25,10 @@
   "git.enableCommitSigning" : true,
   "jupyter.askForKernelRestart" : false,
   "vs-kubernetes" : {
-    "vs-kubernetes.minikube-path": "",
-    "logsDisplay": "webview",
-    "vs-kubernetes.draft-path.mac": "/Users/dhruv/.vs-kubernetes/tools/draft/darwin-amd64/draft",
-    "checkForMinikubeUpgrade": true,
-    "vs-kubernetes.autoCleanupOnDebugTerminate": false,
-    "vs-kubernetes.kubectlVersioning": "user-provided",
-    "vs-kubernetes.kubeconfig": "",
-    "vs-kubernetes.nodejs-autodetect-remote-root": true,
-    "vs-kubernetes.kubectl-path.mac": "/Users/dhruv/.vs-kubernetes/tools/kubectl/kubectl",
-    "vs-kubernetes.helm-path.mac": "/Users/dhruv/.vs-kubernetes/tools/helm/darwin-amd64/helm",
-    "vs-kubernetes.namespace": "",
-    "vs-kubernetes.helm-path": "",
-    "imageBuildTool": "Docker",
-    "vs-kubernetes.draft-path": "",
-    "vs-kubernetes.knownKubeconfigs": [],
-    "vs-kubernetes.minikube-path.mac": "/Users/dhruv/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
-    "vs-kubernetes.outputFormat": "yaml",
-    "vs-kubernetes.kubectl-path": "",
-    "vs-kubernetes.nodejs-remote-root": "",
-    "vs-kubernetes.nodejs-debug-port": 9229,
-    "vscode-kubernetes.helm-path.mac": "/Users/dhruv/.vs-kubernetes/tools/helm/darwin-amd64/helm",
-    "vscode-kubernetes.minikube-path.mac": "/Users/dhruv/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
-    "vscode-kubernetes.kubectl-path.mac": "/Users/dhruv/.vs-kubernetes/tools/kubectl/kubectl"
+    "vs-kubernetes.kubectl-path": "/root/.vs-kubernetes/tools/kubectl/kubectl",
+    "vscode-kubernetes.kubectl-path.mac": "/Users/dhruv/.vs-kubernetes/tools/kubectl/kubectl",
+    "vscode-kubernetes.minikube-path.mac": "/Users/dhruv/.vs-kubernetes/tools/minikube/darwin-arm64/minikube",
+    "vs-kubernetes.minikube-show-information-expiration": "2023-10-30T07:52:19.195Z"
   },
   "eslint.run" : "onSave",
   "workbench.statusBar.feedback.visible" : false,
@@ -78,7 +59,6 @@
     "editor.tabSize" : 2,
     "editor.formatOnSave" : true
   },
-  "jupyter.sendSelectionToInteractiveWindow" : true,
   "telemetry.enableCrashReporter" : false,
   "workbench.editor.closeOnFileDelete" : true,
   "files.insertFinalNewline" : true,
@@ -144,5 +124,34 @@
     "-vscode-kubernetes.helm-path.mac"
   ],
   "bracketPairColorizer.depreciation-notice": false,
-  "go.toolsManagement.autoUpdate": true
+  "go.toolsManagement.autoUpdate": true,
+  "camelk.integrations.runtimeVersion": "1.10.0",
+  "camelk.tools": {
+    "camelk.tools.kamel-path": "/root/.vscode-server/data/User/globalStorage/redhat.vscode-camelk/camelk/tools/kamel/kamel"
+  },
+  "jupyter.interactiveWindow.textEditor.executeSelection": true,
+  "editor.guides.bracketPairs": true,
+  "cucumber.features": [
+
+    "src/test/**/*.feature",
+    "features/**/*.feature",
+    "tests/**/*.feature",
+    "*specs*/**/.feature"
+  ],
+  "cucumber.glue": [
+    "src/test/**/*.java",
+    "features/**/*.js",
+    "features/**/*.jsx",
+    "features/**/*.ts",
+    "features/**/*.tsx",
+    "features/**/*.php",
+    "features/**/*.py",
+    "tests/**/*.py",
+    "tests/**/*.rs",
+    "features/**/*.rs",
+    "features/**/*.rb",
+    "*specs*/**/.cs"
+  ],
+  "intelephense.completion.maxItems": 20,
+  "intelephense.maxMemory": 384
 }
