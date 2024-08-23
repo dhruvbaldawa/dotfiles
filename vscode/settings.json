@@ -61,8 +61,7 @@
   },
   "telemetry.enableCrashReporter" : false,
   "workbench.editor.closeOnFileDelete" : true,
-  "files.insertFinalNewline" : true,
-  "terminal.integrated.enableBell" : true,
+  "files.insertFinalNewline": true,
   "terminal.integrated.shell.osx" : "/opt/homebrew/bin/zsh",
   "gitlens.hovers.currentLine.over" : "line",
   "breadcrumbs.enabled" : true,
@@ -153,5 +152,9 @@
     "*specs*/**/.cs"
   ],
   "intelephense.completion.maxItems": 20,
-  "intelephense.maxMemory": 384
+  "intelephense.maxMemory": 384,
+  "accessibility.signals.terminalBell": {
+    "sound": "on"
+  },
+  "terminal.integrated.enableVisualBell": true
 }

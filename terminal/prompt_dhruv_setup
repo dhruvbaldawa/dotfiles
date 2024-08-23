@@ -3,12 +3,12 @@
 pmodload 'helper'
 # Virtualenv: current working virtualenv
 function virtualenv_info {
-    ([ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION') %f%b') || ([ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`') %f%b')
+    ([ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION')%f%b') || ([ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`')%f%b') || ([ $CONDA_DEFAULT_ENV ] && echo '%B%F{red}('$CONDA_DEFAULT_ENV')%f%b')
 }
 
-# function aws_profile {
-#     ([ ! -z "$AWSUME_PROFILE" ] && echo '%B%F{orange}('$AWSUME_PROFILE')%f%b')
-# }
+function aws_profile {
+    ([ ! -z "$AWS_VAULT" ] && echo '%B%F{orange}('$AWS_VAULT')%f%b')
+}
 
 #function pyenv_info {
 #    [ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION') %f%b'
@@ -109,7 +109,7 @@ function prompt_dhruv_setup {
   _prompt_dhruv_kube_ps1=''
 
   PROMPT='%F{yellow}[${PWD/#$HOME/~}]%f%F{cyan}[%D{%a, %d %b %I:%M:%S%p}]%f$(genmsg_info)${_prompt_dhruv_kube_ps1}
-$(virtualenv_info)%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
+$(aws_profile)$(virtualenv_info)%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
   RPROMPT='$(git-branch-current 2> /dev/null)${git_info[rprompt]}'
 }
 

@@ -16,6 +16,16 @@
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
+[diff]
+  algorithm = histogram
+  colorMoved = default
+
+[init]
+  defaultBranch = main
+
+[rerere]
+  enabled = true
+
 [push]
   default = current
 
@@ -59,6 +69,12 @@
 
 [merge]
   log = true
+  conflictstyle = zdiff3
+
+[rebase]
+  autosquash = true
+  autostash = true
+  updateRefs = true
 
 [url "git@github.com:"]
   insteadOf = "gh:"
@@ -88,9 +104,12 @@ path = .gitconfig-default
   [core]
     sshCommand = "ssh -i ~/.ssh/id_github_dhruv"
 
-[includeIf "gitdir:~/Projects/**/.git"]
+[includeIf "hasconfig:remote.*.url:**:PaystackHQ/**"]
   path = .gitconfig-specific
-
+[includeIf "hasconfig:remote.*.url:**/PaystackHQ/**"]
+  path = .gitconfig-specific
+[includeIf "hasconfig:remote.*.url:**:dhruv-paystack/**"]
+  path = .gitconfig-specific
 [branch]
   autosetupmerge = always
 
@@ -100,6 +119,7 @@ path = .gitconfig-default
 	ff = only
 [fetch]
 	prune = true
+    prunetags = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
