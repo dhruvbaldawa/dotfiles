@@ -25,9 +25,14 @@ setopt HIST_VERIFY           # Do not execute immediately upon history expansion
 setopt APPEND_HISTORY        # append to history file (Default)
 setopt HIST_NO_STORE         # Don't store history commands
 setopt HIST_REDUCE_BLANKS    # Remove superfluous blanks from each command line being added to the history.
+setopt PROMPT_SP
+setopt prompt_subst interactive_comments  # for starship prompt
 
 # Install fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Install starship
+command -v starship &>/dev/null || sh -c "$(curl -fsSL https://starship.rs/install.sh)"
 
 # Setup pyenv environment variables
 export PYENV_ROOT="$HOME/.pyenv"

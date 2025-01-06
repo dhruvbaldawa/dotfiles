@@ -43,4 +43,6 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 link "$dotfiles/terminal/prompt_dhruv_setup" "$HOME/.zprezto/modules/prompt/functions/prompt_dhruv_setup"
+link "$dotfiles/terminal/prompt_starship_setup" "$HOME/.zprezto/modules/prompt/functions/prompt_starship_setup"
+mkdir -p ~/.config && link "$dotfiles/config/starship.toml" "$HOME/.config/starship.toml"
 link "$dotfiles/bin/z.sh" "$bin/z"
