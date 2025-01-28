@@ -1,0 +1,79 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+format = '$directory$time$kubernetes$aws$cmd_duration$line_break$python$conda$nodejs$username$hostname$character'
+
+# Prompt
+right_format = '$git_branch$git_status$git_state'
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+[directory]
+format = '[\[$path\]]($style)[$read_only]($read_only_style)'
+truncation_length = 10
+truncate_to_repo = false
+style = '#FCCE78'
+
+[aws]
+format = '[\($symbol($profile )(\[$duration\])\)]($style)'
+
+[kubernetes]
+symbol = ''
+format = '[\($symbol($context):($namespace)\)]($style)'
+disabled = false
+style = 'cyan'
+
+[cmd_duration]
+min_time = 0
+format = '[ \[$duration\]]($style)'
+style = 'dimmed red'
+show_milliseconds = true
+show_notifications = true
+min_time_to_notify = 60_000
+
+[time]
+format = '[\[$time\]]($style)'
+disabled = false
+style = 'dimmed gray'
+time_format = '%r'
+
+[conda]
+format = '[$symbol$environment ]($style)'
+style = 'dimmed bright-green'
+
+[username]
+format = '[$user]($style)'
+show_always = true
+
+[hostname]
+ssh_only = false
+format = '@[$hostname]($style) '
+style = 'bright-green'
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+style = 'white'
+symbol = ''
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+conflicted = '[K](red)'
+ahead = '[⇡](green)'
+behind = '[⇣](red)'
+diverged = '[⇕](bright-yellow)'
+up_to_date = '[]()'
+untracked = '[?](gray)'
+modified = '[!](purple)'
+staged = '[+](green)'
+renamed = '[»](cyan)'
+deleted = '[✘](bright-red)'
+style = ''

@@ -1,0 +1,164 @@
+{
+    "editor.minimap.enabled" : false,
+    "files.trimFinalNewlines" : true,
+    "jupyter.alwaysTrustNotebooks" : true,
+    "python.pythonPath" : "\/usr\/local\/bin\/python3.7",
+    "editor.multiCursorModifier" : "ctrlCmd",
+    "gitlens.codeLens.enabled" : false,
+    "[stylus]" : {
+      "editor.tabSize" : 2,
+      "editor.formatOnSave" : true
+    },
+    "vsintellicode.modify.editor.suggestSelection" : "automaticallyOverrodeDefaultValue",
+    "editor.wordWrapColumn" : 120,
+    "git.promptToSaveFilesBeforeCommit" : true,
+    "search.smartCase" : true,
+    "files.autoSave" : "onFocusChange",
+    "jupyter.textOutputLimit" : 0,
+    "vetur.format.defaultFormatter.html" : "prettier",
+    "files.exclude" : {
+      "**\/.project" : true,
+      "**\/.settings" : true,
+      "**\/.classpath" : true,
+      "**\/.factorypath" : true
+    },
+    "git.enableCommitSigning" : true,
+    "jupyter.askForKernelRestart" : false,
+    "vs-kubernetes" : {
+      "vs-kubernetes.kubectl-path": "/root/.vs-kubernetes/tools/kubectl/kubectl",
+      "vscode-kubernetes.kubectl-path.mac": "/Users/dhruv/.vs-kubernetes/tools/kubectl/kubectl",
+      "vscode-kubernetes.minikube-path.mac": "/Users/dhruv/.vs-kubernetes/tools/minikube/darwin-arm64/minikube",
+      "vs-kubernetes.minikube-show-information-expiration": "2023-10-30T07:52:19.195Z"
+    },
+    "eslint.run" : "onSave",
+    "workbench.statusBar.feedback.visible" : false,
+    "vsicons.dontShowNewVersionMessage" : true,
+    "[vue]" : {
+      "editor.tabSize" : 2,
+      "editor.formatOnSave" : true
+    },
+    "terminal.integrated.inheritEnv" : false,
+    "explorer.confirmDelete" : false,
+    "python.languageServer" : "Pylance",
+    "terminal.external.osxExec" : "iTerm2.app",
+    "prettier.requireConfig" : true,
+    "[css]" : {
+      "editor.tabSize" : 2,
+      "editor.formatOnSave" : true
+    },
+    "javascript.updateImportsOnFileMove.enabled" : "always",
+    "telemetry.enableTelemetry" : false,
+    "editor.renderWhitespace" : "all",
+    "diffEditor.ignoreTrimWhitespace" : false,
+    "terminal.integrated.fontSize" : 14,
+    "workbench.editor.swipeToNavigate" : true,
+    "python.jediEnabled" : false,
+    "gitlens.statusBar.enabled" : false,
+    "[typescript]" : {
+      "editor.defaultFormatter" : "esbenp.prettier-vscode",
+      "editor.tabSize" : 2,
+      "editor.formatOnSave" : true
+    },
+    "telemetry.enableCrashReporter" : false,
+    "workbench.editor.closeOnFileDelete" : true,
+    "files.insertFinalNewline": true,
+    "terminal.integrated.shell.osx" : "/opt/homebrew/bin/zsh",
+    "gitlens.hovers.currentLine.over" : "line",
+    "breadcrumbs.enabled" : true,
+    "files.trimTrailingWhitespace" : true,
+    "typescript.updateImportsOnFileMove.enabled" : "always",
+    "editor.fontSize" : 14,
+    "[json]" : {
+      "editor.defaultFormatter" : "esbenp.prettier-vscode"
+    },
+    "[javascript]" : {
+      "editor.defaultFormatter" : "esbenp.prettier-vscode",
+      "editor.tabSize" : 2,
+      "editor.formatOnSave" : true
+    },
+    "prettier.printWidth" : 100,
+    "debug.inlineValues" : true,
+    "prettier.singleQuote" : true,
+    "[jsonc]" : {
+      "editor.defaultFormatter" : "esbenp.prettier-vscode"
+    },
+    "editor.accessibilitySupport" : "off",
+    "python.defaultInterpreterPath" : "/usr/local/bin/python3.7",
+    "docker.dockerComposeBuild" : false,
+    "eslint.validate" : [
+      "javascript",
+      "javascriptreact",
+      {
+        "autoFix" : true,
+        "language" : "vue"
+      },
+      "typescript"
+    ],
+    "editor.suggestSelection" : "first",
+    "terminal.integrated.shell.linux" : "\/usr\/local\/bin\/zsh",
+    "debug.onTaskErrors" : "showErrors",
+    "[yaml]" : {
+      "editor.defaultFormatter" : "redhat.vscode-yaml"
+    },
+    "workbench.editorAssociations": {
+      "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "mssql.connections": [
+      {
+        "server": "{{put-server-name-here}}",
+        "database": "{{put-database-name-here}}",
+        "user": "{{put-username-here}}",
+        "password": ""
+      }
+    ],
+    "[sql]": {
+      "editor.defaultFormatter": "ms-mssql.mssql"
+    },
+    "redhat.telemetry.enabled": false,
+    "vscode-kubernetes.kubectl-path.windows": "",
+    "vscode-kubernetes.kubectl-path.mac": "/opt/homebrew/bin/kubectl",
+    "vscode-kubernetes.helm-path.mac": "/opt/homebrew/bin/helm",
+    "settingsSync.ignoredSettings": [
+      "-vscode-kubernetes.kubectl-path.mac",
+      "-vscode-kubernetes.helm-path.mac"
+    ],
+    "bracketPairColorizer.depreciation-notice": false,
+    "go.toolsManagement.autoUpdate": true,
+    "camelk.integrations.runtimeVersion": "1.10.0",
+    "camelk.tools": {
+      "camelk.tools.kamel-path": "/root/.vscode-server/data/User/globalStorage/redhat.vscode-camelk/camelk/tools/kamel/kamel"
+    },
+    "jupyter.interactiveWindow.textEditor.executeSelection": true,
+    "editor.guides.bracketPairs": true,
+    "cucumber.features": [
+
+      "src/test/**/*.feature",
+      "features/**/*.feature",
+      "tests/**/*.feature",
+      "*specs*/**/.feature"
+    ],
+    "cucumber.glue": [
+      "src/test/**/*.java",
+      "features/**/*.js",
+      "features/**/*.jsx",
+      "features/**/*.ts",
+      "features/**/*.tsx",
+      "features/**/*.php",
+      "features/**/*.py",
+      "tests/**/*.py",
+      "tests/**/*.rs",
+      "features/**/*.rs",
+      "features/**/*.rb",
+      "*specs*/**/.cs"
+    ],
+    "intelephense.completion.maxItems": 20,
+    "intelephense.maxMemory": 384,
+    "accessibility.signals.terminalBell": {
+      "sound": "on"
+    },
+    "terminal.integrated.enableVisualBell": true,
+    "editor.fontFamily": "Hack Nerd Font, Monaco, 'Courier New', monospace",
+    "chat.editing.alwaysSaveWithGeneratedChanges": true,
+    "gitHistory.sideBySide": true,
+    "editor.hover.hidingDelay": 9999999
+}

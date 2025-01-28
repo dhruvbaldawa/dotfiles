@@ -1,0 +1,127 @@
+[github]
+  user = dhruvbaldawa
+
+[alias]
+  lg = log -p
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls = ls-files
+  # Show files ignored by git:
+  ign = ls-files -o -i --exclude-standard.settings/
+
+  cb = "!sh -c 'git branch $1 && git ch $1' -"
+  ctb = "!sh -c 'git cb topics/$1' -"
+  cpush = "!sh -c 'git commit -au -m \"$1\" && git push -u origin' -"
+  url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
+  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
+
+[diff]
+  algorithm = histogram
+  colorMoved = default
+
+[init]
+  defaultBranch = main
+
+[rerere]
+  enabled = true
+
+[push]
+  default = current
+
+[format]
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  graph = true
+
+[mergetool]
+  keepBackup = true
+
+[color]
+	ui = true
+
+[apply]
+  whitespace = fix
+
+[core]
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  whitespace = fix,trailing-space,blank-at-eol,blank-at-eof
+  pager = delta --dark --color-only
+
+[interactive]
+    diffFilter = delta --dark --color-only --features=interactive
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+
+[color "status"]
+  added = green
+  changed = red
+  untracked = cyan
+
+[merge]
+  log = true
+  conflictstyle = zdiff3
+
+[rebase]
+  autosquash = true
+  autostash = true
+  updateRefs = true
+
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+  insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+
+# Any GitHub repo with my username should be checked out r/w by default
+# http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
+[url "git@github.com:dhruvbaldawa/"]
+  insteadOf = "git://github.com/dhruvbaldawa/"
+
+[include]
+path = .gitconfig-default
+
+[includeIf "gitdir:~/Code/**/.git"]
+  [core]
+    sshCommand = "ssh -i ~/.ssh/id_github_dhruv"
+
+[includeIf "hasconfig:remote.*.url:**:PaystackHQ/**"]
+  path = .gitconfig-specific
+[includeIf "hasconfig:remote.*.url:**/PaystackHQ/**"]
+  path = .gitconfig-specific
+[includeIf "hasconfig:remote.*.url:**:dhruv-paystack/**"]
+  path = .gitconfig-specific
+[branch]
+  autosetupmerge = always
+
+[diff "sopsdiffer"]
+	textconv = sops -d
+[pull]
+	ff = only
+[fetch]
+	prune = true
+    prunetags = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

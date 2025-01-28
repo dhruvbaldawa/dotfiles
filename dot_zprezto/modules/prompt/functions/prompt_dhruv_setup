@@ -1,0 +1,116 @@
+#!/bin/zsh
+# vim:ft=zsh ts=2 sw=2 sts=2
+pmodload 'helper'
+# Virtualenv: current working virtualenv
+function virtualenv_info {
+    ([ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION')%f%b') || ([ $VIRTUAL_ENV ] && echo '%B%F{red}('`basename $VIRTUAL_ENV`')%f%b') || ([ $CONDA_DEFAULT_ENV ] && echo '%B%F{red}('$CONDA_DEFAULT_ENV')%f%b')
+}
+
+function aws_profile {
+    ([ ! -z "$AWS_VAULT" ] && echo '%B%F{orange}('$AWS_VAULT')%f%b')
+}
+
+#function pyenv_info {
+#    [ $PYENV_VERSION ] && echo '%B%F{red}('$PYENV_VERSION') %f%b'
+#}
+
+# function nvm_info {
+#   ( [ $NVM_BIN ] && echo '%B%F{red}(nvm:'`nvm current`') %f%b')
+# }
+
+function genmsg_info {
+    [ $GEN_MSG ] && echo "%B%F{white}[${GEN_MSG}] %f%b"
+}
+
+function prompt_dhruv_async_callback {
+  case $1 in
+    prompt_dhruv_async_kube)
+      # _prompt_dhruv_kube_ps1="${_kube_ps1}"
+      read _dhruv_kube_ps1 <<< "$3"
+      _prompt_dhruv_kube_ps1="${_dhruv_kube_ps1}"
+      zle && zle reset-prompt
+      ;;
+    "[async]")
+      # Code is 1 for corrupted worker output and 2 for dead worker.
+      if [[ $2 -eq 2 ]]; then
+	    # Our worker died unexpectedly.
+        typeset -g prompt_prezto_async_init=0
+      fi
+      ;;
+  esac
+}
+
+function prompt_dhruv_async_kube {
+  if (( $+functions[kube_ps1] == 0 )); then
+    source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh" zsh
+  fi
+  # comment `add-zsh-hook precmd _kube_ps1_prompt_update` in the file for performance
+  _kube_ps1_prompt_update
+  print -n "$(kube_ps1)"
+}
+
+function prompt_dhruv_async_tasks {
+  # Initialize async worker. This needs to be done here and not in
+  # prompt_dhruv_setup so the git formatting can be overridden by other prompts.
+  if (( !${prompt_prezto_async_init:-0} )); then
+    async_start_worker prompt_dhruv -n
+    async_register_callback prompt_dhruv prompt_dhruv_async_callback
+    typeset -g prompt_prezto_async_init=1
+  fi
+
+  # Kill the old process of slow commands if it is still running.
+  async_flush_jobs prompt_dhruv
+
+  # Compute slow commands in the background.
+  async_job prompt_dhruv prompt_dhruv_async_kube
+}
+
+function prompt_dhruv_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  git-info
+  # Run python info (this should be fast and not require any async)
+  if (( $+functions[python-info] )); then
+    python-info
+  fi
+
+  prompt_dhruv_async_tasks
+}
+
+function prompt_dhruv_setup {
+  # setopt LOCAL_OPTIONS
+  setopt PROMPT_SUBST
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+  autoload -Uz async && async
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_dhruv_precmd
+
+  zstyle ':prezto:module:prompt' managed 'yes'
+
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:unmerged' format "%F{red}[K]%f"
+  zstyle ':prezto:module:git:info:deleted' format "%F{red}[D]%f"
+  zstyle ':prezto:module:git:info:renamed' format "%F{yellow}[Rn]%f"
+  zstyle ':prezto:module:git:info:modified' format "%F{yellow}[C]%f"
+  zstyle ':prezto:module:git:info:added' format "%F{green}[A]%f"
+  zstyle ':prezto:module:git:info:untracked' format "%F{white}[Un]%f"
+  zstyle ':prezto:module:git:info:ahead' format "%F{red}^%f"
+  zstyle ':prezto:module:git:info:behind' format "%F{blue}!%f"
+  zstyle ':prezto:module:git:info:keys' format \
+      'prompt' '' \
+      'rprompt' '%a%d%D%m%r%U%u%A%B'
+
+  _prompt_dhruv_kube_ps1=''
+
+  PROMPT='%F{yellow}[${PWD/#$HOME/~}]%f%F{cyan}[%D{%a, %d %b %I:%M:%S%p}]%f$(genmsg_info)${_prompt_dhruv_kube_ps1}
+$(aws_profile)$(virtualenv_info)%B%F{green}%n@%m%f%b%B%F{yellow}$ %f%b'
+  RPROMPT='$(git-branch-current 2> /dev/null)${git_info[rprompt]}'
+}
+
+prompt_dhruv_setup "$@"
