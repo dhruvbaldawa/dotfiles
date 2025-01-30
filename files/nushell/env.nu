@@ -30,17 +30,3 @@ $env.PATH = (
 # Less configuration
 $env.LESS = "-g -i -M -R -S -w -X -z-4"
 $env.LESSOPEN = "| /usr/bin/env lesspipe %s 2>&-"
-
-# Virtualenv configuration
-$env.VIRTUALENVWRAPPER_PYTHON = "/usr/local/bin/python"
-$env.VIRTUALENVWRAPPER_VIRTUALENV = "/usr/local/bin/virtualenv"
-$env.VIRTUAL_ENV_DISABLE_PROMPT = 1
-$env.VIRTUALENVWRAPPER_WORKON_CD = 0
-
-# Node version manager
-$env.NVM_LAZY_LOAD = true
-
-# Homebrew shell environment
-if ("/opt/homebrew/bin/brew" | path exists) {
-  $env.PATH = ($env.PATH | prepend "/opt/homebrew/bin")
-}

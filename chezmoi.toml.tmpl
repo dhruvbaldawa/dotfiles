@@ -1,0 +1,6 @@
+[data]
+nushell_dir = """{{ if eq .chezmoi.os "darwin" -}}
+    Library/Application Support/nushell
+{{- else -}}
+    .config/nushell
+{{- end -}}"""

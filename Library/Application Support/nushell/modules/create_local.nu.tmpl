@@ -1,0 +1,19 @@
+# Define utility functions
+def diffrow [files: ...path] {
+  open $files | delta --wrap-max-lines unlimited --max-line-length 0
+}
+
+# Environment variables and PATH modifications
+$env.PATH = ($env.PATH | prepend [
+    "/opt/homebrew/opt/coreutils/libexec/gnubin"
+    $"($env.HOME)/.krew/bin"
+    "/opt/homebrew/opt/mysql-client@8.0/bin"
+    $"($env.HOME)/.rd/bin"
+    $"($env.HOME)/.volta/bin"
+    "/opt/homebrew/opt/openjdk@17/bin"
+    $"($env.HOME)/Library/Application Support/JetBrains/Toolbox/scripts"
+])
+
+# Other environment variables
+$env.VOLTA_HOME = $"($env.HOME)/.volta" # @TODO
+$env.CPPFLAGS = "-I/opt/homebrew/opt/openjdk@17/include" # @TODO
