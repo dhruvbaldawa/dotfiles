@@ -30,3 +30,11 @@ $env.PATH = (
 # Less configuration
 $env.LESS = "-g -i -M -R -S -w -X -z-4"
 $env.LESSOPEN = "| /usr/bin/env lesspipe %s 2>&-"
+
+# External tools
+# zoxide
+zoxide init nushell | save -f ~/.zoxide.nu
+# carapace
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
+mkdir ~/.cache/carapace
+carapace _carapace nushell | save --force ~/.cache/carapace/init.nu

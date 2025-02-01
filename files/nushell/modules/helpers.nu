@@ -1,4 +1,5 @@
-# Aliases (equivalent to .aliases)
+use std/dirs
+# Aliases
 alias ls = ls -l
 alias la = ls -la
 alias .. = cd ..
@@ -6,30 +7,27 @@ alias ... = cd ../..
 alias .... = cd ../../..
 alias ~ = cd ~
 alias - = cd -
-alias pd = cd -
+alias pd = dirs drop
 
-# Git-specific aliases
-alias gc = git commit
-alias gs = git status
-alias grv = git remote -v show
-alias gd = git diff
-alias gds = git diff --staged
-alias gcm = git commit -m
-alias grh = git reset --hard
-alias gst = git stash
-alias gco = git checkout
-alias gb = git branch
-alias gia = git add
-alias gap = git add -p
-alias cpr = gh pr create
-alias gth = git town-hack
-alias gts = git-town sync
-alias ghya = git push
-alias ghyauf = git push -uf origin (git-branch-current)
-alias dya = git pull
-alias gfo = git fetch origin
-alias gpom = git pull origin master
-alias gpu = git push -u
+source ($nu.default-config-dir | path join modules git.nu)
+
+# Homebrew
+alias brewc = brew cleanup
+alias brewi = brew install
+alias brewL = brew leaves
+alias brewl = brew list
+alias brewo = brew outdated
+alias brews = brew search
+alias brewu = brew upgrade
+alias brewx = brew uninstall
+
+# Homebrew Cask
+alias caski = brew install --cask
+alias caskl = brew list --cask
+alias casko = brew outdated --cask
+alias casks = brew search --cask
+alias casku = brew upgrade --cask
+alias caskx = brew uninstall --cask
 
 # IP addresses
 alias ip = dig +short myip.opendns.com @resolver1.opendns.com

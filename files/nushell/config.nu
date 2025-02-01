@@ -20,7 +20,8 @@ $env.config = {
     case_sensitive: false
     quick: true
     partial: true
-    algorithm: "prefix"
+    algorithm: "fuzzy"
+
   }
   keybindings: [
     {

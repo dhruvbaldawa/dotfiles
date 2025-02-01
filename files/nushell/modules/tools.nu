@@ -11,6 +11,10 @@ def fzf-file-picker [] {
 }
 
 # @TODO: zoxide
+source ~/.zoxide.nu
+
 # @TODO: carapace
+source ~/.cache/carapace/init.nu
+
 # @TODO: atuin
 # @TODO: nu_scripts aliases
