@@ -160,5 +160,14 @@
     "editor.fontFamily": "Hack Nerd Font, Monaco, 'Courier New', monospace",
     "chat.editing.alwaysSaveWithGeneratedChanges": true,
     "gitHistory.sideBySide": true,
-    "editor.hover.hidingDelay": 9999999
+    "editor.hover.hidingDelay": 9999999,
+    "roo-cline.allowedCommands": [
+      "npm test",
+      "npm install",
+      "tsc",
+      "git log",
+      "git diff",
+      "git show"
+    ],
+    "diffEditor.maxComputationTime": 0,
 }

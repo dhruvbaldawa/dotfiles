@@ -28,8 +28,12 @@ setopt HIST_REDUCE_BLANKS    # Remove superfluous blanks from each command line 
 setopt PROMPT_SP
 setopt prompt_subst interactive_comments  # for starship prompt
 
+# Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Install fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 # Install starship
 command -v starship &>/dev/null || sh -c "$(curl -fsSL https://starship.rs/install.sh)"
@@ -59,10 +63,6 @@ zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
 source <(carapace _carapace)
 
-# homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # direnv
 eval "$(direnv hook zsh)"
 
@@ -74,7 +74,7 @@ source "$HOME/.antigen/antigen.zsh"
 antigen bundle unixorn/tumult.plugin.zsh
 antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
-antigen bundle changyuheng/fz
+# antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
 antigen bundle dbz/kube-aliases
 # antigen bundle lukechilds/zsh-nvm
