@@ -170,4 +170,21 @@
       "git show"
     ],
     "diffEditor.maxComputationTime": 0,
+    "path-intellisense.autoTriggerNextSuggestion": true,
+    "cline.mcp.mode": "off",
+    "cline.modelSettings.o3Mini.reasoningEffort": "high",
+    "terminal.integrated.shellIntegration.enabled": false,
+    "remote.defaultExtensionsIfInstalledLocally": [
+      "GitHub.copilot",
+      "GitHub.copilot-chat",
+      "GitHub.vscode-pull-request-github"
+    ],
+    "github.copilot.enable": {
+      "*": true,
+      "plaintext": false,
+      "markdown": false,
+      "scminput": false,
+      "javascript": true
+    },
+    "github.copilot.nextEditSuggestions.enabled": true
 }
