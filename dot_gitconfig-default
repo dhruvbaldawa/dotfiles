@@ -1,7 +1,0 @@
-[user]
-name = Dhruv Baldawa
-email = dhruvbaldawa@gmail.com
-signingkey = 0B25A10803DA15D6
-
-[commit]
-gpgsign = true

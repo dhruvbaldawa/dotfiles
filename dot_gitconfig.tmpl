@@ -92,24 +92,6 @@
 [url "git://gist.github.com/"]
   insteadOf = "gist:"
 
-# Any GitHub repo with my username should be checked out r/w by default
-# http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
-[url "git@github.com:dhruvbaldawa/"]
-  insteadOf = "git://github.com/dhruvbaldawa/"
-
-[include]
-path = .gitconfig-default
-
-[includeIf "gitdir:~/Code/**/.git"]
-  [core]
-    sshCommand = "ssh -i ~/.ssh/id_github_dhruv"
-
-[includeIf "hasconfig:remote.*.url:**:PaystackHQ/**"]
-  path = .gitconfig-specific
-[includeIf "hasconfig:remote.*.url:**/PaystackHQ/**"]
-  path = .gitconfig-specific
-[includeIf "hasconfig:remote.*.url:**:dhruv-paystack/**"]
-  path = .gitconfig-specific
 [branch]
   autosetupmerge = always
 
@@ -125,3 +107,11 @@ path = .gitconfig-default
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+{{- range $user, $profile := $.gitOwnerProfiles }}
+[includeIf "hasconfig:remote.*.url:git@github.com:{{ $user }}/**"]
+    path = {{ $.chezmoi.homeDir }}/.gitconfig-{{ $profile }}
+{{- end }}
+
+[includeIf "gitdir:{{ $.chezmoi.homeDir }}/Projects/"]
+    path = {{ $.chezmoi.homeDir }}/.gitconfig-work

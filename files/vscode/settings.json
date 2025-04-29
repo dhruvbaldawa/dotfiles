@@ -108,7 +108,9 @@
         "server": "{{put-server-name-here}}",
         "database": "{{put-database-name-here}}",
         "user": "{{put-username-here}}",
-        "password": ""
+        "password": "",
+        "id": "84C7BA6C-A729-4AED-94E9-E97AEFC4B433",
+        "groupId": "32B68CED-6281-447C-B029-20B98CCCBED8"
       }
     ],
     "[sql]": {
@@ -186,5 +188,11 @@
       "scminput": false,
       "javascript": true
     },
-    "github.copilot.nextEditSuggestions.enabled": true
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "mssql.connectionGroups": [
+      {
+        "name": "ROOT",
+        "id": "32B68CED-6281-447C-B029-20B98CCCBED8"
+      }
+    ]
 }
