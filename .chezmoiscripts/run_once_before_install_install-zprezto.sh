@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # Check if zprezto is already installed
 if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
@@ -12,7 +12,4 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   done
 
   zprezto-update
-
-  # Optionally set zsh as default shell
-  # chsh -s /bin/zsh
 fi
