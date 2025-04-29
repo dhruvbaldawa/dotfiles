@@ -1,5 +1,5 @@
-{{ $pathEmail := list "profiles" $.secretsProfile "gitemail" | join "/" -}}
-{{ $pathSigningKey := list "profiles" $.secretsProfile "gitsigningkey" | join "/" -}}
+{{ $pathEmail := list $.secretsProfile "profile" "gitemail" | join "/" -}}
+{{ $pathSigningKey := list $.secretsProfile "profile" "gitsigningkey" | join "/" -}}
 
 [user]
 name = Dhruv Baldawa
