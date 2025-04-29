@@ -78,7 +78,11 @@ gopass show restricted/aws/prod/credentials
 ### 5. **Sync Separately (Optional)**
 Configure independent Git remotes:
 ```bash
-gopass git remote add --store restricted origin git@github.com:yourorg/restricted-store.git
+gopass git --store restricted remote add  origin git@github.com:yourorg/restricted-store.git
+
+# Optionally, update `sshCommand` in .git/config for the password store
+# sshCommand = ssh -oControlMaster=auto -oControlPersist=600 -oControlPath=/tmp/.ssh-[PLACEHOLDER]-%C -i ~/.ssh/[PRIVATE_KEY] -o IdentitiesOnly=yes
+
 gopass sync --store restricted
 ```
 

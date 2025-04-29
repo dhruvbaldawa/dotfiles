@@ -3,6 +3,7 @@ docs/
 README.md
 bootstrap.sh
 bin/executable_z
+.chezmoidata_template
 {{- if ne .chezmoi.os "darwin" }}
 Library/Application Support/nushell/
 {{- end }}
