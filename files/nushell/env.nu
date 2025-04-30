@@ -10,6 +10,8 @@ $env.EDITOR = "vi"
 $env.VISUAL = "vi"
 $env.PAGER = "less"
 
+$env.VIRTUAL_ENV_DISABLE_PROMPT = true
+
 # Path configuration
 $env.PATH = (
   $env.PATH

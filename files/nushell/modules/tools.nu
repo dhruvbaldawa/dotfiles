@@ -1,4 +1,3 @@
-
 # Homebrew shell environment
 load-env (^brew shellenv | capture-foreign-env --shell /bin/bash | transpose -r -d)
 # Homebrew configuration
@@ -15,6 +14,5 @@ source ~/.zoxide.nu
 
 # @TODO: carapace
 source ~/.cache/carapace/init.nu
-
 # @TODO: atuin
 # @TODO: nu_scripts aliases
