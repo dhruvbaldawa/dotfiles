@@ -1,6 +1,7 @@
 #!/bin/bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
 curl https://raw.githubusercontent.com/dhruvbaldawa/dotfiles/refs/heads/main/files/brew/Brewfile | brew bundle --file=- && \
+gh auth login && \
 gopass clone git@github.com:dhruvbaldawa/secrets.git && \
 gopass sync && \
 # Export the GPG public key to the clipboard

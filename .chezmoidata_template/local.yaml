@@ -1,2 +1,2 @@
-gitOwnerProfiles:
-  dhruvbaldawa: personal
+gitIncludeRules:
+  - ["gitdir:~/**", "personal"]

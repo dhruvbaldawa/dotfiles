@@ -108,10 +108,12 @@
 	process = git-lfs filter-process
 	required = true
 
-{{- range $user, $profile := $.gitOwnerProfiles }}
-[includeIf "hasconfig:remote.*.url:git@github.com:{{ $user }}/**"]
+[include]
+  path = ~/.gitconfig-personal
+
+{{- range $index, $includeRule := $.gitIncludeRules }}
+{{- $rule := index $includeRule 0 }}
+{{- $profile := index $includeRule 1 }}
+[includeIf "{{ $rule }}"]
     path = {{ $.chezmoi.homeDir }}/.gitconfig-{{ $profile }}
 {{- end }}
-
-[includeIf "gitdir:{{ $.chezmoi.homeDir }}/Projects/"]
-    path = {{ $.chezmoi.homeDir }}/.gitconfig-work

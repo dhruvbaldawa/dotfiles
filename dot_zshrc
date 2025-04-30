@@ -31,6 +31,7 @@ setopt prompt_subst interactive_comments  # for starship prompt
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Install fzf
 source <(fzf --zsh)

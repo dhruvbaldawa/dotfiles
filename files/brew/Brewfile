@@ -1,5 +1,4 @@
 tap "brewforge/extras"
-tap "homebrew/bundle"
 tap "oven-sh/bun"
 brew "atuin"
 brew "aws-sso-cli"
