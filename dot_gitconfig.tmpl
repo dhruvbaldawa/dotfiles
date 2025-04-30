@@ -111,9 +111,11 @@
 [include]
   path = ~/.gitconfig-personal
 
+{{- if (hasKey . "gitIncludeRules") }}
 {{- range $index, $includeRule := $.gitIncludeRules }}
 {{- $rule := index $includeRule 0 }}
 {{- $profile := index $includeRule 1 }}
 [includeIf "{{ $rule }}"]
     path = {{ $.chezmoi.homeDir }}/.gitconfig-{{ $profile }}
+{{- end }}
 {{- end }}

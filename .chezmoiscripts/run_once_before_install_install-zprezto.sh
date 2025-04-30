@@ -11,3 +11,9 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
     ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
   done
 fi
+
+# Install antigen
+if [ ! -d "$HOME/.antigen" ]; then
+  mkdir -p "$HOME/.antigen"
+  curl -L git.io/antigen > "$HOME/.antigen/antigen.zsh"
+fi
