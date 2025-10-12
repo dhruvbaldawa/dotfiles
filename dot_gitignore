@@ -45,3 +45,4 @@ editor.env
 
 .pytest_cache/
 .exercism/
+.worktrees/
