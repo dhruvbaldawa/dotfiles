@@ -53,7 +53,6 @@ source <(carapace _carapace)
 
 # Start antigen and use more plugins
 source "$HOME/.antigen/antigen.zsh"
-antigen bundle unixorn/tumult.plugin.zsh
 antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
 # antigen bundle changyuheng/fz
