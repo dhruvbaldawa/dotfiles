@@ -60,8 +60,8 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle dbz/kube-aliases
 antigen apply
 
-[[ -f "$HOME/.aliases" ]] && source $HOME/.aliases
-[[ -f "$HOME/.functions" ]] && source $HOME/.functions
+[[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
+[[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra
 
 autoload -Uz compinit

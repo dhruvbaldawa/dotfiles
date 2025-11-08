@@ -46,3 +46,5 @@ editor.env
 .pytest_cache/
 .exercism/
 .worktrees/
+.claude/settings.local.json
+
