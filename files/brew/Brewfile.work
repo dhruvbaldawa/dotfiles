@@ -1,0 +1,12 @@
+tap "brewforge/extras"
+brew "aws-sso-cli"
+brew "kubernetes-cli"
+brew "helm"
+brew "helmfile"
+brew "kube-ps1"
+brew "kubecm"
+brew "kubectx"
+brew "sops"
+
+cask "1password"
+cask "freelens"
