@@ -36,6 +36,7 @@ brew "yarn"
 brew "yq"
 brew "zoxide"
 brew "zsh"
+brew "zellij"
 
 # for compiling python
 brew "zlib"
