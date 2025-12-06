@@ -19,5 +19,7 @@ default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Un
 # When verifying signatures, prefer SHA256 and above
 cert-digest-algo SHA512
 
-# Enable loopback pinentry mode (works with allow-loopback-pinentry in gpg-agent.conf)
+{{ if ne .chezmoi.os "darwin" -}}
+# Linux: Enable loopback pinentry mode for headless/scripted use
 pinentry-mode loopback
+{{ end -}}
