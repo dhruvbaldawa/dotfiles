@@ -28,6 +28,8 @@ gpg --import < keyfile
 gopass sync
 ```
 
+For GPG agent caching and Keychain integration, see [docs/gpg_setup.md](docs/gpg_setup.md).
+
 ## Quick install (existing setup)
 
 If Homebrew and gopass are already configured:
@@ -41,7 +43,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply dhruvbaldawa
 - **Shell**: zsh with prezto, starship prompt, atuin history
 - **Editors**: vim, VS Code settings
 - **Git**: config with delta diff, diff-so-fancy
-- **Secrets**: gopass integration with GPG
+- **Secrets**: gopass integration with GPG, 7-day passphrase caching
 - **Tools**: fzf, ripgrep, zoxide, jq, and more
 
 ## Configuration
