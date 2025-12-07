@@ -19,3 +19,10 @@ cask "visual-studio-code"
 cask "voiceink"
 cask "webcatalog"
 cask "zoom"
+
+# fonts
+cask "font-hack"
+cask "font-hack-nerd-font"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-readex-pro"
