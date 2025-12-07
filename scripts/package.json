@@ -1,0 +1,13 @@
+{
+  "name": "dotfiles-scripts",
+  "type": "module",
+  "scripts": {
+    "bootstrap": "bun run bootstrap.ts"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14"
+  }
+}

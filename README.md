@@ -10,14 +10,17 @@ Run the bootstrap script to set up a fresh macOS instance:
 curl -fsSL https://raw.githubusercontent.com/dhruvbaldawa/dotfiles/main/bootstrap.sh | bash
 ```
 
-This will:
+This launches an interactive setup that lets you choose:
 
-1. Install Homebrew
-2. Install packages from Brewfile (CLI tools, casks)
-3. Authenticate with GitHub CLI
-4. Clone secrets store with gopass
-5. Prompt for GPG key setup
-6. Initialize and apply chezmoi
+- **Packages to install:**
+  - Core CLI tools (git, fzf, ripgrep, starship, etc.)
+  - Desktop applications (VS Code, iTerm2, Arc, Obsidian, etc.)
+  - Work tools (Kubernetes, AWS, Helm, 1Password)
+
+- **Setup steps:**
+  - GitHub CLI authentication
+  - Secrets store (gopass) setup
+  - Dotfiles application (chezmoi)
 
 ### Manual GPG setup
 
@@ -34,6 +37,16 @@ If Homebrew and gopass are already configured:
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply dhruvbaldawa
+```
+
+## Local development
+
+To run the bootstrap script locally:
+
+```bash
+cd scripts
+bun install
+bun run bootstrap
 ```
 
 ## What's included
