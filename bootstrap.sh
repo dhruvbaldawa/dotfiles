@@ -1,19 +1,38 @@
 #!/bin/bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-curl https://raw.githubusercontent.com/dhruvbaldawa/dotfiles/refs/heads/main/files/brew/Brewfile | brew bundle --file=- && \
-gh auth login && \
-gopass clone git@github.com:dhruvbaldawa/secrets.git && \
-echo "Please share the GPG public key with me to continue the installation." && \
-echo "Copy the exported key and ask user to run `gpg --import < keyfile`" && \
-echo "After that, run `gopass sync`" && \
-read -n 1 -s -r -p "Press any key to continue..." && \
-gopass sync && \
-echo "Please share the GPG public key with me to continue the installation." && \
-chezmoi init --ssh dhruvbaldawa/dotfiles && \
-chezmoi apply
-# chezmoi
-# starship
-# nushell
-# zsh
-# atuin
-# homebrew
+set -e
+
+REPO="dhruvbaldawa/dotfiles"
+BRANCH="main"
+
+echo "🚀 Dotfiles Bootstrap"
+echo ""
+
+# Install Homebrew if not present
+if ! command -v brew &> /dev/null; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  # Add Homebrew to PATH for this session
+  if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
+
+# Install Bun if not present
+if ! command -v bun &> /dev/null; then
+  echo "Installing Bun..."
+  brew install oven-sh/bun/bun
+fi
+
+# Create temp directory and download script
+TEMP_DIR=$(mktemp -d)
+trap "rm -rf $TEMP_DIR" EXIT
+
+echo "Downloading bootstrap script..."
+curl -fsSL "https://raw.githubusercontent.com/${REPO}/${BRANCH}/scripts/bootstrap.ts" -o "$TEMP_DIR/bootstrap.ts"
+
+# Run script (Bun auto-installs dependencies)
+cd "$TEMP_DIR"
+bun run bootstrap.ts

@@ -1,5 +1,6 @@
 files/
 docs/
+scripts/
 README.md
 bootstrap.sh
 bin/executable_z
