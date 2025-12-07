@@ -1,0 +1,25 @@
+# GPG Configuration
+
+# Use the gpg-agent for passphrase handling
+use-agent
+
+# Avoid information leakage
+no-emit-version
+no-comments
+export-options export-minimal
+
+# Display key fingerprints
+keyid-format 0xlong
+with-fingerprint
+
+# Use SHA-512 as default hash for new keys
+personal-digest-preferences SHA512 SHA384 SHA256
+default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
+
+# When verifying signatures, prefer SHA256 and above
+cert-digest-algo SHA512
+
+{{ if ne .chezmoi.os "darwin" -}}
+# Linux: Enable loopback pinentry mode for headless/scripted use
+pinentry-mode loopback
+{{ end -}}

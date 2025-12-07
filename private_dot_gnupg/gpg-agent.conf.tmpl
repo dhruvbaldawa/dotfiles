@@ -1,0 +1,33 @@
+# GPG Agent Configuration
+# Cache passphrases for 7 days (604800 seconds)
+
+# Time (in seconds) a cache entry is valid after last access
+# This resets each time the cached passphrase is used
+default-cache-ttl 604800
+
+# Maximum time (in seconds) a cache entry is valid
+# After this time, passphrase will be expired regardless of access
+max-cache-ttl 604800
+
+# Same settings for SSH keys (if using gpg-agent for SSH)
+default-cache-ttl-ssh 604800
+max-cache-ttl-ssh 604800
+
+# Allow external password cache (e.g., macOS Keychain)
+allow-preset-passphrase
+
+{{ if eq .chezmoi.os "darwin" -}}
+# macOS: Use pinentry-mac for native dialog and Keychain integration
+# Homebrew installs to different locations on Intel vs Apple Silicon
+{{ if eq .chezmoi.arch "arm64" -}}
+pinentry-program /opt/homebrew/bin/pinentry-mac
+{{ else -}}
+pinentry-program /usr/local/bin/pinentry-mac
+{{ end -}}
+{{ else -}}
+# Linux: Use curses-based pinentry for terminal/server use
+# Falls back gracefully in headless environments
+pinentry-program /usr/bin/pinentry-curses
+# Allow loopback for non-interactive/scripted use
+allow-loopback-pinentry
+{{ end -}}
