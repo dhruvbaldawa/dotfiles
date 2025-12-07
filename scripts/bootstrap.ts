@@ -67,8 +67,8 @@ async function installBrewfile(option: BrewfileOption): Promise<boolean> {
   spinner.start(`Installing ${option.label}...`);
 
   try {
-    const brewfileUrl = `${REPO_URL}/${option.path}`;
-    await $`curl -fsSL ${brewfileUrl} | brew bundle --file=-`.quiet();
+    const brewfilePath = resolve(REPO_ROOT, option.path);
+    await $`brew bundle --file=${brewfilePath}`;
     spinner.stop(`${option.label} installed successfully`);
     return true;
   } catch (error) {
