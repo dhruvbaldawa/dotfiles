@@ -26,15 +26,13 @@ if ! command -v bun &> /dev/null; then
   brew install oven-sh/bun/bun
 fi
 
-# Create temp directory and download scripts
+# Create temp directory and download script
 TEMP_DIR=$(mktemp -d)
 trap "rm -rf $TEMP_DIR" EXIT
 
-echo "Downloading bootstrap scripts..."
-curl -fsSL "https://raw.githubusercontent.com/${REPO}/${BRANCH}/scripts/package.json" -o "$TEMP_DIR/package.json"
+echo "Downloading bootstrap script..."
 curl -fsSL "https://raw.githubusercontent.com/${REPO}/${BRANCH}/scripts/bootstrap.ts" -o "$TEMP_DIR/bootstrap.ts"
 
-# Install dependencies and run
+# Run script (Bun auto-installs dependencies)
 cd "$TEMP_DIR"
-bun install --silent
 bun run bootstrap.ts

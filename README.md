@@ -44,9 +44,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply dhruvbaldawa
 To run the bootstrap script locally:
 
 ```bash
-cd scripts
-bun install
-bun run bootstrap
+bun run scripts/bootstrap.ts
 ```
 
 ## What's included
