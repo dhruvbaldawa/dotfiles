@@ -1,8 +1,9 @@
 #!/usr/bin/env bun
 import * as p from "@clack/prompts";
 import { $ } from "bun";
+import { resolve } from "path";
 
-const REPO_URL = "https://raw.githubusercontent.com/dhruvbaldawa/dotfiles/main";
+const REPO_ROOT = resolve(import.meta.dir, "..");
 
 interface BrewfileOption {
   value: string;
@@ -67,13 +68,22 @@ async function installBrewfile(option: BrewfileOption): Promise<boolean> {
   spinner.start(`Installing ${option.label}...`);
 
   try {
-    const brewfileUrl = `${REPO_URL}/${option.path}`;
-    await $`curl -fsSL ${brewfileUrl} | brew bundle --file=-`.quiet();
+    const brewfilePath = resolve(REPO_ROOT, option.path);
+    await $`brew bundle --file=${brewfilePath} --verbose`;
     spinner.stop(`${option.label} installed successfully`);
     return true;
   } catch (error) {
     spinner.stop(`Failed to install ${option.label}`);
-    p.log.error(String(error));
+    if (error && typeof error === "object" && "stderr" in error) {
+      const stderr = error.stderr;
+      if (stderr instanceof Buffer) {
+        p.log.error(stderr.toString());
+      } else {
+        p.log.error(String(stderr));
+      }
+    } else {
+      p.log.error(String(error));
+    }
     return false;
   }
 }
