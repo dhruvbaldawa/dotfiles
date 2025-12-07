@@ -3,6 +3,7 @@ set -e
 
 REPO="dhruvbaldawa/dotfiles"
 BRANCH="main"
+DOTFILES_DIR="$HOME/.dotfiles"
 
 echo "🚀 Dotfiles Bootstrap"
 echo ""
@@ -17,6 +18,8 @@ if ! command -v brew &> /dev/null; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
   elif [[ -f "/usr/local/bin/brew" ]]; then
     eval "$(/usr/local/bin/brew shellenv)"
+  elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   fi
 fi
 
@@ -26,13 +29,20 @@ if ! command -v bun &> /dev/null; then
   brew install oven-sh/bun/bun
 fi
 
-# Create temp directory and download script
-TEMP_DIR=$(mktemp -d)
-trap "rm -rf $TEMP_DIR" EXIT
+# Clone the repo if not already present
+if [[ ! -d "$DOTFILES_DIR" ]]; then
+  echo "Cloning dotfiles repository..."
+  git clone "https://github.com/${REPO}.git" "$DOTFILES_DIR"
 
-echo "Downloading bootstrap script..."
-curl -fsSL "https://raw.githubusercontent.com/${REPO}/${BRANCH}/scripts/bootstrap.ts" -o "$TEMP_DIR/bootstrap.ts"
+  # Switch remote to SSH for future operations
+  cd "$DOTFILES_DIR"
+  git remote set-url origin "git@github.com:${REPO}.git"
+else
+  echo "Dotfiles directory already exists, pulling latest..."
+  cd "$DOTFILES_DIR"
+  git pull
+fi
 
-# Run script (Bun auto-installs dependencies)
-cd "$TEMP_DIR"
-bun run bootstrap.ts
+# Run bootstrap script from the cloned repo
+cd "$DOTFILES_DIR"
+bun run scripts/bootstrap.ts
