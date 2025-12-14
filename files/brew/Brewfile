@@ -11,7 +11,7 @@ brew "git"
 brew "git-delta"
 brew "gopass"
 brew "pinentry"
-brew "gnupg"
+brew "gnupg" if OS.mac?
 brew "htop"
 brew "jq"
 brew "just"

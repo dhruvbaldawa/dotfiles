@@ -62,6 +62,7 @@ antigen apply
 
 [[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
 [[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh
+[[ -f "$HOME/tools.sh" ]] && source $HOME/tools.sh
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra
 
 autoload -Uz compinit
