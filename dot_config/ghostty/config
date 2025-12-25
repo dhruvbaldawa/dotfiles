@@ -1,0 +1,54 @@
+# Theme
+theme = GitHub Dark High Contrast
+
+# Font
+font-family = JetbrainsMono Nerd Font Mono
+font-size = 14
+font-feature = calt
+font-feature = liga
+adjust-cell-width = -5%
+
+# Window size
+window-width = 80
+window-height = 25
+
+# Scrollback
+scrollback-limit = 100000
+
+# Background effects
+background-opacity = 0.95
+background-blur-radius = 4
+
+# Cursor
+cursor-color = #00c200
+cursor-text = #000000
+cursor-style = block
+cursor-style-blink = false
+
+# Colors
+foreground = #00c200
+background = #000000
+selection-foreground = #000000
+selection-background = #b4d5ff
+
+# Splits
+split-divider-color = #00c200
+
+# Mouse behavior
+focus-follows-mouse = true
+mouse-hide-while-typing = true
+
+# Shell integration
+shell-integration = zsh
+shell-integration-features = no-cursor
+
+# Bell
+bell-features = title,border,attention
+
+# macOS specific
+macos-option-as-alt = true
+macos-titlebar-style = transparent
+
+# Quick terminal (quake-style dropdown)
+keybind = global:super+grave_accent=toggle_quick_terminal
+
