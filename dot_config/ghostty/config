@@ -1,5 +1,5 @@
 # Theme
-theme = GitHub Dark High Contrast
+theme = anysphere-dark
 
 # Font
 font-family = JetbrainsMono Nerd Font Mono
@@ -20,19 +20,13 @@ background-opacity = 0.95
 background-blur-radius = 4
 
 # Cursor
-cursor-color = #00c200
-cursor-text = #000000
+cursor-color = #e4e4e4
+cursor-text = #141414
 cursor-style = block
 cursor-style-blink = false
 
-# Colors
-foreground = #00c200
-background = #000000
-selection-foreground = #000000
-selection-background = #b4d5ff
-
 # Splits
-split-divider-color = #00c200
+split-divider-color = #81a1c1
 
 # Mouse behavior
 focus-follows-mouse = true
@@ -52,3 +46,5 @@ macos-titlebar-style = transparent
 # Quick terminal (quake-style dropdown)
 keybind = global:super+grave_accent=toggle_quick_terminal
 
+# Keybindings
+keybind = shift+enter=text:\x1b\r
