@@ -44,7 +44,10 @@ macos-option-as-alt = true
 macos-titlebar-style = transparent
 
 # Quick terminal (quake-style dropdown)
-keybind = global:super+grave_accent=toggle_quick_terminal
+quick-terminal-screen = mouse
+quick-terminal-position = bottom
+quick-terminal-space-behavior = remain
+keybind = global:alt+grave_accent=toggle_quick_terminal
 
 # Keybindings
 keybind = shift+enter=text:\x1b\r
