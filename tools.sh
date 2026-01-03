@@ -4,6 +4,8 @@ export PERPLEXITY_API_KEY="$(gopass show creds/perplexity-api-key)"
 export PARALLEL_API_KEY="$(gopass show creds/parallel-api-key)"
 export OTEL_BEARER_TOKEN="$(gopass show creds/otel-bearer-token)"
 
+export APPRISE_URLS="$(gopass show creds/apprise-urls)"
+
 # Claude Code OTEL telemetry
 export CLAUDE_CODE_ENABLE_TELEMETRY=1
 export OTEL_METRICS_EXPORTER=otlp
