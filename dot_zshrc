@@ -57,7 +57,7 @@ antigen bundle greymd/docker-zsh-completion
 antigen bundle MichaelAquilina/zsh-you-should-use
 # antigen bundle changyuheng/fz
 antigen bundle zsh-users/zsh-completions
-antigen bundle dbz/kube-aliases
+command -v kubectl &>/dev/null && antigen bundle dbz/kube-aliases
 antigen apply
 
 [[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
