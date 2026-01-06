@@ -13,7 +13,7 @@ window-width = 80
 window-height = 25
 
 # Scrollback
-scrollback-limit = 100000
+scrollback-limit = 10000000
 
 # Background effects
 background-opacity = 0.95
