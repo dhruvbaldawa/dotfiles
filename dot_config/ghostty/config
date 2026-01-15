@@ -1,3 +1,6 @@
+# Autoupdate
+auto-update-channel = tip
+
 # Theme
 theme = anysphere-dark
 
