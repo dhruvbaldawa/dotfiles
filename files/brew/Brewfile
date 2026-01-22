@@ -37,6 +37,9 @@ brew "yq"
 brew "zoxide"
 brew "zsh"
 brew "zellij"
+brew "joshmedeski/sesh/sesh"
+brew "lazygit"
+brew "tmux"
 
 # fonts
 cask "font-0xproto"

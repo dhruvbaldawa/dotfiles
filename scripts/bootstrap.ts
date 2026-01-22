@@ -204,6 +204,42 @@ async function setupChezmoi(): Promise<boolean> {
   }
 }
 
+async function setupTmuxPluginManager(): Promise<boolean> {
+  const hasTmux = await checkCommand("tmux");
+  if (!hasTmux) {
+    p.log.warn("tmux not found. Please install core CLI tools first.");
+    return false;
+  }
+
+  // Check if TPM is already installed
+  try {
+    await $`test -d ~/.tmux/plugins/tpm`.quiet();
+    p.log.success("TPM is already installed");
+    return true;
+  } catch {
+    // Directory doesn't exist, continue with installation
+  }
+
+  const spinner = p.spinner();
+  spinner.start("Installing Tmux Plugin Manager...");
+
+  try {
+    await $`git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`.quiet();
+    spinner.stop("TPM installed successfully");
+
+    p.log.info("To use TPM:");
+    p.log.message("  1. Add plugins to your .tmux.conf");
+    p.log.message("  2. Press prefix + I to install plugins");
+    p.log.message("  3. Press prefix + U to update plugins");
+
+    return true;
+  } catch (error) {
+    spinner.stop("Failed to install TPM");
+    p.log.error(String(error));
+    return false;
+  }
+}
+
 async function main() {
   console.clear();
 
@@ -233,6 +269,7 @@ async function main() {
       { value: "github", label: "GitHub CLI authentication", hint: "gh auth login" },
       { value: "secrets", label: "Secrets (gopass)", hint: "Clone and sync secrets repo" },
       { value: "chezmoi", label: "Apply dotfiles", hint: "Initialize and apply chezmoi" },
+      { value: "tpm", label: "Tmux Plugin Manager", hint: "Clone TPM to ~/.tmux/plugins/tpm" },
     ],
     initialValues: ["github", "chezmoi"],
     required: false,
@@ -293,6 +330,10 @@ async function main() {
 
   if (selectedSteps.includes("chezmoi")) {
     await setupChezmoi();
+  }
+
+  if (selectedSteps.includes("tpm")) {
+    await setupTmuxPluginManager();
   }
 
   p.outro("✨ Bootstrap complete!");
