@@ -1,8 +1,8 @@
 # Claude Code MCPs
 export FIRECRAWL_API_KEY="$(gopass show creds/firecrawl-api-key)"
-export PERPLEXITY_API_KEY="$(gopass show creds/perplexity-api-key)"
-export PARALLEL_API_KEY="$(gopass show creds/parallel-api-key)"
 export OTEL_BEARER_TOKEN="$(gopass show creds/otel-bearer-token)"
+export MCP_PROXY_HOST="https://mcp.dhruv.cc"
+export MCP_PROXY_AUTH="$(gopass show creds/mcp-proxy-auth)"
 
 export APPRISE_URLS="$(gopass show creds/apprise-urls)"
 
