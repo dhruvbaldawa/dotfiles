@@ -10,6 +10,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Prezto's utility module registers a `make` wrapper for colormake; remove it
+# so `make` resolves to the actual binary.
+(( $+functions[make] )) && unfunction make
+
 export HISTSIZE=9999999
 export HISTFILESIZE=9999999
 export SAVEHIST=${HISTSIZE}
