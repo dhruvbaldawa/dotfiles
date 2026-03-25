@@ -10,13 +10,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Bind normal-mode arrow keys to history-substring-search (prezto only binds
-# the application-mode sequences via terminfo).
-if (( $+functions[history-substring-search-up] )); then
-  bindkey '^[[A' history-substring-search-up
-  bindkey '^[[B' history-substring-search-down
-fi
-
 # Prezto's utility module registers a `make` wrapper for colormake; remove it
 # so `make` resolves to the actual binary.
 (( $+functions[make] )) && unfunction make
@@ -47,6 +40,9 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # Install fzf
 source <(fzf --zsh)
 
+# Atuin shell history (binds Up arrow and Ctrl+R)
+eval "$(atuin init zsh)"
+
 # Install starship
 command -v starship &>/dev/null || sh -c "$(curl -fsSL https://starship.rs/install.sh)"
 
@@ -62,14 +58,10 @@ zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
 source <(carapace _carapace)
 
-# Start antigen and use more plugins
-source "$HOME/.antigen/antigen.zsh"
-antigen bundle greymd/docker-zsh-completion
-antigen bundle MichaelAquilina/zsh-you-should-use
-# antigen bundle changyuheng/fz
-antigen bundle zsh-users/zsh-completions
-command -v kubectl &>/dev/null && antigen bundle dbz/kube-aliases
-antigen apply
+# Load plugins via antidote
+source "$(brew --prefix antidote)/share/antidote/antidote.zsh"
+antidote load
+command -v kubectl &>/dev/null && source <(antidote bundle dbz/kube-aliases)
 
 [[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
 [[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh

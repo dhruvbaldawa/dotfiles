@@ -1,0 +1,3 @@
+greymd/docker-zsh-completion
+MichaelAquilina/zsh-you-should-use
+zsh-users/zsh-completions

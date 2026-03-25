@@ -12,12 +12,6 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   done
 fi
 
-# Install antigen
-if [ ! -d "$HOME/.antigen" ]; then
-  mkdir -p "$HOME/.antigen"
-  curl -L git.io/antigen > "$HOME/.antigen/antigen.zsh"
-fi
-
 if [ ! -f "/usr/local/bin/starship" ]; then
   curl -sS https://starship.rs/install.sh | sh
 fi
