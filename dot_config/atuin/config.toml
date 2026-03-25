@@ -1,0 +1,8 @@
+# ABOUTME: Atuin shell history configuration.
+# ABOUTME: Uses session-scoped history for up-arrow; Ctrl+R searches all history.
+
+## Use session-specific history when pressing up arrow, not global history
+filter_mode_shell_up_arrow = "session"
+
+## Default filter mode for the full search UI (Ctrl+R)
+filter_mode = "global"
