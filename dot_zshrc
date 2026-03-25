@@ -46,8 +46,8 @@ export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {}'"
 source <(fzf --zsh)
 
-# Atuin shell history (binds Up arrow and Ctrl+R)
-eval "$(atuin init zsh)"
+# Atuin shell history (Ctrl+R only; up arrow handled by history-substring-search)
+eval "$(atuin init zsh --disable-up-arrow)"
 
 # Install starship
 command -v starship &>/dev/null || sh -c "$(curl -fsSL https://starship.rs/install.sh)"
@@ -71,6 +71,12 @@ source <(carapace _carapace)
 source "$(brew --prefix antidote)/share/antidote/antidote.zsh"
 antidote load
 command -v kubectl &>/dev/null && source <(antidote bundle dbz/kube-aliases)
+
+# Bind up/down arrows to history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
 
 [[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
 [[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh
