@@ -3,3 +3,5 @@
 greymd/docker-zsh-completion
 MichaelAquilina/zsh-you-should-use
 zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zdharma-continuum/fast-syntax-highlighting
