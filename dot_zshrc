@@ -55,6 +55,9 @@ command -v starship &>/dev/null || sh -c "$(curl -fsSL https://starship.rs/insta
 # Disable the virtualenv prompt.
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
+# fnm (Node version manager)
+eval "$(fnm env)"
+
 # zoxide
 eval "$(zoxide init zsh)"
 

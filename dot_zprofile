@@ -24,10 +24,10 @@ fi
 #
 
 if [[ -z "$EDITOR" ]]; then
-  export EDITOR='vi'
+  export EDITOR='vim'
 fi
 if [[ -z "$VISUAL" ]]; then
-  export VISUAL='vi'
+  export VISUAL='vim'
 fi
 if [[ -z "$PAGER" ]]; then
   export PAGER='less'
