@@ -1,3 +1,5 @@
+# ABOUTME: Plugin list for antidote zsh plugin manager.
+# ABOUTME: Each line is a GitHub repo loaded as a zsh plugin.
 greymd/docker-zsh-completion
 MichaelAquilina/zsh-you-should-use
 zsh-users/zsh-completions
