@@ -25,27 +25,16 @@ alias f='open -a Finder'
 # be nice
 alias please=sudo
 
-# Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-    colorflag="--color"
-else # OS X `ls`
-    colorflag="-G"
-fi
+# Modern CLI replacements
+alias ls='eza'
+alias l='eza -l'
+alias la='eza -la'
+alias lsd='eza -lD'
+alias lt='eza --tree --level=2'
+alias cat='bat --paging=never'
+alias c='bat'
 
-alias grep='grep --color=always'
-
-# List all files colorized in long format
-alias l="ls -l ${colorflag}"
-
-# List all files colorized in long format, including dot files
-alias la="ls -la ${colorflag}"
-
-# List only directories
-alias lsd='ls -l | grep "^d"'
-
-# `cat` with beautiful colors. requires Pygments installed.
-#                              sudo easy_install Pygments
-alias c='pygmentize -O style=monokai -f console256 -g'
+alias grep='grep --color=auto'
 
 # GIT STUFF
 
