@@ -1,8 +1,23 @@
-# ABOUTME: Atuin shell history configuration.
-# ABOUTME: Uses session-scoped history for up-arrow; Ctrl+R searches all history.
+# ABOUTME: Configures search modes, UI style, and key bindings.
+
+# Compact UI with limited height instead of full-screen takeover
+style = "compact"
+inline_height = 8
 
 ## Use session-specific history when pressing up arrow, not global history
 filter_mode_shell_up_arrow = "session"
 
-## Default filter mode for the full search UI (Ctrl+R)
+# Up arrow: prefix search (matches what you've already typed)
+search_mode_shell_up_key_binding = "prefix"
+filter_mode_shell_up_key_binding = "host"
+
+# Ctrl+R: full fuzzy search across all history
+search_mode = "fuzzy"
 filter_mode = "global"
+
+# Execute immediately on enter (press tab to edit first)
+enter_accept = true
+
+# Sync
+[sync]
+records = true
