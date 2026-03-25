@@ -16,6 +16,11 @@
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
+  # Structural diffs via difftastic (syntax-aware, language-aware diffs)
+  dft = "!f() { GIT_EXTERNAL_DIFF=difft git diff $@; }; f"
+  dfts = "!f() { GIT_EXTERNAL_DIFF=difft git diff --staged $@; }; f"
+  dftl = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+
 [diff]
   algorithm = histogram
   colorMoved = default
