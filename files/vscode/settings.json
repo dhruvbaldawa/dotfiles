@@ -40,7 +40,7 @@
   "terminal.integrated.inheritEnv": false,
   "explorer.confirmDelete": false,
   "python.languageServer": "Pylance",
-  "terminal.external.osxExec": "iTerm2.app",
+  "terminal.external.osxExec": "Ghostty.app",
   "prettier.requireConfig": true,
   "[css]": {
     "editor.tabSize": 2,
@@ -62,7 +62,7 @@
   "telemetry.enableCrashReporter": false,
   "workbench.editor.closeOnFileDelete": true,
   "files.insertFinalNewline": true,
-  "terminal.integrated.shell.osx": "/opt/homebrew/bin/zsh",
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "gitlens.hovers.currentLine.over": "line",
   "breadcrumbs.enabled": true,
   "files.trimTrailingWhitespace": true,
@@ -95,7 +95,7 @@
     "typescript"
   ],
   "editor.suggestSelection": "first",
-  "terminal.integrated.shell.linux": "/usr/local/bin/zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh",
   "debug.onTaskErrors": "showErrors",
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
