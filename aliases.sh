@@ -29,6 +29,7 @@ alias c='bat'
 alias grep='grep --color=auto'
 
 # GIT STUFF
+alias lg='lazygit'
 
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:main"
@@ -129,6 +130,11 @@ alias plistbuddy="/usr/libexec/PlistBuddy"
 # Volume control
 alias stfu="osascript -e ‘set volume output muted true’"
 alias pumpitup="osascript -e ‘set volume 10’"
+
+# Docker cleanup
+alias dprune='docker system prune -af'
+alias drmi='docker images -q --filter "dangling=true" | xargs docker rmi'
+alias drmc='docker ps -aq --filter "status=exited" | xargs docker rm'
 
 # Kill all the tabs in Chrome to free up memory
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
