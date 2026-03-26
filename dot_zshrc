@@ -72,6 +72,9 @@ source "$(brew --prefix antidote)/share/antidote/antidote.zsh"
 antidote load
 command -v kubectl &>/dev/null && source <(antidote bundle dbz/kube-aliases)
 
+# zsh-autosuggestions: try history first, then completion engine
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
 # Bind up/down arrows to history-substring-search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
