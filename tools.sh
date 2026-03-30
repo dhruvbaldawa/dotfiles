@@ -3,7 +3,7 @@ export FIRECRAWL_API_KEY="$(gopass show creds/firecrawl-api-key)"
 export OTEL_BEARER_TOKEN="$(gopass show creds/otel-bearer-token)"
 export MCP_PROXY_HOST="https://mcp.dhruv.cc"
 export MCP_PROXY_AUTH="$(gopass show creds/mcp-proxy-auth)"
-export BRAVE_API_KEY="(gopass show creds/brave-api-key)"
+export BRAVE_API_KEY="$(gopass show creds/brave-api-key)"
 
 export APPRISE_URLS="$(gopass show creds/apprise-urls)"
 
