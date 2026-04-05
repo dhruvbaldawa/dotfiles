@@ -28,6 +28,7 @@ brew "pass-otp"
 brew "pinentry-mac" if OS.mac?
 brew "ripgrep"
 brew "rsync"
+brew "rtk"
 brew "sd"
 brew "starship"
 brew "tldr"
