@@ -32,6 +32,35 @@ function runupdate(){
     zprezto-update
 }
 
+# Cap zoxide ranks above $1 (default 100) to flatten heavy hitters
+function znorm() {
+    local cap="${1:-100}"
+    local db
+    for candidate in \
+        "${_ZO_DATA_DIR:-}/db.zo" \
+        "$HOME/Library/Application Support/zoxide/db.zo" \
+        "$HOME/.local/share/zoxide/db.zo"; do
+        if [[ "$candidate" != "/db.zo" && -f "$candidate" ]]; then
+            db="$candidate"
+            break
+        fi
+    done
+    if [[ -z "$db" ]]; then
+        echo "znorm: zoxide DB not found" >&2
+        return 1
+    fi
+    cp "$db" "${db}.bak.$(date +%Y%m%d-%H%M%S)"
+
+    local -i count=0
+    local p
+    while IFS= read -r p; do
+        zoxide remove "$p"
+        zoxide add -s "$cap" "$p"
+        (( count++ ))
+    done < <(zoxide query -ls | awk -v c="$cap" '$1+0 > c { $1=""; sub(/^ +/,""); print }')
+    echo "znorm: capped $count entries at rank $cap (backup: ${db}.bak.*)"
+}
+
 # Update ccconfigs, chezmoi, and gopass if on main branch
 function syncconfigs() {
     local current_dir="$PWD"

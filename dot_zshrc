@@ -59,6 +59,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 eval "$(fnm env)"
 
 # zoxide
+export _ZO_MAXAGE=100000
 eval "$(zoxide init zsh)"
 
 # carapace
