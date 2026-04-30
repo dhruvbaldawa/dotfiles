@@ -15,27 +15,33 @@ fi
 (( $+functions[make] )) && unfunction make
 
 # ABOUTME: Cache slow `eval "$(cmd)"` / `source <(cmd)` inits to disk.
-# ABOUTME: Regenerates when the source binary changes (SHA256 checksum).
+# ABOUTME: Regenerates when the source binary path/mtime/size changes.
 __cache_eval() {
   local name="$1" cmd="$2"
   local bin="${3:-${cmd[(w)1]}}"
   local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
-  local cache_file="$cache_dir/${name}.zsh" hash_file="$cache_dir/${name}.sha256"
+  local cache_file="$cache_dir/${name}.zsh" meta_file="$cache_dir/${name}.meta"
 
   local bin_path
   bin_path="$(command -v "$bin" 2>/dev/null)" || return 1
 
-  local current_hash
-  current_hash="$(shasum -a 256 "$bin_path" 2>/dev/null | awk '{print $1}')"
+  local current_meta
+  if zmodload zsh/stat 2>/dev/null; then
+    local -A bin_stat
+    zstat -H bin_stat "$bin_path" 2>/dev/null || return 1
+    current_meta="${bin_path:A}:${bin_stat[mtime]}:${bin_stat[size]}"
+  else
+    current_meta="${bin_path:A}"
+  fi
 
-  if [[ -f "$cache_file" && -f "$hash_file" && "$(<"$hash_file")" == "$current_hash" ]]; then
+  if [[ -f "$cache_file" && -f "$meta_file" && "$(<"$meta_file")" == "$current_meta" ]]; then
     source "$cache_file"
     return 0
   fi
 
   mkdir -p "$cache_dir"
   eval "$cmd" > "$cache_file"
-  echo "$current_hash" > "$hash_file"
+  echo "$current_meta" > "$meta_file"
   source "$cache_file"
 }
 
@@ -59,8 +65,19 @@ setopt prompt_subst interactive_comments  # for starship prompt
 
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
-[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ -d /opt/homebrew ]]; then
+  export HOMEBREW_PREFIX="/opt/homebrew"
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+  export HOMEBREW_REPOSITORY="/opt/homebrew"
+  path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $path)
+  export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
+elif [[ -d /home/linuxbrew/.linuxbrew ]]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
+  export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
+  path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $path)
+  export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
+fi
 
 # fzf: use fd for file/directory discovery, bat/eza for previews
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
@@ -88,12 +105,26 @@ __cache_eval zoxide 'zoxide init zsh'
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
-__cache_eval carapace 'carapace _carapace'
+__cache_eval carapace 'carapace _carapace zsh'
 
 # Load plugins via antidote
 source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
 antidote load
-command -v kubectl &>/dev/null && source <(antidote bundle dbz/kube-aliases)
+
+# Keep common Kubernetes shortcuts cheap; load the full kube-aliases bundle on demand.
+alias k='kubectl'
+alias kc='kubectl'
+alias kube='kubectl'
+alias kctx='kubectx'
+alias kns='kubens'
+
+__kube_aliases_loaded=0
+kube-aliases-load() {
+  (( __kube_aliases_loaded )) && return 0
+  command -v kubectl &>/dev/null || return 1
+  source <(antidote bundle dbz/kube-aliases)
+  __kube_aliases_loaded=1
+}
 
 # Bind up/down arrows to history-substring-search
 bindkey '^[[A' history-substring-search-up
@@ -105,4 +136,3 @@ bindkey '^[OB' history-substring-search-down
 [[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh
 [[ -f "$HOME/tools.sh" ]] && source $HOME/tools.sh
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra
-
