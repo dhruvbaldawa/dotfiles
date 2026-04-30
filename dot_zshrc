@@ -106,10 +106,3 @@ bindkey '^[OB' history-substring-search-down
 [[ -f "$HOME/tools.sh" ]] && source $HOME/tools.sh
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra
 
-autoload -Uz compinit
-# Rebuild zcompdump at most once per day (zsh glob qualifier: modified >24h ago)
-if [[ ! -f "$HOME/.zcompdump" || -n "$HOME/.zcompdump"(#qN.mh+24) ]]; then
-  compinit
-else
-  compinit -C
-fi
