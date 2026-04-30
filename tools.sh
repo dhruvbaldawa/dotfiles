@@ -18,6 +18,18 @@ export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer ${OTEL_BEARER_TOKEN}"
 export OTEL_RESOURCE_ATTRIBUTES=plan=claude-max
 export OTEL_METRIC_EXPORT_INTERVAL=10000
 export OTEL_LOGS_EXPORT_INTERVAL=5000
+
+# Opencode
+export OPENCODE_ENABLE_TELEMETRY=1
+export OPENCODE_OTLP_ENDPOINT="https://otel.dhruv.cc"
+export OPENCODE_OTLP_HEADERS="Authorization=Bearer ${OTEL_BEARER_TOKEN}"
+export OPENCODE_OTLP_PROTOCOL=http/protobuf
+export OPENCODE_OTLP_METRICS_INTERVAL=5000
+
+# Codex
+export OTEL_EXPORTER_OTLP_AUTHORIZATION="Bearer ${OTEL_BEARER_TOKEN}"
+
+# RTK
 export RTK_TELEMETRY_DISABLED=1
 
 # opencode OTEL telemetry (separate namespace from Claude Code)
