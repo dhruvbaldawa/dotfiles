@@ -31,6 +31,8 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
+  'autosuggestions' \
+  'syntax-highlighting' \
   'git' \
   'osx' \
   'rsync' \
