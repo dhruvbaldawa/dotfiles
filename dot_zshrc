@@ -100,6 +100,8 @@ __cache_eval fnm 'fnm env'
 # zoxide
 export _ZO_MAXAGE=100000
 __cache_eval zoxide 'zoxide init zsh'
+# Run zoxide's chpwd tracking in a detached background subshell so cd is instant.
+__zoxide_hook() { (command zoxide add -- "$(__zoxide_pwd)" &>/dev/null &) }
 
 # carapace
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
@@ -107,9 +109,13 @@ zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
 __cache_eval carapace 'carapace _carapace zsh'
 
-# Load plugins via antidote
-source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
-antidote load
+# Load plugins via antidote static bundle (only re-bundles when .txt changes).
+zsh_plugins="${ZDOTDIR:-$HOME}/.zsh_plugins"
+if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh" ]]; then
+  source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
+  antidote bundle <"${zsh_plugins}.txt" >|"${zsh_plugins}.zsh"
+fi
+source "${zsh_plugins}.zsh"
 
 # Keep common Kubernetes shortcuts cheap; load the full kube-aliases bundle on demand.
 alias k='kubectl'

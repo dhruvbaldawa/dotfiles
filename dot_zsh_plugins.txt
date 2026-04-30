@@ -1,5 +1,6 @@
 # ABOUTME: Plugin list for antidote zsh plugin manager.
-# ABOUTME: Each line is a GitHub repo loaded as a zsh plugin.
-greymd/docker-zsh-completion
+# ABOUTME: zsh-defer must be first; kind:defer plugins load after first prompt.
+romkatv/zsh-defer
+greymd/docker-zsh-completion kind:defer
 zsh-users/zsh-completions
 zsh-users/zsh-history-substring-search
