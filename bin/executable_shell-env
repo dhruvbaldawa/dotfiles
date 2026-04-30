@@ -1,0 +1,101 @@
+#!/usr/bin/env zsh
+# ABOUTME: Manage gopass-backed shell env vars via a single decrypted bundle in tmpfs.
+# ABOUTME: Commands: build list hydrate clear diff reload — see usage below.
+
+MANIFEST="${XDG_CONFIG_HOME:-$HOME/.config}/shell-env/manifest.yaml"
+GOPASS_BUNDLE="creds/shell-env"
+CACHE="${TMPDIR:-/tmp}/zsh-secrets-${UID}"
+TTL=14400  # 4h in seconds
+
+# Parse manifest: output "VAR GOPASS_PATH" per line, skip comments and blanks.
+_sem_entries() {
+  [[ -f "$MANIFEST" ]] || {
+    printf 'shell-env: no manifest at %s\n' "$MANIFEST" >&2
+    return 1
+  }
+  sed 's/#.*//' "$MANIFEST" \
+    | awk -F': *' 'NF==2 {
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", $1)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
+        if ($1 && $2) print $1, $2
+      }'
+}
+
+case "${1:-help}" in
+
+  # build: gopass paths → single encrypted bundle in gopass.
+  # Run once after initial setup and whenever a key is rotated.
+  build)
+    local entries
+    entries=$(_sem_entries) || exit 1
+    local -a bundle
+    local fail=0
+    while IFS=' ' read -r var path; do
+      local val
+      val=$(gopass show -o "$path" 2>/dev/null) || {
+        printf 'shell-env build: failed to read %s for %s\n' "$path" "$var" >&2
+        fail=1; continue
+      }
+      [[ -z "$val" ]] && {
+        printf 'shell-env build: empty value at %s\n' "$path" >&2
+        fail=1; continue
+      }
+      bundle+=("export ${var}=$(printf '%q' "$val")")
+    done <<< "$entries"
+    (( fail )) && exit 1
+    printf '%s\n' "${bundle[@]}" | gopass insert -m "$GOPASS_BUNDLE" || exit 1
+    printf 'shell-env: bundle written to %s\n' "$GOPASS_BUNDLE"
+    ;;
+
+  # list: show manifest mappings without revealing secret values.
+  list)
+    local entries
+    entries=$(_sem_entries) || exit 1
+    printf '%-35s %s\n' "VAR" "GOPASS PATH"
+    printf '%-35s %s\n' "---" "-----------"
+    while IFS=' ' read -r var path; do
+      printf '%-35s %s\n' "$var" "$path"
+    done <<< "$entries"
+    ;;
+
+  # clear: delete tmpfs cache (next shell start will re-decrypt).
+  clear)
+    rm -f "$CACHE"
+    printf 'shell-env: cache cleared\n'
+    ;;
+
+  # diff: report which manifest vars are unset in the current environment.
+  diff)
+    local entries
+    entries=$(_sem_entries) || exit 1
+    local ok=1
+    while IFS=' ' read -r var _; do
+      [[ -z "${(P)var}" ]] && { printf '  UNSET: %s\n' "$var"; ok=0 }
+    done <<< "$entries"
+    (( ok )) && printf '  all vars present in environment\n'
+    ;;
+
+  # reload: force re-decrypt and print exports to stdout.
+  # Usage in current shell: eval "$(shell-env reload)"
+  reload)
+    rm -f "$CACHE"
+    umask 077
+    gopass show -o "$GOPASS_BUNDLE" >| "$CACHE" 2>/dev/null || {
+      printf 'shell-env: decrypt failed\n' >&2; exit 1
+    }
+    chmod 600 "$CACHE"
+    cat "$CACHE"
+    ;;
+
+  help|--help|-h|*)
+    printf 'Usage: shell-env <command>\n\n'
+    printf '  build   Read manifest + gopass paths, write bundle to %s\n' "$GOPASS_BUNDLE"
+    printf '  list    Show VAR → path from manifest (no secret values)\n'
+    printf '  clear   Delete tmpfs cache\n'
+    printf '  diff    Print manifest vars unset in current environment\n'
+    printf '  reload  Print fresh vars to stdout (usage: eval "$(shell-env reload)")\n\n'
+    printf 'Setup: run "shell-env build" once, then open a new shell.\n'
+    printf 'Rotate keys: update gopass, run "shell-env build", then "eval \\"$(shell-env reload)\\"" in active shells.\n'
+    exit 1
+    ;;
+esac

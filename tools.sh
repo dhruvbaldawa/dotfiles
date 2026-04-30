@@ -1,11 +1,20 @@
-# Claude Code MCPs
-export FIRECRAWL_API_KEY="$(gopass show creds/firecrawl-api-key)"
-export OTEL_BEARER_TOKEN="$(gopass show creds/otel-bearer-token)"
-export MCP_PROXY_HOST="https://mcp.dhruv.cc"
-export MCP_PROXY_AUTH="$(gopass show creds/mcp-proxy-auth)"
-export BRAVE_API_KEY="(gopass show creds/brave-api-key)"
+# Secrets: decrypt gopass bundle to per-session tmpfs cache once, source on hit.
+# Cold start (cache absent/expired): ~1.3s. Warm hit: <5ms.
+# Run "shell-env build" once to populate; "eval $(shell-env reload)" to refresh in-session.
+() {
+  local cache="${TMPDIR:-/tmp}/zsh-secrets-${UID}"
+  local now mtime
+  now=$(date +%s)
+  mtime=$(stat -f %m "$cache" 2>/dev/null || echo 0)
+  if (( now - mtime >= 14400 )); then
+    umask 077
+    gopass show -o creds/shell-env >| "$cache" 2>/dev/null && chmod 600 "$cache"
+  fi
+  [[ -f "$cache" ]] && source "$cache"
+}
 
-export APPRISE_URLS="$(gopass show creds/apprise-urls)"
+# Claude Code MCPs
+export MCP_PROXY_HOST="https://mcp.dhruv.cc"
 
 # Claude Code OTEL telemetry
 export CLAUDE_CODE_ENABLE_TELEMETRY=1

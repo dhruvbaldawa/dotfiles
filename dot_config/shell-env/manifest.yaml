@@ -1,0 +1,10 @@
+# shell-env manifest: VAR_NAME: gopass/path
+# No secrets here — this file is chezmoi-tracked.
+# Run "shell-env build" after adding entries or rotating keys.
+# Run "eval $(shell-env reload)" or open a new shell to pick up changes.
+
+FIRECRAWL_API_KEY: creds/firecrawl-api-key
+OTEL_BEARER_TOKEN: creds/otel-bearer-token
+MCP_PROXY_AUTH:    creds/mcp-proxy-auth
+BRAVE_API_KEY:     creds/brave-api-key
+APPRISE_URLS:      creds/apprise-urls
