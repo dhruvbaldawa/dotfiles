@@ -2,6 +2,10 @@
 # ABOUTME: Manage gopass-backed shell env vars via a single decrypted bundle in tmpfs.
 # ABOUTME: Commands: build list hydrate clear diff reload — see usage below.
 
+# Scripts don't inherit the interactive shell's PATH on macOS; set it explicitly.
+typeset -U path
+path=(/opt/homebrew/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin $path)
+
 MANIFEST="${XDG_CONFIG_HOME:-$HOME/.config}/shell-env/manifest.yaml"
 GOPASS_BUNDLE="creds/shell-env"
 CACHE="${TMPDIR:-/tmp}/zsh-secrets-${UID}"
@@ -32,7 +36,7 @@ case "${1:-help}" in
     local fail=0
     while IFS=' ' read -r var path; do
       local val
-      val=$(gopass show -o "$path" 2>/dev/null) || {
+      val=$(gopass cat "$path" 2>/dev/null) || {
         printf 'shell-env build: failed to read %s for %s\n' "$path" "$var" >&2
         fail=1; continue
       }
@@ -80,7 +84,7 @@ case "${1:-help}" in
   reload)
     rm -f "$CACHE"
     umask 077
-    gopass show -o "$GOPASS_BUNDLE" >| "$CACHE" 2>/dev/null || {
+    gopass cat "$GOPASS_BUNDLE" >| "$CACHE" 2>/dev/null || {
       printf 'shell-env: decrypt failed\n' >&2; exit 1
     }
     chmod 600 "$CACHE"
