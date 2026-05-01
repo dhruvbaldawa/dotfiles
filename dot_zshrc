@@ -40,8 +40,8 @@ __cache_eval() {
   fi
 
   mkdir -p "$cache_dir"
-  eval "$cmd" > "$cache_file"
-  echo "$current_meta" > "$meta_file"
+  eval "$cmd" >| "$cache_file"
+  echo "$current_meta" >| "$meta_file"
   source "$cache_file"
 }
 
@@ -88,9 +88,6 @@ export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {}'"
 __cache_eval fzf 'fzf --zsh'
 
-# Starship prompt
-command -v starship &>/dev/null && __cache_eval starship 'starship init zsh'
-
 # Disable the virtualenv prompt.
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
@@ -109,14 +106,25 @@ zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
 __cache_eval carapace 'carapace _carapace zsh'
 
-# Load plugins via antidote static bundle (only re-bundles when .txt changes).
+# Load plugins via antidote static bundle.
 zsh_plugins="${ZDOTDIR:-$HOME}/.zsh_plugins"
-if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh" ]]; then
+if [[ -n "${ANTIDOTE_HOME:-}" ]]; then
+  antidote_home="$ANTIDOTE_HOME"
+elif [[ "$OSTYPE" == darwin* ]]; then
+  antidote_home="$HOME/Library/Caches/antidote"
+else
+  antidote_home="${XDG_CACHE_HOME:-$HOME/.cache}/antidote"
+fi
+if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh" || ! -d "$antidote_home" ]]; then
   source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
   antidote bundle <"${zsh_plugins}.txt" >"${zsh_plugins}.zsh.tmp" \
     && mv "${zsh_plugins}.zsh.tmp" "${zsh_plugins}.zsh"
 fi
 source "${zsh_plugins}.zsh"
+
+# Starship prompt. Load after zsh-defer has scheduled deferred plugins so it
+# cannot clear Starship's right prompt through the RPS1 alias.
+command -v starship &>/dev/null && __cache_eval starship 'starship init zsh'
 
 # Keep common Kubernetes shortcuts cheap; load the full kube-aliases bundle on demand.
 alias k='kubectl'

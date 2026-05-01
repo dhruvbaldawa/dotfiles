@@ -14,6 +14,12 @@ alias firefox="open -a firefox"
 alias chrome="open -a google\ chrome"
 alias f='open -a Finder'
 
+# Homebrew
+alias brewi="brew install"
+alias caski="brew install --cask"
+alias brewx="brew uninstall"
+alias brews="brew search"
+
 # be nice
 alias please=sudo
 

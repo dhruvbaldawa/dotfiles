@@ -11,7 +11,7 @@
     # Subshell: umask change must not leak into the interactive session.
     # Atomic write: write to .tmp then rename so a failed decrypt never leaves
     # a fresh-mtime empty file that suppresses retries for the next 4h TTL.
-    (umask 077; gopass cat creds/shell-env >"${cache}.tmp" 2>/dev/null) \
+    (umask 077; gopass show -f creds/shell-env >"${cache}.tmp" 2>/dev/null) \
       && mv "${cache}.tmp" "$cache" \
       || rm -f "${cache}.tmp"
   fi

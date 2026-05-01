@@ -34,10 +34,8 @@ case "${1:-help}" in
     bundle=()
     fail=0
     while IFS=' ' read -r var gp; do
-      # </dev/null: gopass would otherwise inherit the loop's here-string stdin
-      # and consume the remaining entries, so the loop only ever ran once.
-      # First line only — gopass entries may carry metadata in the body.
-      val=$(gopass cat "$gp" </dev/null 2>/dev/null) || { printf 'shell-env build: read failed for %s\n' "$gp" >&2; fail=1; continue; }
+      # First line only: gopass entries may carry metadata in the body.
+      val=$(gopass show -o "$gp" 2>/dev/null) || { printf 'shell-env build: read failed for %s\n' "$gp" >&2; fail=1; continue; }
       val=${val%%$'\n'*}
       [[ -z "$val" ]] && { printf 'shell-env build: empty value at %s\n' "$gp" >&2; fail=1; continue; }
       bundle+=("export ${var}=$(printf '%q' "$val")")
@@ -78,7 +76,7 @@ case "${1:-help}" in
   reload)
     rm -f "$CACHE"
     umask 077
-    gopass cat "$GOPASS_BUNDLE" >"$CACHE" 2>/dev/null || {
+    gopass show -f "$GOPASS_BUNDLE" >"$CACHE" 2>/dev/null || {
       printf 'shell-env: decrypt failed\n' >&2; exit 1
     }
     chmod 600 "$CACHE"
