@@ -101,7 +101,7 @@ __cache_eval fnm 'fnm env'
 export _ZO_MAXAGE=100000
 __cache_eval zoxide 'zoxide init zsh'
 # Run zoxide's chpwd tracking in a detached background subshell so cd is instant.
-__zoxide_hook() { (command zoxide add -- "$(__zoxide_pwd)" &>/dev/null &) }
+__zoxide_hook() { command zoxide add -- "$(__zoxide_pwd)" &>/dev/null &! }
 
 # carapace
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
