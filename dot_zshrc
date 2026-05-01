@@ -132,11 +132,15 @@ kube-aliases-load() {
   __kube_aliases_loaded=1
 }
 
-# Bind up/down arrows to history-substring-search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
+# Bind up/down arrows to history-substring-search.
+# Guard on widget existence so a missing plugin falls back to default keybind
+# (up-line-or-history) instead of surfacing "No such widget" on each press.
+if (( $+widgets[history-substring-search-up] )); then
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+  bindkey '^[OA' history-substring-search-up
+  bindkey '^[OB' history-substring-search-down
+fi
 
 [[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
 [[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh

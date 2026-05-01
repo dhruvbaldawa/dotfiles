@@ -8,7 +8,7 @@
   mtime=$(stat -f %m "$cache" 2>/dev/null || echo 0)
   if (( now - mtime >= 14400 )); then
     umask 077
-    gopass show -o creds/shell-env >| "$cache" 2>/dev/null && chmod 600 "$cache"
+    gopass cat creds/shell-env >| "$cache" 2>/dev/null && chmod 600 "$cache"
   fi
   [[ -f "$cache" ]] && source "$cache"
 }

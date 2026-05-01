@@ -4,6 +4,11 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 
+# Clip slow modules (git_status, language detectors) at 100ms.
+# Saves ~580ms/cd in large repos; may show empty git module in pathological cases.
+command_timeout = 100
+scan_timeout = 30
+
 format = '$directory$time$kubernetes$aws$cmd_duration$line_break$python$conda$nodejs$username$hostname$character'
 
 # Prompt
@@ -31,6 +36,9 @@ symbol = ''
 format = '[\($symbol($context):($namespace)\)]($style)'
 disabled = false
 style = 'cyan'
+# Only render when KUBECONFIG is set — avoids 260ms cost in non-k8s dirs.
+# detect_files alone has a known bug (starship#6047); detect_env_vars is reliable.
+detect_env_vars = ['KUBECONFIG']
 
 [cmd_duration]
 min_time = 0
