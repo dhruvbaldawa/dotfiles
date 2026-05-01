@@ -3,14 +3,19 @@
 # Run "shell-env build" once to populate; "eval $(shell-env reload)" to refresh in-session.
 () {
   local cache="${TMPDIR:-/tmp}/zsh-secrets-${UID}"
-  local now mtime
-  now=$(date +%s)
-  mtime=$(stat -f %m "$cache" 2>/dev/null || echo 0)
+  local now=0 mtime=0
+  (( now = EPOCHSECONDS ))
+  local -A _cs
+  zstat -H _cs "$cache" 2>/dev/null && mtime=${_cs[mtime]}
   if (( now - mtime >= 14400 )); then
-    umask 077
-    gopass cat creds/shell-env >| "$cache" 2>/dev/null && chmod 600 "$cache"
+    # Subshell: umask change must not leak into the interactive session.
+    # Atomic write: write to .tmp then rename so a failed decrypt never leaves
+    # a fresh-mtime empty file that suppresses retries for the next 4h TTL.
+    (umask 077; gopass cat creds/shell-env >"${cache}.tmp" 2>/dev/null) \
+      && mv "${cache}.tmp" "$cache" \
+      || rm -f "${cache}.tmp"
   fi
-  [[ -f "$cache" ]] && source "$cache"
+  [[ -s "$cache" ]] && source "$cache"
 }
 
 # Claude Code MCPs

@@ -113,7 +113,8 @@ __cache_eval carapace 'carapace _carapace zsh'
 zsh_plugins="${ZDOTDIR:-$HOME}/.zsh_plugins"
 if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh" ]]; then
   source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
-  antidote bundle <"${zsh_plugins}.txt" >|"${zsh_plugins}.zsh"
+  antidote bundle <"${zsh_plugins}.txt" >"${zsh_plugins}.zsh.tmp" \
+    && mv "${zsh_plugins}.zsh.tmp" "${zsh_plugins}.zsh"
 fi
 source "${zsh_plugins}.zsh"
 
