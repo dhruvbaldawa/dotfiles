@@ -43,6 +43,7 @@ brew "zellij"
 brew "joshmedeski/sesh/sesh"
 brew "lazygit"
 brew "tmux"
+brew "modem-dev/tap/hunk"
 
 # fonts
 cask "font-0xproto"
