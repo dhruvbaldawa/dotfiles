@@ -2,6 +2,10 @@
 # Cold start (cache absent/expired): ~1.3s. Warm hit: <5ms.
 # Run "shell-env build" once to populate; "eval $(shell-env reload)" to refresh in-session.
 () {
+  # zstat needs zsh/stat and EPOCHSECONDS needs zsh/datetime; today both happen
+  # to be loaded by .zshrc's __cache_eval before this file sources, but that is
+  # an ordering accident — make the dependency explicit.
+  zmodload zsh/stat zsh/datetime 2>/dev/null
   local cache="${TMPDIR:-/tmp}/zsh-secrets-${UID}"
   local now=0 mtime=0
   (( now = EPOCHSECONDS ))
@@ -15,8 +19,11 @@
     local sock="$HOME/.run/gopass/gopass-age-agent.sock" sock_mtime=0 boot_time=0
     local -A _sk
     zstat -H _sk "$sock" 2>/dev/null && sock_mtime=${_sk[mtime]}
-    boot_time=$(sysctl -n kern.boottime 2>/dev/null | sed -n 's/.*{ sec = \([0-9]*\).*/\1/p')
-    (( sock_mtime > 0 && boot_time > 0 && sock_mtime < boot_time )) && rm -f "$sock"
+    # Only pay the sysctl+sed fork when a socket actually exists.
+    if (( sock_mtime > 0 )); then
+      boot_time=$(sysctl -n kern.boottime 2>/dev/null | sed -n 's/.*{ sec = \([0-9]*\).*/\1/p')
+      (( boot_time > 0 && sock_mtime < boot_time )) && command rm -f "$sock"
+    fi
   fi
   if (( now - mtime >= 604800 )); then
     # Subshell: umask change must not leak into the interactive session.

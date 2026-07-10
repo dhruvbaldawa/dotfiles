@@ -204,8 +204,8 @@ else
 fi
 if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh" || ! -d "$antidote_home" ]]; then
   source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
-  antidote bundle <"${zsh_plugins}.txt" >"${zsh_plugins}.zsh.tmp" \
-    && mv "${zsh_plugins}.zsh.tmp" "${zsh_plugins}.zsh"
+  antidote bundle <"${zsh_plugins}.txt" >| "${zsh_plugins}.zsh.tmp" \
+    && command mv -f "${zsh_plugins}.zsh.tmp" "${zsh_plugins}.zsh"
 fi
 source "${zsh_plugins}.zsh"
 
@@ -219,8 +219,9 @@ autoload -Uz compinit
 _zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 mkdir -p "${_zcompdump:h}"
 # -C skips the security audit and function check for speed; take the fast path
-# unless the dump is missing or older than 20h (then regenerate + re-audit).
-if [[ -n "$_zcompdump"(#qN.mh-20) ]]; then
+# unless the dump is missing, older than 20h, or older than the antidote bundle
+# (a new completion plugin must register now, not after the 20h window).
+if [[ -n "$_zcompdump"(#qN.mh-20) && ! "${zsh_plugins}.zsh" -nt "$_zcompdump" ]]; then
   compinit -C -d "$_zcompdump"
 else
   compinit -i -d "$_zcompdump"
@@ -339,6 +340,9 @@ __kube_aliases_loaded=0
 kube-aliases-load() {
   (( __kube_aliases_loaded )) && return 0
   command -v kubectl &>/dev/null || return 1
+  # antidote is a sourced script, not a PATH binary; warm shells (bundle cache
+  # hit) never sourced it, so load it here before use.
+  (( $+functions[antidote] )) || source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
   source <(antidote bundle dbz/kube-aliases)
   __kube_aliases_loaded=1
 }
