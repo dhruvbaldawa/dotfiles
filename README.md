@@ -51,7 +51,7 @@ bun run scripts/bootstrap.ts
 
 ## What's included
 
-- **Shell**: zsh with prezto, starship prompt
+- **Shell**: zsh with antidote, starship prompt
 - **Editors**: vim, VS Code settings
 - **Git**: config with delta diff, diff-so-fancy
 - **Secrets**: gopass integration with GPG, 7-day passphrase caching

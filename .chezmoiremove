@@ -1,0 +1,4 @@
+# ABOUTME: Targets chezmoi force-removes from $HOME on every apply (no-op once gone).
+# ABOUTME: Purges the prezto install now that zsh runs on antidote alone.
+.zprezto
+.zpreztorc
