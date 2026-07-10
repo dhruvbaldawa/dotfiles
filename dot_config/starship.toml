@@ -1,3 +1,6 @@
+# ABOUTME: Starship prompt: two-line left prompt, git/timing on the right,
+# ABOUTME: palette-driven colors, and modules that render only when relevant.
+
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
@@ -8,14 +11,31 @@ add_newline = false
 command_timeout = 1000
 scan_timeout = 300
 
-format = '$directory$time$kubernetes$aws$cmd_duration$line_break$python$conda$nodejs$username$hostname$character'
+# Line 1: where am I (dir + k8s/aws context). Line 2: env + input line.
+# username/hostname/shlvl/jobs/sudo/status only render when they matter
+# (SSH, nested shells, bg jobs, cached sudo creds, last command failed).
+format = '$directory$kubernetes$aws$line_break$python$conda$nodejs$direnv$username$hostname$shlvl$jobs$sudo$status$character'
 
-# Prompt
-right_format = '$git_branch$git_status$git_state'
+# Git on the right, slow-command duration and clock trailing it. The whole
+# right side vanishes when the prompt goes transient (see .zshrc).
+right_format = '$git_branch$git_status$git_state$cmd_duration$time'
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character] # The name of the module we are configuring is 'character'
-success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+# Module styles reference this palette; retheme the prompt in one place.
+palette = 'main'
+
+[palettes.main]
+path = '#FCCE78'
+host = 'bright-green'
+context = 'cyan'
+vcs = 'white'
+muted = 'bright-black'
+ok = 'green'
+warn = 'yellow'
+danger = 'red'
+
+[character]
+success_symbol = '[➜](bold ok)'
+error_symbol = '[➜](bold danger)'
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -25,46 +45,81 @@ disabled = true
 format = '[\[$path\]]($style)[$read_only]($read_only_style)'
 truncation_length = 10
 truncate_to_repo = false
-style = '#FCCE78'
+style = 'path'
 
+# Symbol is a literal so the outer group only renders when a profile is
+# active — '$symbol' is always non-empty and would defeat the gating.
 [aws]
-format = '[\($symbol($profile )(\[$duration\])\)]($style)'
+format = '([\(☁️  $profile( \[$duration\])\)]($style))'
 
 [kubernetes]
 symbol = ''
 format = '[\($symbol($context):($namespace)\)]($style)'
 disabled = false
-style = 'cyan'
+style = 'context'
+
+# Guardrail: production contexts are impossible to miss, staging gets amber.
+[[kubernetes.contexts]]
+context_pattern = '.*prod.*'
+style = 'bold danger'
+
+[[kubernetes.contexts]]
+context_pattern = '.*staging.*'
+style = 'warn'
 
 [cmd_duration]
-min_time = 0
+min_time = 2000
 format = '[ \[$duration\]]($style)'
-style = 'dimmed red'
-show_milliseconds = true
+style = 'dimmed danger'
 
 [time]
-format = '[\[$time\]]($style)'
+format = '[ \[$time\]]($style)'
 disabled = false
-style = 'dimmed gray'
+style = 'dimmed muted'
 time_format = '%r'
 
 [conda]
 format = '[$symbol$environment ]($style)'
 style = 'dimmed bright-green'
 
+# Shows whether the .envrc in scope is active ("on") or present-but-unloaded.
+[direnv]
+disabled = false
+format = '[\(direnv:$loaded\)]($style) '
+loaded_msg = 'on'
+unloaded_msg = 'off'
+style = 'muted'
+
 [username]
 format = '[$user]($style)'
-show_always = true
 
 [hostname]
-ssh_only = false
+ssh_only = true
 format = '@[$hostname]($style) '
-style = 'bright-green'
+style = 'host'
+
+[shlvl]
+disabled = false
+threshold = 3
+format = '[$symbol$shlvl]($style) '
+symbol = '↕'
+style = 'bold warn'
+
+[sudo]
+disabled = false
+format = '[sudo]($style) '
+style = 'bold warn'
+
+[status]
+disabled = false
+format = '[$symbol$status( $signal_name)]($style) '
+symbol = '✘ '
+style = 'bold danger'
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
-style = 'white'
-symbol = ''
+style = 'vcs'
+symbol = ''
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
@@ -73,7 +128,7 @@ ahead = '[⇡](green)'
 behind = '[⇣](red)'
 diverged = '[⇕](bright-yellow)'
 up_to_date = '[]()'
-untracked = '[?](gray)'
+untracked = '[?](muted)'
 modified = '[!](purple)'
 staged = '[+](green)'
 renamed = '[»](cyan)'

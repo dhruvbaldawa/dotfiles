@@ -167,6 +167,9 @@ function zle-line-init {
 }
 function zle-line-finish {
   (( $+terminfo[rmkx] )) && echoti rmkx
+  # Transient prompt: collapse the just-submitted prompt to a bare marker.
+  # Defined after starship init below; no-op when starship is absent.
+  (( $+functions[__prompt_shrink] )) && __prompt_shrink
 }
 zle -N zle-line-init
 zle -N zle-line-finish
@@ -328,6 +331,38 @@ __cache_eval carapace 'carapace _carapace zsh'
 # Starship prompt. Load after zsh-defer has scheduled deferred plugins so it
 # cannot clear Starship's right prompt through the RPS1 alias.
 command -v starship &>/dev/null && __cache_eval starship 'starship init zsh'
+
+# Transient prompt: once a line is submitted (or aborted), repaint its prompt
+# as a bare marker so scrollback reads command→output instead of full prompt
+# banners. Starship only supports this natively in fish/cmd; in zsh we swap
+# PROMPT around each line: zle-line-finish (above) shrinks it, precmd restores
+# it before the next render, and TRAPINT covers lines aborted with Ctrl-C
+# (zle-line-finish does not fire for those).
+if [[ $PROMPT == *starship* ]]; then
+  __prompt_full=$PROMPT
+  __rprompt_full=$RPROMPT
+  __prompt_marker='%B%F{green}➜%f%b '
+
+  # Swap in the marker and repaint. The CONTEXT guard skips PS2 continuation
+  # lines; `zle` guards the repaint when called outside the line editor.
+  __prompt_shrink() {
+    [[ ${CONTEXT:-start} == start ]] || return 0
+    PROMPT=$__prompt_marker
+    RPROMPT=''
+    zle && zle .reset-prompt
+    return 0
+  }
+  __prompt_restore() {
+    PROMPT=$__prompt_full
+    RPROMPT=$__rprompt_full
+  }
+  precmd_functions+=(__prompt_restore)
+
+  TRAPINT() {
+    __prompt_shrink
+    return $(( 128 + $1 ))
+  }
+fi
 
 # Keep common Kubernetes shortcuts cheap; load the full kube-aliases bundle on demand.
 alias k='kubectl'
