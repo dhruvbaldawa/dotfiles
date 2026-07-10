@@ -6,7 +6,8 @@
 #
 
 # Compile the completion dump to increase startup speed.
-zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/prezto/zcompdump"
+# Path must match the -d argument passed to compinit in ~/.zshrc.
+zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
   if command mkdir "${zcompdump}.zwc.lock" 2>/dev/null; then
     zcompile "$zcompdump"

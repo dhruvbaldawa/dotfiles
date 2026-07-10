@@ -1,18 +1,10 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# ABOUTME: Interactive zsh setup: shell options, keybinds, completion, antidote
+# ABOUTME: plugins, and disk-cached tool inits (fzf/fnm/direnv/zoxide/carapace/starship).
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Prezto's utility module registers a `make` wrapper for colormake; remove it
-# so `make` resolves to the actual binary.
-(( $+functions[make] )) && unfunction make
+# Wrappers (e.g. Anthropic's "orca" daemon) point ZDOTDIR at their own dir and
+# re-source ~/.zshrc. Our chezmoi-managed files (.zsh_history, .zsh_plugins.*)
+# are pinned to $HOME below, so a foreign ZDOTDIR cannot split shell state.
+# unset ZDOTDIR
 
 # ABOUTME: Cache slow `eval "$(cmd)"` / `source <(cmd)` inits to disk.
 # ABOUTME: Regenerates when the source binary path/mtime/size changes.
@@ -45,6 +37,9 @@ __cache_eval() {
   source "$cache_file"
 }
 
+# History. HISTFILE was previously set by prezto's history module; without this
+# export zsh stops persisting history entirely (silent loss of ~/.zsh_history).
+export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=9999999
 export HISTFILESIZE=9999999
 export SAVEHIST=${HISTSIZE}
@@ -79,6 +74,103 @@ elif [[ -d /home/linuxbrew/.linuxbrew ]]; then
   export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 fi
 
+# Shell options ported from prezto's environment/directory modules; everything
+# else prezto set is either a zsh default already or consciously dropped.
+setopt COMBINING_CHARS      # Combine zero-length punctuation characters (accents) with the base character.
+unsetopt BG_NICE            # Don't run all background jobs at a lower priority.
+unsetopt HUP                # Don't kill jobs on shell exit.
+unsetopt CHECK_JOBS         # Don't report on jobs when shell exits.
+
+setopt AUTO_CD              # Auto changes to a directory without typing cd.
+setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
+setopt CDABLE_VARS          # Change directory to a path stored in a variable.
+setopt MULTIOS              # Write to multiple descriptors.
+setopt EXTENDED_GLOB        # Use extended globbing syntax.
+unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
+                            # Use >! and >>! to bypass.
+
+setopt COMPLETE_IN_WORD ALWAYS_TO_END PATH_DIRS AUTO_MENU AUTO_LIST AUTO_PARAM_SLASH
+unsetopt MENU_COMPLETE FLOW_CONTROL CASE_GLOB
+
+# Free Ctrl+S/Ctrl+Q for keybinds instead of terminal flow control.
+if [[ -r ${TTY:-} && -w ${TTY:-} && $+commands[stty] == 1 ]]; then
+  stty -ixon <$TTY >$TTY
+fi
+
+# Colored man pages / less.
+export LESS_TERMCAP_mb=$'\E[01;31m'       # Begins blinking.
+export LESS_TERMCAP_md=$'\E[01;31m'       # Begins bold.
+export LESS_TERMCAP_me=$'\E[0m'           # Ends mode.
+export LESS_TERMCAP_se=$'\E[0m'           # Ends standout-mode.
+export LESS_TERMCAP_so=$'\E[00;47;30m'    # Begins standout-mode.
+export LESS_TERMCAP_ue=$'\E[0m'           # Ends underline.
+export LESS_TERMCAP_us=$'\E[01;32m'       # Begins underline.
+
+# Line editor (ported from prezto's editor module, emacs keymap only).
+bindkey -e
+# Treat '=' and '/' as word separators so path segments and flag values are
+# separate words for word-motion/word-kill widgets.
+WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+zmodload zsh/terminfo
+[[ -n "$terminfo[khome]" ]] && bindkey "$terminfo[khome]" beginning-of-line
+[[ -n "$terminfo[kend]"  ]] && bindkey "$terminfo[kend]"  end-of-line
+[[ -n "$terminfo[kcbt]"  ]] && bindkey "$terminfo[kcbt]"  reverse-menu-complete
+[[ -n "$terminfo[kich1]" ]] && bindkey "$terminfo[kich1]" overwrite-mode
+bindkey '\e[3~' delete-char   # CSI Delete (terminfo kdch1 is unreliable across TERM values)
+
+# Ctrl-Left/Ctrl-Right (plus Esc/application-mode variants) jump by word.
+for key in '\e[1;5D' '\e[5D' '\e\e[D' '\eOd'; do
+  bindkey "$key" emacs-backward-word
+done
+for key in '\e[1;5C' '\e[5C' '\e\e[C' '\eOc'; do
+  bindkey "$key" emacs-forward-word
+done
+unset key
+
+# Glob-pattern-aware incremental history search on Ctrl-R/Ctrl-S.
+# (fzf's init below rebinds ^R to fzf-history-widget, same as today; ^S keeps this.)
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward
+
+# Expand history references (!!, !$, ...) inline when Space is pressed.
+bindkey ' ' magic-space
+
+# Open the current command line in $EDITOR.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# Smart URLs: auto-escape special chars when pasting a URL. Must be set up
+# before zsh-autosuggestions loads (it wraps whatever self-insert is bound
+# at its load time); autosuggestions is deferred, so this always wins.
+autoload -Uz is-at-least
+if [[ $ZSH_VERSION != 5.1.1 && $TERM != dumb ]]; then
+  if is-at-least 5.2; then
+    autoload -Uz bracketed-paste-url-magic
+    zle -N bracketed-paste bracketed-paste-url-magic
+  elif is-at-least 5.1; then
+    autoload -Uz bracketed-paste-magic
+    zle -N bracketed-paste bracketed-paste-magic
+  fi
+  autoload -Uz url-quote-magic
+  zle -N self-insert url-quote-magic
+fi
+
+# Keep the terminfo-based key sequences above valid: enter keypad application
+# mode while the line editor is active, leave it when it finishes.
+function zle-line-init {
+  (( $+terminfo[smkx] )) && echoti smkx
+}
+function zle-line-finish {
+  (( $+terminfo[rmkx] )) && echoti rmkx
+}
+zle -N zle-line-init
+zle -N zle-line-finish
+
 # fzf: use fd for file/directory discovery, bat/eza for previews
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border'
@@ -86,28 +178,23 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {}'"
-__cache_eval fzf 'fzf --zsh'
 
 # Disable the virtualenv prompt.
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# fnm (Node version manager)
-__cache_eval fnm 'fnm env'
-
 # zoxide
 export _ZO_MAXAGE=100000
-__cache_eval zoxide 'zoxide init zsh'
-# Run zoxide's chpwd tracking in a detached background subshell so cd is instant.
-__zoxide_hook() { command zoxide add -- "$(__zoxide_pwd)" &>/dev/null &! }
 
-# carapace
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
-__cache_eval carapace 'carapace _carapace zsh'
+# zsh-autosuggestions: read at plugin load time, so export before the bundle.
+# MANUAL_REBIND is safe because autosuggestions is the LAST plugin in the
+# bundle (nothing wraps its widgets after it); ASYNC keeps typing latency low.
+export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-# Load plugins via antidote static bundle.
-zsh_plugins="${ZDOTDIR:-$HOME}/.zsh_plugins"
+# Load plugins via antidote static bundle. This sources zsh-defer synchronously,
+# adds ALL plugin fpaths synchronously, and schedules the kind:defer plugins to
+# load (in listed order) after the first prompt.
+zsh_plugins="$HOME/.zsh_plugins"
 if [[ -n "${ANTIDOTE_HOME:-}" ]]; then
   antidote_home="$ANTIDOTE_HOME"
 elif [[ "$OSTYPE" == darwin* ]]; then
@@ -121,6 +208,121 @@ if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh"
     && mv "${zsh_plugins}.zsh.tmp" "${zsh_plugins}.zsh"
 fi
 source "${zsh_plugins}.zsh"
+
+# Homebrew's keg-only curl ships a _curl completion; must be on fpath pre-compinit.
+fpath=("$HOMEBREW_PREFIX/opt/curl/share/zsh/site-functions"(N) $fpath)
+
+# compinit: AFTER the antidote bundle (fpath is complete) and BEFORE the
+# carapace/zoxide/fzf inits below (carapace's cached init calls compdef
+# unguarded; prezto used to provide the early compinit).
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+mkdir -p "${_zcompdump:h}"
+# -C skips the security audit and function check for speed; take the fast path
+# unless the dump is missing or older than 20h (then regenerate + re-audit).
+if [[ -n "$_zcompdump"(#qN.mh-20) ]]; then
+  compinit -C -d "$_zcompdump"
+else
+  compinit -i -d "$_zcompdump"
+  touch "$_zcompdump"
+fi
+unset _zcompdump
+
+# Completion styles (ported from prezto's completion module).
+zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+
+# Case-insensitive, partial-word, then substring matching.
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+
+# Fuzzy/approximate matching; error budget scales with word length (max 7).
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
+
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+zstyle ':completion:*' squeeze-slashes true
+
+# Complete environment variable names after `export` / `FOO=`.
+zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
+
+# ssh/scp host completion from known_hosts, ~/.ssh/config, and /etc/hosts.
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${=${=${${(f)"$(cat {/etc/ssh/ssh_,~/.ssh/}known_hosts(|2)(N) 2> /dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
+  ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2> /dev/null))"}%%(\#)*}
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2> /dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
+
+# Hide system/service accounts from user completion (press twice to show).
+zstyle ':completion:*:*:*:users' ignored-patterns \
+  adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+  dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
+  hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+  mailman mailnull mldonkey mysql nagios \
+  named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+  operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+  rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
+zstyle '*' single-ignored show
+
+# Don't re-suggest already-typed args; rm also completes dotfiles.
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+# kill/pkill: colorized process menu.
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $LOGNAME -o pid,user,command -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+
+# man: group pages by section.
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
+
+# ssh/scp/rsync: sensible host ordering; filter loopback/IP-literal noise.
+zstyle ':completion:*:(ssh|scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:(scp|rsync):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
+zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
+
+# fzf keybindings/completion (guarded compdef inside; needs compinit above).
+__cache_eval fzf 'fzf --zsh'
+
+# fnm (Node version manager)
+__cache_eval fnm 'fnm env'
+
+# direnv
+__cache_eval direnv 'direnv hook zsh'
+
+# zoxide
+__cache_eval zoxide 'zoxide init zsh'
+# Run zoxide's chpwd tracking in a detached background subshell so cd is instant.
+__zoxide_hook() { command zoxide add -- "$(__zoxide_pwd)" &>/dev/null &! }
+
+# carapace: its cached init calls compdef unguarded — keep after compinit.
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+__cache_eval carapace 'carapace _carapace zsh'
 
 # Starship prompt. Load after zsh-defer has scheduled deferred plugins so it
 # cannot clear Starship's right prompt through the RPS1 alias.
@@ -141,17 +343,23 @@ kube-aliases-load() {
   __kube_aliases_loaded=1
 }
 
-# Bind up/down arrows to history-substring-search.
-# Guard on widget existence so a missing plugin falls back to default keybind
-# (up-line-or-history) instead of surfacing "No such widget" on each press.
-if (( $+widgets[history-substring-search-up] )); then
+# Bind up/down arrows to history-substring-search. The plugin is kind:defer,
+# so its widgets don't exist yet at zshrc eval time; schedule the binds through
+# zsh-defer, which runs them after the plugin's own deferred load (registration
+# order). Until the first defer flush, arrows keep the default history binds.
+__hsts_bindkeys() {
+  # Guard keeps a graceful fallback if the plugin is ever missing.
+  (( $+widgets[history-substring-search-up] )) || return 0
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down
   bindkey '^[OA' history-substring-search-up
   bindkey '^[OB' history-substring-search-down
-fi
+}
+(( $+functions[zsh-defer] )) && zsh-defer __hsts_bindkeys
 
 [[ -f "$HOME/aliases.sh" ]] && source $HOME/aliases.sh
 [[ -f "$HOME/functions.sh" ]] && source $HOME/functions.sh
 [[ -f "$HOME/tools.sh" ]] && source $HOME/tools.sh
+# ~/.extra: machine-local config, intentionally unmanaged by chezmoi.
+# Keep it fast — no synchronous gopass/eval at startup (see README.md).
 [[ -f "$HOME/.extra" ]] && source $HOME/.extra

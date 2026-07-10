@@ -1,6 +1,22 @@
-# ABOUTME: Plugin list for antidote zsh plugin manager.
-# ABOUTME: zsh-defer must be first; kind:defer plugins load after first prompt.
+# ABOUTME: Plugin list for the antidote static bundle.
+# ABOUTME: zsh-defer must be first; kind:defer plugins load, in listed order, after the first prompt.
+
+# Deferral engine. Sourced first and synchronously so `zsh-defer` is defined
+# before any kind:defer entry below expands to `zsh-defer source ...`.
 romkatv/zsh-defer
+
+# Completions. antidote adds each plugin dir to fpath SYNCHRONOUSLY even under
+# kind:defer (only the init `source` is deferred), so the compinit that runs
+# right after this bundle sees them.
 greymd/docker-zsh-completion kind:defer
 zsh-users/zsh-completions
-zsh-users/zsh-history-substring-search
+
+# Fish-like line editing, deferred so the first prompt paints before they load.
+# Listed order == defer execution order, and it is load-bearing:
+#   1. fast-syntax-highlighting  - annotates the command line
+#   2. history-substring-search  - MUST come after highlighting (its README)
+#   3. zsh-autosuggestions       - LAST: with MANUAL_REBIND it wraps the final
+#                                  widget set once and nothing may wrap it after.
+zdharma-continuum/fast-syntax-highlighting kind:defer
+zsh-users/zsh-history-substring-search kind:defer
+zsh-users/zsh-autosuggestions kind:defer
