@@ -23,6 +23,41 @@ alias brews="brew search"
 # be nice
 alias please=sudo
 
+# Ported from prezto — only the aliases with real usage in ~/.zsh_history.
+# Keep this block ABOVE the sections below so any same-named alias defined
+# later in this file still wins (last definition wins), matching the old
+# prezto-before-aliases.sh precedence.
+alias g='git'
+alias gb='git branch'
+alias gba='git branch --all --verbose'
+alias gbd='git branch --delete'
+alias gbl='git branch --verbose'
+alias gco='git checkout'
+alias gdc='git ls-files --cached'
+alias gia='git add'
+alias glg='git log --topo-order --graph --pretty=format:"%C(green)%h%C(reset) %s%C(red)%d%C(reset)%n"'
+alias gpa='git push --all'
+alias gr='git rebase'
+alias grc='git rebase --continue'
+alias gsa='git stash apply'
+alias gsd='git stash show --patch --stat'
+alias gsx='git stash drop'
+alias gwd='git diff --no-ext-diff'
+alias gwR='git reset --hard'
+alias gWl='git worktree list'
+
+alias dkps='docker ps'
+alias dkc='docker compose'
+alias dkcps='docker compose ps'
+
+alias ll='eza -l'
+# Prezto silently injected -p; nested one-shot `mkdir a/b/c` habits rely on it.
+alias mkdir='mkdir -p'
+
+# cd/pushd to the frontmost Finder window (pfd lives in functions.sh)
+alias cdf='cd "$(pfd)"'
+alias pushdf='pushd "$(pfd)"'
+
 # Modern CLI replacements
 alias ls='eza'
 alias l='eza -l'
@@ -61,7 +96,7 @@ alias gts='git-town sync'
 
 # usable git aliases
 alias ghya='git push'
-alias ghyauf='git push -uf origin $(git-branch-current)'
+alias ghyauf='git push -uf origin $(git branch --show-current)'
 alias dya='git pull'
 alias kasakai='git status'
 

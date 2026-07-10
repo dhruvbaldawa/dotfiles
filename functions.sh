@@ -29,7 +29,61 @@ function dataurl() {
 function runupdate(){
     brew update && \
     brew outdated -q --formula | xargs brew upgrade
-    zprezto-update
+    # Update antidote-managed zsh plugins (replaces the removed prezto self-update).
+    source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh" && antidote update
+}
+
+# Print the given columns from stdin, e.g. `ps aux | slit 2 11`
+function slit() {
+    awk "{ print ${(j:,:):-\$${^@}} }"
+}
+
+# Print the current Finder window's directory
+function pfd() {
+    osascript 2>/dev/null <<EOF
+    tell application "Finder"
+        return POSIX path of (target of first window as text)
+    end tell
+EOF
+}
+
+# Preview files in Quick Look
+function ql() {
+    if (( $# > 0 )); then
+        qlmanage -p "$@" &>/dev/null
+    fi
+}
+
+# Move files to the macOS Trash via Finder (recoverable, unlike rm)
+function trash() {
+    emulate -L zsh
+    setopt LOCAL_OPTIONS EXTENDED_GLOB
+    local file
+    local -a files=()
+    for file in "$@"; do
+        if [[ -e $file ]]; then
+            # ':a' gets the full path (not ':A', which would resolve symlinks)
+            files+=("the POSIX file \"${file:a}\"")
+        else
+            print "trash: No such file or directory '$file'." >&2
+            return 1
+        fi
+    done
+    if (( $#files == 0 )); then
+        print 'usage: trash <files...>' >&2
+        return 64  # Match rm's return code.
+    fi
+    # Join file list with commas, and tell Finder to trash that list.
+    local file_list="${(pj., .)files}"
+    osascript 2>&1 >/dev/null -e "tell app \"Finder\" to move { ${file_list} } to trash"
+}
+
+# Recursively delete .DS_Store files and __MACOSX directories
+function osx-rm-dir-metadata() {
+    find "${@:-$PWD}" \( \
+        -type f -name '.DS_Store' -o \
+        -type d -name '__MACOSX' \
+    \) -print0 | xargs -0 rm -rf
 }
 
 # Cap zoxide ranks above $1 (default 100) to flatten heavy hitters
