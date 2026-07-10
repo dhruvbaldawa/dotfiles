@@ -36,12 +36,11 @@ Icon?
 .ropeproject
 todo.txt
 
-
-
 .env
 editor.env
 .autoenv
 .nvmrc
+.env.sh
 
 .pytest_cache/
 .exercism/
@@ -49,3 +48,6 @@ editor.env
 .claude/settings.local.json
 CLAUDE.local.md
 .claude/worktrees
+
+
+**/.claude/.cc-writes/
