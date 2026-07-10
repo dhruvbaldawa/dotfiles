@@ -1,6 +1,5 @@
 tap "oven-sh/bun"
 brew "antidote"
-brew "atuin"
 brew "bat"
 brew "carapace"
 brew "chezmoi"
