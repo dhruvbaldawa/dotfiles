@@ -60,3 +60,17 @@ bun run scripts/bootstrap.ts
 ## Configuration
 
 On first run, chezmoi prompts for a secrets profile (`personal` or `work`) to load the appropriate configuration.
+
+## Machine-local config: `~/.extra`
+
+`~/.zshrc` sources `~/.extra` last, if it exists. It holds machine-specific config
+(work PATHs, per-machine secrets, tool init added by installers) and is deliberately
+**not managed by chezmoi** — create it by hand on each machine.
+
+Rules for `~/.extra`:
+
+- No literal secrets — reference gopass instead.
+- No synchronous `gopass show` or `eval "$(cmd)"` at startup. Each gopass call costs
+  ~0.5–1s per shell. Batch secret exports behind the tmpfs cache pattern used in
+  `tools.sh` (7-day TTL, `umask 077`, atomic `command mv -f` write, only cache
+  when every lookup succeeds), or use `__cache_eval` from `.zshrc` for tool inits.
