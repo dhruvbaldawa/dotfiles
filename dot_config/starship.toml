@@ -14,11 +14,12 @@ scan_timeout = 300
 # Line 1: where am I (dir + k8s/aws context). Line 2: env + input line.
 # username/hostname/shlvl/jobs/sudo/status only render when they matter
 # (SSH, nested shells, bg jobs, cached sudo creds, last command failed).
-format = '$directory$kubernetes$aws$line_break$python$conda$nodejs$direnv$username$hostname$shlvl$jobs$sudo$status$character'
+format = '$directory$kubernetes$aws$line_break$python$conda$nodejs$direnv$username$hostname$shlvl$jobs$sudo$character'
 
-# Git on the right, slow-command duration and clock trailing it. The whole
-# right side vanishes when the prompt goes transient (see .zshrc).
-right_format = '$git_branch$git_status$git_state$cmd_duration$time'
+# Git on the right, slow-command duration and clock trailing it. Exit status
+# lives here too, dimmed — the red arrow already flags failure on the input
+# line. The whole right side vanishes when the prompt goes transient (.zshrc).
+right_format = '$status$git_branch$git_status$git_state$cmd_duration$time'
 
 # Module styles reference this palette; retheme the prompt in one place.
 palette = 'main'
@@ -112,9 +113,9 @@ style = 'bold warn'
 
 [status]
 disabled = false
-format = '[$symbol$status( $signal_name)]($style) '
+format = '[\[$symbol$status( $signal_name)\]]($style) '
 symbol = '✘ '
-style = 'bold danger'
+style = 'dimmed danger'
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
