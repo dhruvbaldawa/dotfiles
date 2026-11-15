@@ -1,11 +1,4 @@
-[user]
-name = Dhruv Baldawa
-email = {{ gopass "personal/profile/gitemail" }}
-signingkey = {{ gopass "personal/profile/gitsigningkey" }}
-
-[commit]
-gpgsign = true
-
+{{ template "git-profile" (dict "name" "personal" "gopassPrefix" "personal" "data" .) }}
 [core]
 sshCommand = "ssh -i ~/.ssh/id_github_dhruv"
 

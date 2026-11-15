@@ -11,3 +11,9 @@ Library/Application Support/nushell/
 {{- if ne .chezmoi.os "linux" }}
 .config/nushell/
 {{- end }}
+{{- /* Claude Code config (moved from ccconfigs): Mac only until pastel's own config is reconciled. */}}
+{{- if ne .chezmoi.os "darwin" }}
+.claude/
+.claude-personal/
+.config/ccstatusline/
+{{- end }}

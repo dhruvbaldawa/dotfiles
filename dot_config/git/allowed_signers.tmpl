@@ -1,0 +1,8 @@
+{{- /* Lets `git log --show-signature` verify this machine's SSH signatures: one line per
+       git.profiles entry that has sshSigningKey. Renders empty (no file) when none do. */ -}}
+{{- range $name, $p := dig "git" "profiles" dict . -}}
+{{- if $p.sshSigningKey -}}
+{{- if not $p.email }}{{ fail (printf "git.profiles.%s.email is required with sshSigningKey" $name) }}{{ end -}}
+{{ $p.email }} namespaces="git" {{ include (joinPath $.chezmoi.homeDir (trimPrefix "~/" $p.sshSigningKey)) | trim }}
+{{ end -}}
+{{- end -}}

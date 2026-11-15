@@ -1,0 +1,33 @@
+{{- /*
+  Shared [user]/signing block for ~/.gitconfig-<profile>.
+  Call: template "git-profile" (dict "name" "<profile>" "gopassPrefix" "<prefix>" "data" .)
+  Reads .chezmoidata git.profiles.<name>:
+    email          non-secret; falls back to gopass <prefix>/profile/gitemail
+    sshSigningKey  set = SSH signing; unset = GPG key from gopass <prefix>/profile/gitsigningkey
+*/ -}}
+{{- $p := dig "git" "profiles" .name dict .data -}}
+[user]
+name = Dhruv Baldawa
+{{- if $p.email }}
+email = {{ $p.email }}
+{{- else }}
+email = {{ gopass (printf "%s/profile/gitemail" .gopassPrefix) }}
+{{- end }}
+{{- if $p.sshSigningKey }}
+signingkey = {{ $p.sshSigningKey }}
+
+[gpg]
+format = ssh
+
+[gpg "ssh"]
+allowedSignersFile = ~/.config/git/allowed_signers
+{{- else }}
+signingkey = {{ gopass (printf "%s/profile/gitsigningkey" .gopassPrefix) }}
+
+# Explicit, because another profile included earlier may set gpg.format = ssh.
+[gpg]
+format = openpgp
+{{- end }}
+
+[commit]
+gpgsign = true

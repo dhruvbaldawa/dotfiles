@@ -1,2 +1,13 @@
-gitIncludeRules:
-  - ["gitdir:~/**", "personal"]
+# Copy to .chezmoidata/local.yaml (gitignored) on a new machine and fill in.
+git:
+  profiles:
+    personal:
+      email: ""            # non-secret; empty = read from gopass personal/profile/gitemail
+      sshSigningKey: ""    # e.g. "~/.ssh/id_github_dhruv.pub"; empty = GPG signing
+  includeRules:
+    - when: "gitdir:~/**"
+      profile: personal
+claude:
+  # Per-machine Claude Code settings, deep-merged last over the shared fragments,
+  # e.g. work-only plugins or marketplaces.
+  settings: {}
