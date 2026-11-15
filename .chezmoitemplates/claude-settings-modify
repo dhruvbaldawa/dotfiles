@@ -1,13 +1,15 @@
 #!/bin/sh
 # chezmoi modify script for Claude Code settings.json (used by ~/.claude and ~/.claude-personal).
-# Source of truth: .chezmoitemplates/claude-settings/*.json, merged in the order below.
-#   - fragment keys win (arrays such as permissions.allow are replaced, not unioned);
-#   - keys only in the live file (UI toggles added at runtime) are kept;
+# Source of truth: .chezmoitemplates/claude-settings/*.json, deep-merged in the order below;
+# "local" renders .chezmoidata `claude.settings` (per-machine overrides) and goes last.
+#   - each top-level key the fragments define replaces the live one wholesale, so removing
+#     something from a fragment removes it from the live file too;
+#   - top-level keys only in the live file (UI toggles added at runtime) are kept;
 #   - hook groups installed by tools that manage their own hooks (Orca) are kept.
 # `chezmoi diff` shows any live-only change worth promoting into a fragment.
 set -eu
 des=$(jq -s 'reduce .[] as $f ({}; . * $f)' <<'CHEZMOI_CLAUDE_FRAGMENTS'
-{{ range list "core" "permissions" "sandbox" "plugins" "automode" "hooks" -}}
+{{ range list "core" "permissions" "sandbox" "plugins" "automode" "hooks" "local" -}}
 {{ includeTemplate (printf "claude-settings/%s.json" .) $ }}
 {{ end -}}
 CHEZMOI_CLAUDE_FRAGMENTS
@@ -17,7 +19,7 @@ cur=$(cat)
 printf '%s\n' "$cur" | jq --argjson des "$des" '
   def tool_owned: any(.hooks[]?; (.command // "") | test("ORCA_AGENT_HOOK|/\\.orca/"));
   . as $cur
-  | ($cur * $des)
+  | ($cur + $des)
   | .hooks = (reduce ((($cur.hooks // {}) + ($des.hooks // {})) | keys_unsorted[]) as $ev ({};
       .[$ev] = (($des.hooks[$ev] // []) + (($cur.hooks[$ev] // []) | map(select(tool_owned))))))
   | if .hooks == {} then del(.hooks) else . end'

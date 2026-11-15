@@ -7,3 +7,7 @@ git:
   includeRules:
     - when: "gitdir:~/**"
       profile: personal
+claude:
+  # Per-machine Claude Code settings, deep-merged last over the shared fragments,
+  # e.g. work-only plugins or marketplaces.
+  settings: {}
