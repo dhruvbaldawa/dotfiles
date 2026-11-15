@@ -1,13 +1,3 @@
-{{ $pathEmail := list $.secretsProfile "profile" "gitemail" | join "/" -}}
-{{ $pathSigningKey := list $.secretsProfile "profile" "gitsigningkey" | join "/" -}}
-
-[user]
-name = Dhruv Baldawa
-email = {{ gopass $pathEmail }}
-signingkey = {{ gopass $pathSigningKey }}
-
-[commit]
-gpgsign = true
-
+{{ template "git-profile" (dict "name" "work" "gopassPrefix" $.secretsProfile "data" .) }}
 [core]
 sshCommand = "ssh -i ~/.ssh/id_github_work"
