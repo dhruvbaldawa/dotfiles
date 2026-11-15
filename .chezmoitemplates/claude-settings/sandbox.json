@@ -1,0 +1,32 @@
+{{- /* allowUnixSockets: macOS matches literal paths only (globs don't work), so the launchd ssh-agent
+       socket, whose name changes every boot, is read from SSH_AUTH_SOCK at apply time. Re-run
+       `chezmoi apply` after a reboot until Dhruv's key moves to Secretive (A3d), whose path is fixed. */ -}}
+{{- $sockets := list "~/.gnupg/S.gpg-agent" "~/.gnupg/S.gpg-agent.extra" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $sockets = append $sockets "~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh" -}}
+{{-   $agent := env "SSH_AUTH_SOCK" -}}
+{{-   if contains "com.apple.launchd" $agent -}}
+{{-     $sockets = append $sockets (ternary (printf "/private%s" $agent) $agent (hasPrefix "/var/" $agent)) -}}
+{{-   end -}}
+{{- else -}}
+{{-   $sockets = concat $sockets (list "/run/user/*/gnupg/S.gpg-agent" "/run/user/*/gnupg/S.gpg-agent.extra" "/run/user/*/ssh-agent.socket") -}}
+{{- end -}}
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowUnixSockets": {{ toJson $sockets }}
+    },
+    "enableWeakerNetworkIsolation": true,
+    "excludedCommands": [
+      "docker *",
+      "docker-compose *",
+      "ssh *",
+      "git *",
+      "gpg *",
+      "gpg-agent *"
+    ],
+    "allowRead": true
+  }
+}
