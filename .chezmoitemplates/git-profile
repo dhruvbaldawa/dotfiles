@@ -1,11 +1,16 @@
 {{- /*
-  Shared [user]/signing block for ~/.gitconfig-<profile>.
-  Call: template "git-profile" (dict "name" "<profile>" "gopassPrefix" "<prefix>" "data" .)
+  Shared [user]/signing/ssh block for ~/.gitconfig-<profile>.
+  Call: template "git-profile" (dict "name" "<profile>" "gopassPrefix" "<prefix>" "sshKey" "<default key>" "data" .)
   Reads .chezmoidata git.profiles.<name>:
     email          non-secret; falls back to gopass <prefix>/profile/gitemail
+    sshKey         GitHub auth key for core.sshCommand; falls back to the caller's sshKey
     sshSigningKey  set = SSH signing; unset = GPG key from gopass <prefix>/profile/gitsigningkey
+  and git.sshAgent: set = authenticate and sign through that agent socket (Secretive on the Mac),
+  leaving SSH_AUTH_SOCK on the default agent for everything else.
 */ -}}
 {{- $p := dig "git" "profiles" .name dict .data -}}
+{{- $agent := dig "git" "sshAgent" "" .data -}}
+{{- $sshKey := $p.sshKey | default .sshKey -}}
 [user]
 name = Dhruv Baldawa
 {{- if $p.email }}
@@ -21,6 +26,9 @@ format = ssh
 
 [gpg "ssh"]
 allowedSignersFile = ~/.config/git/allowed_signers
+{{- if $agent }}
+program = {{ .data.chezmoi.homeDir }}/.config/git/ssh-keygen-agent
+{{- end }}
 {{- else }}
 signingkey = {{ gopass (printf "%s/profile/gitsigningkey" .gopassPrefix) }}
 
@@ -31,3 +39,11 @@ format = openpgp
 
 [commit]
 gpgsign = true
+
+[core]
+{{- if $agent }}
+{{- /* -F /dev/null: ~/.ssh/config's github.com IdentityFile would otherwise be offered before this profile's key. */}}
+sshCommand = "ssh -F /dev/null -o IdentityAgent={{ $agent }} -o IdentitiesOnly=yes -i {{ $sshKey }}"
+{{- else }}
+sshCommand = "ssh -i {{ $sshKey }}"
+{{- end }}

@@ -1,9 +1,12 @@
 # Copy to .chezmoidata/local.yaml (gitignored) on a new machine and fill in.
 git:
+  # Optional: agent socket for GitHub auth + signing (Mac: Secretive). Unset = default agent / key files.
+  # sshAgent: "/Users/<you>/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
   profiles:
     personal:
       email: ""            # non-secret; empty = read from gopass personal/profile/gitemail
       sshSigningKey: ""    # e.g. "~/.ssh/id_github_dhruv.pub"; empty = GPG signing
+      # sshKey: ""         # GitHub auth key for core.sshCommand; default ~/.ssh/id_github_dhruv
   includeRules:
     - when: "gitdir:~/**"
       profile: personal
