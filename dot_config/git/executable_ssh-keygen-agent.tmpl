@@ -1,0 +1,3 @@
+#!/bin/sh
+# gpg.ssh.program for git: sign through git.sshAgent (Secretive) while SSH_AUTH_SOCK stays on the default agent.
+SSH_AUTH_SOCK="{{ .git.sshAgent }}" exec ssh-keygen "$@"

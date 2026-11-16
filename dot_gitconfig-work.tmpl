@@ -1,3 +1,1 @@
-{{ template "git-profile" (dict "name" "work" "gopassPrefix" $.secretsProfile "data" .) }}
-[core]
-sshCommand = "ssh -i ~/.ssh/id_github_work"
+{{ template "git-profile" (dict "name" "work" "sshKey" "~/.ssh/id_github_work" "gopassPrefix" $.secretsProfile "data" .) }}

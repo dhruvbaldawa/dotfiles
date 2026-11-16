@@ -17,3 +17,7 @@ Library/Application Support/nushell/
 .claude-personal/
 .config/ccstatusline/
 {{- end }}
+{{- /* gpg.ssh.program wrapper: only where git signs through a dedicated agent (Secretive). */}}
+{{- if not (dig "git" "sshAgent" "" .) }}
+.config/git/ssh-keygen-agent
+{{- end }}
